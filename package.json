@@ -13,12 +13,12 @@
   },
   "devDependencies": {},
   "scripts": {
-    "prestart": "node-sass ./src/scss -o ./src/css",
+    "prestart": "node-sass ./src/assets/scss -o ./src/assets/css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "scss": "node-sass ./src/scss -o ./src/css",
-    "watch-scss": "node-sass --watch ./src/scss -o ./src/css"
+    "scss": "node-sass ./src/assets/scss -o ./src/assets/css",
+    "watch-scss": "node-sass --watch ./src/assets/scss -o ./src/assets/css"
   }
 }
