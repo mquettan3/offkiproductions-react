@@ -1,7 +1,6 @@
 /*
   SASS Files - This is automatically compiled into css using the scss npm script in package.json each time this file is changed.
 */
-@section_background_color : rgb(245, 245, 245);
 .logo-holder embed {
   display: block;
   width: 100%;
@@ -1295,4 +1294,4 @@ section:nth-child(even) {
   font-size: 20px; }
 
 .vegas-wrapper {
-  background-color: rgba(0, 0, 0, 0.5); }
+  background-color: whitesmoke; }

@@ -10,6 +10,8 @@
   },
   "devDependencies": {},
   "scripts": {
+    "prestart": "node-sass scss -o css",
+    "poststart": "node-sass --watch scss -o css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
