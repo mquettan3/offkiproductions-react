@@ -4,7 +4,8 @@ import App from './App';
 import './styles/index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './loader.js';
-import 'vegas/dist/vegas.js';
+require('bootstrap');
+require('vegas');
 
 ReactDOM.render(
   <App />,

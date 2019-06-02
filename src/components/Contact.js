@@ -1,6 +1,7 @@
 // Contact.component.js
-
 import React, { Component } from 'react';
+
+import '@fortawesome/fontawesome-free/css/all.css';
 
 export default class Contact extends Component {
   render() {

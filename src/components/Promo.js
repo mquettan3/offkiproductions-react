@@ -1,20 +1,29 @@
 // Navbar.component.js
 
 import React, { Component } from 'react';
-// import $ from 'jquery';
+import $ from 'jquery';
+import Hero1 from '../assets/images/hero-1.jpg';
+import Hero2 from '../assets/images/hero-2.jpg';
+import Hero3 from '../assets/images/hero-3.jpg';
+import Hero4 from '../assets/images/hero-4.jpg';
+import Overlay06 from 'vegas/dist/overlays/06.png';
+import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
 
 export default class Promo extends Component {
   componentDidMount(){
-    // $("#promo").vegas({
-    //     delay: 8000,
-    //     color: '#101113',
-    //     transition: 'zoomOut',
-    //     transitionDuration: 3000,
-    //     slides: [
-    //         { src: '../assets/images/hero-1.jpg' },
-    //         { src: '../assets/images/hero-4.jpg' }
-    //     ]
-    // });
+    $("#promo").vegas({
+        delay: 8000,
+        color: '#101113',
+        overlay: Overlay06,
+        transition: 'zoomOut',
+        transitionDuration: 3000,
+        slides: [
+            { src: Hero1 },
+            { src: Hero2 },
+            { src: Hero3 },
+            { src: Hero4 }
+        ]
+    });
   }
 
   render() {
@@ -22,7 +31,9 @@ export default class Promo extends Component {
       <section id="promo" className="promo-section section">
         <div className="container text-center promo-content">
           <div className="upper-wrapper">
-            <div className="logo-holder"><img src="../assets/images/Logos/MeditatingManSolo.svg" alt=""/></div>
+            <div className="logo-holder">
+              <img src={MeditatingManSolo} alt="" />
+            </div>
             <h2 className="headline">Off Ki Productions</h2>
             <div className="tagline">We are Dedicated to Enhancing Your Craft!</div>
           </div>

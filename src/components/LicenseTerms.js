@@ -12,6 +12,7 @@ export default class LicenseTerms extends Component {
             <div className="col-md-4 col-sm-12 mb-4 mb-sm-0">
               <h4>Basic</h4>
               <table className="table table-vertical-align table-striped">
+                <tbody>
                 <tr>
                   <th>Cost</th>
                   <td className="text-center noWordWrap">
@@ -90,11 +91,13 @@ export default class LicenseTerms extends Component {
                     2
                   </td>
                 </tr>
+                </tbody>
               </table>
             </div>
             <div className="col-md-4 col-sm-12 mb-4 mb-sm-0">
               <h4>Premium</h4>
               <table className="table table-vertical-align table-striped">
+                <tbody>
                 <tr>
                   <th>Cost</th>
                   <td className="text-center noWordWrap">
@@ -173,11 +176,13 @@ export default class LicenseTerms extends Component {
                     2
                   </td>
                 </tr>
+                </tbody>
               </table>
             </div>
             <div className="col-md-4 col-sm-12">
               <h4>Exclusive</h4>
               <table className="table table-vertical-align table-striped">
+                <tbody>
                 <tr>
                   <th>Cost</th>
                   <td className="text-center noWordWrap">
@@ -256,6 +261,7 @@ export default class LicenseTerms extends Component {
                     Unlimited
                   </td>
                 </tr>
+                </tbody>
               </table>
             </div>
           </div>

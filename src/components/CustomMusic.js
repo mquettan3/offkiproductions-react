@@ -18,61 +18,67 @@ export default class CustomMusic extends Component {
             <div className="col-md-4 col-sm-12 mb-4 mb-sm-0">
               <h4>Basic</h4>
               <table className="table table-vertical-align table-striped">
-                <tr>
-                  <th>Cost</th>
-                  <td className="text-center noWordWrap">
-                    $75
-                  </td>
-                </tr>
-                <tr>
-                  <th># Of Revisions</th>
-                  <td className="text-center noWordWrap">
-                    2
-                  </td>
-                </tr>
-                <tr>
-                  <th colspan="2"><i>**All Other licence terms are identical to those listed below.</i></th>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th>Cost</th>
+                    <td className="text-center noWordWrap">
+                      $75
+                    </td>
+                  </tr>
+                  <tr>
+                    <th># Of Revisions</th>
+                    <td className="text-center noWordWrap">
+                      2
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colSpan="2"><i>**All Other licence terms are identical to those listed below.</i></th>
+                  </tr>
+                </tbody>
               </table>
             </div>
             <div className="col-md-4 col-sm-12 mb-4 mb-sm-0">
               <h4>Premium</h4>
               <table className="table table-vertical-align table-striped">
-                <tr>
-                  <th>Cost</th>
-                  <td className="text-center noWordWrap">
-                    $100
-                  </td>
-                </tr>
-                <tr>
-                  <th># Of Revisions</th>
-                  <td className="text-center noWordWrap">
-                    2
-                  </td>
-                </tr>
-                <tr>
-                  <th colspan="2"><i>**All Other licence terms are identical to those listed below.</i></th>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th>Cost</th>
+                    <td className="text-center noWordWrap">
+                      $100
+                    </td>
+                  </tr>
+                  <tr>
+                    <th># Of Revisions</th>
+                    <td className="text-center noWordWrap">
+                      2
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colSpan="2"><i>**All Other licence terms are identical to those listed below.</i></th>
+                  </tr>
+                </tbody>
               </table>
             </div>
             <div className="col-md-4 col-sm-12">
               <h4>Exclusive</h4>
               <table className="table table-vertical-align table-striped">
-                <tr>
-                  <th>Cost</th>
-                  <td className="text-center noWordWrap">
-                    Make an Offer!
-                  </td>
-                </tr>
-                <tr>
-                  <th># Of Revisions</th>
-                  <td className="text-center noWordWrap">
-                    5
-                  </td>
-                </tr>
-                <tr>
-                  <th colspan="2"><i>**All Other licence terms are identical to those listed below.</i></th>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th>Cost</th>
+                    <td className="text-center noWordWrap">
+                      Make an Offer!
+                    </td>
+                  </tr>
+                  <tr>
+                    <th># Of Revisions</th>
+                    <td className="text-center noWordWrap">
+                      5
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colSpan="2"><i>**All Other licence terms are identical to those listed below.</i></th>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>

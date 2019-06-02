@@ -1,7 +1,7 @@
 /*
   SASS Files - This is automatically compiled into css using the scss npm script in package.json each time this file is changed.
 */
-.logo-holder embed {
+.logo-holder img {
   display: block;
   width: 100%;
   height: 100%; }
