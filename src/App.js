@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './styles/App.css';
 import './assets/css/theme-1.css';
 import Navbar from './components/Navbar.js';
 import Promo from './components/Promo.js';
+import BeatStore from './components/BeatStore.js';
+import CustomMusic from './components/CustomMusic.js';
+import LicenseTerms from './components/LicenseTerms.js';
+import AboutUs from './components/AboutUs.js';
+import Contact from './components/Contact.js';
+import Footer from './components/Footer.js';
 
 class App extends Component {
   render() {
@@ -11,13 +16,12 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <Promo />
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <BeatStore />
+        <CustomMusic />
+        <LicenseTerms />
+        <AboutUs />
+        <Contact />
+        <Footer />
       </div>
     );
   }

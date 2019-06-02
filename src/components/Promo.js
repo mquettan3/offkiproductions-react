@@ -1,14 +1,28 @@
 // Navbar.component.js
 
 import React, { Component } from 'react';
+// import $ from 'jquery';
 
 export default class Promo extends Component {
+  componentDidMount(){
+    // $("#promo").vegas({
+    //     delay: 8000,
+    //     color: '#101113',
+    //     transition: 'zoomOut',
+    //     transitionDuration: 3000,
+    //     slides: [
+    //         { src: '../assets/images/hero-1.jpg' },
+    //         { src: '../assets/images/hero-4.jpg' }
+    //     ]
+    // });
+  }
+
   render() {
     return (
       <section id="promo" className="promo-section section">
         <div className="container text-center promo-content">
           <div className="upper-wrapper">
-            <div className="logo-holder"><img src="./src/assets/images/Logos/MeditatingManSolo.svg" alt=""/></div>
+            <div className="logo-holder"><img src="../assets/images/Logos/MeditatingManSolo.svg" alt=""/></div>
             <h2 className="headline">Off Ki Productions</h2>
             <div className="tagline">We are Dedicated to Enhancing Your Craft!</div>
           </div>
