@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import $ from 'jquery';
+require('jquery.scrollto');
 
 export default class Navbar extends Component {
   componentDidMount(){
