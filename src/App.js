@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import './styles/App.css';
-import './assets/css/theme-1.css';
 import Navbar from './components/Navbar.js';
 import Promo from './components/Promo.js';
 import BeatStore from './components/BeatStore.js';
