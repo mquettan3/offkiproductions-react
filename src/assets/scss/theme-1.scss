@@ -1555,3 +1555,46 @@ section:nth-child(even) {
 .vegas-wrapper {
   background-color: $section_background_color;
 }
+
+@keyframes zoomin {
+  from {
+    opacity: 0;
+    transform: scale(3);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.promo-current-slide {
+  background-size: cover;
+  overflow: hidden;
+  background-position-x: 50%;
+  background-position-y: 50%;
+  padding: 0 0;
+  opacity: 1;
+  position: absolute;
+  animation-name: zoomin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+.promo-previous-slide {
+  background-size: cover;
+  overflow: hidden;
+  position: absolute;
+  background-position-x: 50%;
+  background-position-y: 50%;
+  padding: 0 0;
+}
+
+.promo-overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.promo-content-wrapper {
+  position:relative;
+}
