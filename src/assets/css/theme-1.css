@@ -371,7 +371,8 @@ label {
   width: 100%;
   position: relative;
   color: #fff;
-  background: #101113; }
+  background: #101113;
+  overflow: hidden; }
 
 .logo-holder {
   height: 100px;
@@ -1327,3 +1328,6 @@ section:nth-child(even) {
 .promo-overlay {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.6); }
+
+.promo-content-wrapper {
+  position: relative; }
