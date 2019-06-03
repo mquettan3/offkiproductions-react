@@ -1,34 +1,66 @@
 // Navbar.component.js
 
 import React, { Component } from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 import Hero1 from '../assets/images/hero-1.jpg';
 import Hero2 from '../assets/images/hero-2.jpg';
 import Hero3 from '../assets/images/hero-3.jpg';
 import Hero4 from '../assets/images/hero-4.jpg';
-import Overlay06 from 'vegas/dist/overlays/06.png';
 import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
 
 export default class Promo extends Component {
-  componentDidMount(){
-    $("#promo").vegas({
-        delay: 8000,
-        color: '#101113',
-        overlay: Overlay06,
-        transition: 'zoomOut',
-        transitionDuration: 3000,
-        slides: [
-            { src: Hero1 },
-            { src: Hero2 },
-            { src: Hero3 },
-            { src: Hero4 }
-        ]
-    });
+  constructor(props) {
+    super(props);
+
+    this.state = { width: 0, height: 0, images: [ Hero1, Hero2, Hero3, Hero4 ], imageIndex: 0, intervalId: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.handleTimer = this.handleTimer.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+    this.setState({intervalId: setInterval(this.handleTimer, 1000)});
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+    clearInterval(this.state.intervalId);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  handleTimer() {
+    if((this.state.imageIndex + 1)  === this.state.images.length) {
+      this.setState({imageIndex: 0});
+    } else {
+      this.setState({imageIndex: this.state.imageIndex + 1});
+    }
   }
 
   render() {
+    const sectionStyle = {
+      backgroundImage: "url(" + this.state.images[this.state.imageIndex] + ")",
+      backgroundSize: 'cover',
+      overflow: 'hidden',
+      height: this.state.height,
+      width: this.state.width,
+      backgroundPositionX: "50%",
+      backgroundPositionY: "50%",
+      padding: "0 0"
+    }
+
+    const overlayStyle = {
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      height: this.state.height,
+      width: this.state.width
+   }
+    
     return (
-      <section id="promo" className="promo-section section">
+      <section id="promo" className="promo-section section" style={sectionStyle}>
+      <div className="promo-slideshow" style={overlayStyle}>
         <div className="container text-center promo-content">
           <div className="upper-wrapper">
             <div className="logo-holder">
@@ -57,6 +89,7 @@ export default class Promo extends Component {
                 </div>
             </div>
         </div>
+      </div>
       </section>
     )
   }

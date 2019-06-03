@@ -9,9 +9,9 @@ import './loader.js';
 import 'bootstrap/dist/css/bootstrap.css';
 require('bootstrap');
 
-// Vegas Styles
-import 'vegas/dist/vegas.css';
-require('vegas');
+// Font Awesome important
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/fontawesome.js'
 
 // Custom Styles
 import './assets/css/theme-1.css';
