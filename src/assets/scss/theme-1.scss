@@ -673,7 +673,30 @@ ol.carousel-indicators  > li + li {
     font-size: 32px
 }
 
-@media (max-width: 767.98px) {
+/* This is where the text in the updates-block begins to wrap */
+@media (max-width: 509.98px) {
+  .updates-block .promo-cta-content .btn-cta {
+      position: static
+  }
+
+  .updates-block {
+    height:auto;
+  }
+
+  .updates-block .promo-cta-content .desc {
+      width: 100%;
+  }
+
+  .promo-content .headline {
+    font-size: 35px;
+  }
+
+  .promo-section {
+    min-height: 960px;
+  }
+}
+
+@media (min-width: 510px) {
     .header {
         background: rgba(0, 0, 0, 0.9);
         padding-top: 0
@@ -723,6 +746,9 @@ ol.carousel-indicators  > li + li {
     }
     .updates-block .promo-cta-content .btn-cta {
         position: static;
+    }
+    .updates-block .promo-cta-content .desc {
+        width: 620px;
     }
 }
 

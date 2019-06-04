@@ -13,7 +13,7 @@ export default class Promo extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { animationRunning: true, width: 0, height: 0, minHeight: 600, images: [ Hero1, Hero2, Hero3, Hero4 ], currentImageIndex: 0, previousImageIndex: 0, intervalId: 0, dynamicSlideClassName: "promo-current-slide-end" };
+    this.state = { animationRunning: true, width: 0, height: 0, images: [ Hero1, Hero2, Hero3, Hero4 ], currentImageIndex: 0, previousImageIndex: 0, intervalId: 0, dynamicSlideClassName: "promo-current-slide-end" };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleTimer = this.handleTimer.bind(this);
     this.stopAnimation = this.stopAnimation.bind(this);
@@ -33,11 +33,21 @@ export default class Promo extends Component {
   }
 
   updateWindowDimensions() {
+    // Implement min-height logic carried over from CSS.  width/height absolute numbers from derived CSS breakpoints.
     var height = window.innerHeight;
-    if (height < this.state.minHeight) {
-      height = this.state.minHeight;
+    var width = window.innerWidth;
+
+    if (width > 510) {
+      if (height < 600) {
+        height = 600;
+      }
+    } else {
+      if (height < 960) {
+        height = 960;
+      }
     }
-    this.setState({ width: window.innerWidth, height: height});
+
+    this.setState({ width: width, height: height});
   }
 
   handleTimer() {
