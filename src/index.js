@@ -11,7 +11,7 @@ require('bootstrap');
 
 // Font Awesome important
 import '@fortawesome/fontawesome-free/css/all.css';
-import '@fortawesome/fontawesome-free/js/fontawesome.js'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 // Custom Styles
 import './assets/css/theme-1.css';

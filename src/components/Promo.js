@@ -24,7 +24,7 @@ export default class Promo extends Component {
     window.addEventListener('resize', this.updateWindowDimensions);
     this.refs.visibleSlide.addEventListener("animationiteration", this.stopAnimation, false);
 
-    this.setState({intervalId: setInterval(this.handleTimer, 3000)});
+    this.setState({intervalId: setInterval(this.handleTimer, 8000)});
   }
 
   componentWillUnmount() {

@@ -3,8 +3,10 @@
 */
 .logo-holder img {
   display: block;
-  width: 100%;
-  height: 100%; }
+  width: auto;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto; }
 
 html,
 body {
@@ -384,6 +386,7 @@ label {
   overflow: hidden; }
 
 .promo-content {
+  top: 90px;
   padding-top: 80px; }
 
 .promo-content .headline {
@@ -1313,7 +1316,7 @@ section:nth-child(even) {
   opacity: 1;
   position: absolute;
   animation-name: zoomin;
-  animation-duration: 1s;
+  animation-duration: 3s;
   animation-iteration-count: infinite; }
 
 .promo-previous-slide {
@@ -1329,7 +1332,8 @@ section:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.6); }
 
 .promo-content-wrapper {
-  position: relative; }
+  position: relative;
+  padding-top: 90px; }
 
 @keyframes progress_bar {
   0% {
@@ -1341,7 +1345,7 @@ section:nth-child(even) {
   height: 2px;
   position: absolute;
   animation-name: progress_bar;
-  animation-duration: 3s;
+  animation-duration: 8s;
   animation-iteration-count: infinite;
   background-color: #6eceb2;
   bottom: 0px; }

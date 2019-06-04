@@ -3,11 +3,14 @@
 */
 
 $section_background_color: rgb(245, 245, 245);
+$site_accent_color: #6eceb2;
 
 .logo-holder img {
   display: block;
-  width: 100%;
+  width: auto;
   height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 html,
@@ -39,7 +42,7 @@ p {
 }
 
 a {
-    color: #6eceb2;
+    color: $site_accent_color;
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
     -ms-transition: all 0.4s ease-in-out;
@@ -78,8 +81,8 @@ a.btn {
 
 a.btn-primary,
 .btn-primary {
-    background: #6eceb2;
-    border: 2px solid #6eceb2;
+    background: $site_accent_color;
+    border: 2px solid $site_accent_color;
     color: #fff;
     text-transform: uppercase;
     -webkit-box-shadow: inset 0 0 0 0 #3d884d;
@@ -112,9 +115,9 @@ a.btn-secondary,
     border: 2px solid #1c1d21;
     color: #fff;
     text-transform: uppercase;
-    -webkit-box-shadow: inset 0 0 0 0 #6eceb2;
-    -moz-box-shadow: inset 0 0 0 0 #6eceb2;
-    box-shadow: inset 0 0 0 0 #6eceb2
+    -webkit-box-shadow: inset 0 0 0 0 $site_accent_color;
+    -moz-box-shadow: inset 0 0 0 0 $site_accent_color;
+    box-shadow: inset 0 0 0 0 $site_accent_color
 }
 
 a.btn-secondary:hover,
@@ -139,11 +142,11 @@ a.btn-secondary:focus,
 a.btn-ghost-primary,
 .btn-ghost-primary {
     background: none;
-    border: 2px solid #6eceb2;
-    color: #6eceb2;
-    -webkit-box-shadow: inset 0 0 0 0 #6eceb2;
-    -moz-box-shadow: inset 0 0 0 0 #6eceb2;
-    box-shadow: inset 0 0 0 0 #6eceb2;
+    border: 2px solid $site_accent_color;
+    color: $site_accent_color;
+    -webkit-box-shadow: inset 0 0 0 0 $site_accent_color;
+    -moz-box-shadow: inset 0 0 0 0 $site_accent_color;
+    box-shadow: inset 0 0 0 0 $site_accent_color;
     text-transform: uppercase
 }
 
@@ -151,19 +154,19 @@ a.btn-ghost-primary:active,
 a.btn-ghost-primary:focus,
 .btn-ghost-primary:active,
 .btn-ghost-primary:focus {
-    border: 2px solid #6eceb2;
-    color: #6eceb2;
+    border: 2px solid $site_accent_color;
+    color: $site_accent_color;
     outline: none
 }
 
 a.btn-ghost-primary:hover,
 .btn-ghost-primary:hover {
-    -webkit-box-shadow: inset 0 100px 0 0 #6eceb2;
-    -moz-box-shadow: inset 0 100px 0 0 #6eceb2;
-    box-shadow: inset 0 100px 0 0 #6eceb2;
-    background: #6eceb2;
+    -webkit-box-shadow: inset 0 100px 0 0 $site_accent_color;
+    -moz-box-shadow: inset 0 100px 0 0 $site_accent_color;
+    box-shadow: inset 0 100px 0 0 $site_accent_color;
+    background: $site_accent_color;
     color: #fff;
-    border: 2px solid #6eceb2
+    border: 2px solid $site_accent_color
 }
 
 a.btn-ghost-secondary,
@@ -252,7 +255,7 @@ label {
 }
 
 .highlight {
-    color: #6eceb2
+    color: $site_accent_color
 }
 
 #topcontrol {
@@ -303,7 +306,7 @@ label {
     display: inline-block;
     height: 4px;
     width: 60px;
-    background: #6eceb2;
+    background: $site_accent_color;
     position: absolute;
     left: 50%;
     bottom: -5px;
@@ -409,7 +412,7 @@ label {
 }
 
 .footer a {
-    color: #6eceb2
+    color: $site_accent_color
 }
 
 .footer a:hover {
@@ -445,6 +448,7 @@ label {
 }
 
 .promo-content {
+    top: 90px;
     padding-top: 80px
 }
 
@@ -600,7 +604,7 @@ label {
 }
 
 .updates-block .carousel-content .desc a.more-link {
-    color: #6eceb2;
+    color: $site_accent_color;
     vertical-align: middle
 }
 
@@ -609,7 +613,7 @@ label {
 }
 
 .updates-block .carousel-content .highlight {
-    color: #6eceb2
+    color: $site_accent_color
 }
 
 .carousel-indicators {
@@ -650,7 +654,7 @@ ol.carousel-indicators  > li + li {
 
 .countdown-box .number {
     font-weight: 700;
-    color: #6eceb2;
+    color: $site_accent_color;
     font-size: 24px
 }
 
@@ -715,7 +719,7 @@ ol.carousel-indicators  > li + li {
 
 .gigs-section .meta-list .svg-inline--fa {
     margin-right: 5px;
-    color: #6eceb2;
+    color: $site_accent_color;
     font-size: 16px
 }
 
@@ -840,7 +844,7 @@ ol.carousel-indicators  > li + li {
     position: absolute;
     left: -10px;
     top: 0;
-    background: #6eceb2;
+    background: $site_accent_color;
     color: #fff;
     font-family: 'Raleway', sans-serif;
     text-transform: uppercase;
@@ -1042,7 +1046,7 @@ ol.carousel-indicators  > li + li {
 }
 
 .contact-section a:hover {
-    color: #6eceb2
+    color: $site_accent_color
 }
 
 .contact-section .section-title {
@@ -1080,7 +1084,7 @@ ol.carousel-indicators  > li + li {
 
 .contact-section .contact-block .svg-inline--fa {
     margin-right: 5px;
-    color: #6eceb2;
+    color: $site_accent_color;
     font-size: 24px
 }
 
@@ -1232,7 +1236,7 @@ ol.carousel-indicators  > li + li {
         box-shadow: none
     }
     .nav>li.active>a {
-        color: #6eceb2
+        color: $site_accent_color
     }
     .promo-section {
         min-height: 900px
@@ -1484,7 +1488,7 @@ body {
 }
 
 .config-panel #color-options li.theme-1 a {
-    background: #6eceb2
+    background: $site_accent_color
 }
 
 .config-panel #color-options li.theme-2 a {
@@ -1577,7 +1581,7 @@ section:nth-child(even) {
   opacity: 1;
   position: absolute;
   animation-name: zoomin;
-  animation-duration: 1s;
+  animation-duration: 3s;
   animation-iteration-count: infinite;
 }
 
@@ -1597,6 +1601,7 @@ section:nth-child(even) {
 
 .promo-content-wrapper {
   position:relative;
+  padding-top: 90px;
 }
 
 @keyframes progress_bar {
@@ -1613,7 +1618,7 @@ section:nth-child(even) {
   height: 2px;
   position: absolute;
   animation-name: progress_bar;
-  animation-duration: 3s;
+  animation-duration: 8s;
   animation-iteration-count: infinite;
   background-color: rgb(110, 206, 178);
   bottom: 0px;
