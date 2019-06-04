@@ -1331,3 +1331,18 @@ section:nth-child(even) {
 
 .promo-content-wrapper {
   position: relative; }
+
+@keyframes progress_bar {
+  0% {
+    width: 0; }
+  100% {
+    width: 100%; } }
+
+.promo-progress-bar {
+  height: 2px;
+  position: absolute;
+  animation-name: progress_bar;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  background-color: #6eceb2;
+  bottom: 0px; }

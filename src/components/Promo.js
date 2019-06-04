@@ -94,7 +94,8 @@ export default class Promo extends Component {
         <div className="promo-previous-slide" style={PreviousBackgroundImage}></div>
         <div className="promo-current-slide"  style={CurrentBackgroundImage} ref="visibleSlide"></div>
         <div className="promo-overlay" style={OverlayStyle}></div>
-        <div className="promo-content-wrapper">
+        <div className="promo-progress-bar" />
+        <div className="promo-content-wrapper"  style={PromoSectionHeight}>
           <div className="container text-center promo-content">
             <div className="upper-wrapper">
               <div className="logo-holder">
