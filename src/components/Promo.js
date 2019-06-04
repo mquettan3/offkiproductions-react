@@ -99,7 +99,7 @@ export default class Promo extends Component {
           <div className="container text-center promo-content">
             <div className="upper-wrapper">
               <div className="logo-holder">
-                <img src={MeditatingManSolo} alt="" />
+                <embed src={MeditatingManSolo} alt="" />
               </div>
               <h2 className="headline">Off Ki Productions</h2>
               <div className="tagline">We are Dedicated to Enhancing Your Craft!</div>
