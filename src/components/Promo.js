@@ -118,13 +118,13 @@ export default class Promo extends Component {
                                       </p>
                                   </div>
                                   <a className="btn btn-primary btn-cta" href="https://forms.gle/jf6nVfiVQxuFVTR56">Subscribe</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
+                              </div> {/* carousel-content */}
+                          </div> {/* carousel-item */}
+                      </div> {/* carousel-inner */}
+                  </div> {/* carousel-updates */}
+              </div> {/* container updates-block-innter */}
+          </div> {/* updates-block */}
+        </div> {/* promo-content-wrapper */}
       </section>
     )
   }

@@ -4,6 +4,7 @@
 
 $section_background_color: rgb(245, 245, 245);
 $site_accent_color: #6eceb2;
+$site_dark_accent_color: #3d884d;
 
 .logo-holder img {
   display: block;
@@ -85,16 +86,16 @@ a.btn-primary,
     border: 2px solid $site_accent_color;
     color: #fff;
     text-transform: uppercase;
-    -webkit-box-shadow: inset 0 0 0 0 #3d884d;
-    -moz-box-shadow: inset 0 0 0 0 #3d884d;
-    box-shadow: inset 0 0 0 0 #3d884d
+    -webkit-box-shadow: inset 0 0 0 0 $site_dark_accent_color;
+    -moz-box-shadow: inset 0 0 0 0 $site_dark_accent_color;
+    box-shadow: inset 0 0 0 0 $site_dark_accent_color
 }
 
 a.btn-primary:hover,
 .btn-primary:hover {
-    -webkit-box-shadow: inset 0 100px 0 0 #3d884d;
-    -moz-box-shadow: inset 0 100px 0 0 #3d884d;
-    box-shadow: inset 0 100px 0 0 #3d884d
+    -webkit-box-shadow: inset 0 100px 0 0 $site_dark_accent_color;
+    -moz-box-shadow: inset 0 100px 0 0 $site_dark_accent_color;
+    box-shadow: inset 0 100px 0 0 $site_dark_accent_color
 }
 
 a.btn-primary:hover,
@@ -103,8 +104,8 @@ a.btn-primary:focus,
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
-    background: #3d884d;
-    border: 2px solid #3d884d;
+    background: $site_dark_accent_color;
+    border: 2px solid $site_dark_accent_color;
     color: #fff;
     outline: none
 }
@@ -122,9 +123,9 @@ a.btn-secondary,
 
 a.btn-secondary:hover,
 .btn-secondary:hover {
-    -webkit-box-shadow: inset 0 100px 0 0 #3d884d;
-    -moz-box-shadow: inset 0 100px 0 0 #3d884d;
-    box-shadow: inset 0 100px 0 0 #3d884d
+    -webkit-box-shadow: inset 0 100px 0 0 $site_dark_accent_color;
+    -moz-box-shadow: inset 0 100px 0 0 $site_dark_accent_color;
+    box-shadow: inset 0 100px 0 0 $site_dark_accent_color
 }
 
 a.btn-secondary:hover,
@@ -133,8 +134,8 @@ a.btn-secondary:focus,
 .btn-secondary:hover,
 .btn-secondary:active,
 .btn-secondary:focus {
-    background: #3d884d;
-    border: 2px solid #3d884d;
+    background: $site_dark_accent_color;
+    border: 2px solid $site_dark_accent_color;
     color: #fff;
     outline: none
 }
