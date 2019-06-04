@@ -281,7 +281,8 @@ label {
 
 .header {
   color: #fff;
-  padding-top: 0; }
+  padding-top: 0;
+  background: rgba(0, 0, 0, 0.9); }
 
 .header-scrolled {
   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
@@ -572,6 +573,9 @@ ol.carousel-indicators > li + li {
 
 /* This is where the text in the updates-block begins to wrap */
 @media (max-width: 509.98px) {
+  .header {
+    background: rgba(0, 0, 0, 0.9);
+    padding-top: 0; }
   .updates-block .promo-cta-content .btn-cta {
     position: static; }
   .updates-block {
@@ -584,9 +588,6 @@ ol.carousel-indicators > li + li {
     min-height: 960px; } }
 
 @media (min-width: 510px) {
-  .header {
-    background: rgba(0, 0, 0, 0.9);
-    padding-top: 0; }
   .navbar-collapse {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -608,6 +609,8 @@ ol.carousel-indicators > li + li {
     width: 100%; } }
 
 @media (min-width: 768px) {
+  .header {
+    background: none; }
   .navbar-expand-md .navbar-nav .nav-link {
     padding-left: 15px;
     padding-right: 15px; }
