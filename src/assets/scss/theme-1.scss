@@ -445,7 +445,7 @@ label {
     background-position: center center;
     background-repeat: no-repeat;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     overflow: hidden
 }
 
@@ -457,12 +457,14 @@ label {
 .promo-content .headline {
     font-size: 48px;
     text-transform: uppercase;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4)
+    font-weight: 900;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8)
 }
 
 .promo-content .tagline {
     font-size: 24px;
     margin-bottom: 90px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8)
 }
 
 .updates-block {
@@ -693,7 +695,7 @@ ol.carousel-indicators  > li + li {
   }
 
   .promo-content .headline {
-    font-size: 35px;
+    font-size: 40px;
   }
 
   .promo-section {
@@ -750,6 +752,9 @@ ol.carousel-indicators  > li + li {
   }
   .updates-block .promo-cta-content .desc {
       width: 620px;
+  }
+  .promo-content .headline {
+      font-size: 48px;
   }
 }
 
@@ -829,7 +834,7 @@ section:nth-child(even) {
 
 .promo-overlay {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .promo-content-wrapper {
