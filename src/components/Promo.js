@@ -2,21 +2,30 @@
 
 import React, { Component } from 'react';
 
-// import $ from 'jquery';
-import Hero1 from '../assets/images/hero-1.jpg';
-import Hero2 from '../assets/images/hero-2.jpg';
-import Hero3 from '../assets/images/hero-3.jpg';
-import Hero4 from '../assets/images/hero-4.jpg';
+// import Hero1 from '../assets/images/hero-1.jpg';
+// import Hero2 from '../assets/images/hero-2.jpg';
+// import Hero3 from '../assets/images/hero-3.jpg';
+// import Hero4 from '../assets/images/hero-4.jpg';
 import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
+
+// File Search
+var glob = require("glob");
 
 export default class Promo extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { animationRunning: true, width: 0, height: 0, images: [ Hero1, Hero2, Hero3, Hero4 ], currentImageIndex: 0, previousImageIndex: 0, intervalId: 0, dynamicSlideClassName: "promo-current-slide-end" };
+    this.state = { animationRunning: true, width: 0, height: 0, images: [], currentImageIndex: 0, previousImageIndex: 0, intervalId: 0 };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleTimer = this.handleTimer.bind(this);
     this.stopAnimation = this.stopAnimation.bind(this);
+    this.assignImages = this.assignImages.bind(this);
+
+    glob("../assets/images/hero*.*", this.assignImages)
+  }
+
+  assignImages(er, files) {
+      this.setState({images: files});
   }
 
   componentDidMount() {
