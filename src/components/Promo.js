@@ -17,14 +17,17 @@ export default class Promo extends Component {
     this.stopAnimation = this.stopAnimation.bind(this);
     this.assignImages = this.assignImages.bind(this);
 
+    var images = []
     // Request from server the full list of files to scroll through
     axios.get('http://192.168.56.102:4000/herofiles')
       .then(function (response) {
         // handle success
-        console.log(response.data.response);
 
         // Parse the response
-
+        var count = 0;
+        for(count in response.data) {
+          images.push('http://192.168.56.102:4000/herofiles/' + response.data[count])
+        }
       })
       .catch(function (error) {
         // handle error
@@ -36,8 +39,8 @@ export default class Promo extends Component {
         // Do nothing
       });
 
-    // Assign the initial state
-    this.state = { animationRunning: true, width: 0, height: 0, images: ['http://192.168.56.102:4000/herofiles/hero-1.jpg'], currentImageIndex: 0, previousImageIndex: 0, intervalId: 0 };
+      // Assign the initial state
+      this.state = { animationRunning: true, width: 0, height: 0, images: images, currentImageIndex: 0, previousImageIndex: 0, intervalId: 0 };
 
   }
 

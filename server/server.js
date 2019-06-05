@@ -27,16 +27,34 @@ app.listen(PORT, function() {
   console.log('Server is running on Port: ', PORT);
 });
 
-// Respond with "hello world" when a GET request is made to the homepage.
-app.get('/herofiles/:fileName', function (req, res) {
-  // Server debug print
-  console.log('Received a request on Port: ', PORT);
+// Respond with the names of all relevant files in /home/mquettan3/workspace/offkiproductions-react/src/assets/images
+// TODO - The paths in production will likely be different
+app.get('/herofiles', function (req, res) {
+  // Send the list of files from the specified location
+  glob(__dirname + '/../src/assets/images/hero*', function (er, files) {
+    var fileList = []
+    var count = 0;
 
+    for(count in files) {
+      fileList.push(path.basename(files[count]));
+    }
+    res.json(fileList);
+
+    // Server debug print
+    console.log("Sent file list " + fileList);
+  })
+});
+
+// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/images
+// TODO - The paths in production will likely be different
+app.get('/herofiles/:fileName', function (req, res) {
   // Send the file requested from the static location
-  res.sendFile('/home/mquettan3/workspace/offkiproductions-react/src/assets/images/' + req.params.fileName, function(err) {
-    console.log(err);
+  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName), function(err) {
+    if(err) {
+      console.log(err);      
+    }
   });
 
   // Server debug print
-  console.log("Sent file: " + '../src/assets/images/' + req.params.fileName);
+  console.log("Sent file: " + path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName));
 });
