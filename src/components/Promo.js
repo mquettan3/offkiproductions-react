@@ -2,26 +2,43 @@
 
 import React, { Component } from 'react';
 
-// import Hero1 from '../assets/images/hero-1.jpg';
-// import Hero2 from '../assets/images/hero-2.jpg';
-// import Hero3 from '../assets/images/hero-3.jpg';
-// import Hero4 from '../assets/images/hero-4.jpg';
 import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
 
-// File Search
-var glob = require("glob");
+// Require Axios for HTTP requests
+const axios = require('axios');
 
 export default class Promo extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { animationRunning: true, width: 0, height: 0, images: [], currentImageIndex: 0, previousImageIndex: 0, intervalId: 0 };
+    // Bind all private methods to allow this pointer to be available to them.
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleTimer = this.handleTimer.bind(this);
     this.stopAnimation = this.stopAnimation.bind(this);
     this.assignImages = this.assignImages.bind(this);
 
-    glob("../assets/images/hero*.*", this.assignImages)
+    // Request from server the full list of files to scroll through
+    axios.get('http://192.168.56.102:4000/herofiles')
+      .then(function (response) {
+        // handle success
+        console.log(response.data.response);
+
+        // Parse the response
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+
+        // Do nothing
+      });
+
+    // Assign the initial state
+    this.state = { animationRunning: true, width: 0, height: 0, images: ['http://192.168.56.102:4000/herofiles/hero-1.jpg'], currentImageIndex: 0, previousImageIndex: 0, intervalId: 0 };
+
   }
 
   assignImages(er, files) {
