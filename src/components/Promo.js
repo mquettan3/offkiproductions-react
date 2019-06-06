@@ -20,7 +20,7 @@ export default class Promo extends Component {
 
     // Initializng images with Hero1 here beacuse waiting for the axios.get response took too much time.
     var images = [Hero1]
-    
+
     // Request from server the full list of files to scroll through
     axios.get('http://192.168.56.102:4000/herofiles')
       .then(function (response) {
@@ -30,7 +30,7 @@ export default class Promo extends Component {
         var count = 0;
         for(count in response.data) {
           // Skip the first image because the first one is sent along with the React App.  All subsequent images are queried for so this hides the loading.
-          if (count != 0) {
+          if (count !== 0) {
             images.push('http://192.168.56.102:4000/herofiles/' + response.data[count])
           }
         }

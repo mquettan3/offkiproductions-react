@@ -5,3 +5,35 @@
 $section_background_color: rgb(245, 245, 245);
 $site_accent_color: #6eceb2;
 $site_dark_accent_color: #3d884d;
+
+.audio-file-shop table {
+  border: 2px solid;
+  width: 100%;
+}
+
+.audio-file-shop .category-row {
+  border: 2px solid;
+}
+
+.audio-file-shop .song-row {
+  border: 2px solid;
+}
+
+.song-row .song-title {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.song-row .shopping-selection {
+  text-align: right;
+  width: 173px;
+}
+
+.song-row .shopping-selection select {
+  padding-right: 20px;
+  margin-right: 20px;
+}
+
+.song-row .shopping-selection input {
+  margin-right: 20px;
+}
