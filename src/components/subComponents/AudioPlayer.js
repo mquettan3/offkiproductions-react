@@ -14,6 +14,8 @@ function getTime(time) {
     return (
       Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
     );
+  } else {
+    return "0:00"
   }
 }
 
@@ -80,8 +82,9 @@ export default class AudioPlayer extends Component {
         {playPauseButton}
         <button className="stop-button" onClick={this.handleStop}>Stop</button>
         <span className="current-time">{getTime(this.props.currentTime)}</span>
-        <span className="duration">/{getTime(this.props.duration)}</span>
-        <div className="progress-bar-wrapper" onClick={this.handleManualSeek}>
+        <span className="time-separator">/</span>
+        <span className="duration">{getTime(this.props.duration)}</span>
+        <div className="progress-bar-wrapper" onMouseDown={this.handleManualSeek}>
           <div className="progress-bar" style={progressWidth}></div>
         </div>
         <input className="volume-slider" type="range" min="0" max="100" step="1" onChange={this.handleVolumeChange} value={this.props.volume} />

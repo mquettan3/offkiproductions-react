@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 import FlowTing from "../../assets/audio/samples/Rap Type Beats/Flow Ting.mp3"
 import TakeFlight from "../../assets/audio/samples/R&B Beats/Take Flight.mp3"
 
-import MeditatingLogo from "../../assets/images/Logos/MeditatingLogoBlack.svg"
-import WaveformLogo from "../../assets/images/Logos/WaveformLogoBlack.svg"
+import Hero4 from "../../assets/images/hero-4.jpg"
+import JoshPortrait from "../../assets/images/JoshPortrait.PNG"
 
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
@@ -29,8 +29,8 @@ export default class AudioFileShop extends Component {
     this.player = React.createRef();
 
     var tempCategorySongStruct = {categories: []}
-    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: MeditatingLogo, isActive: false}]});
-    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: WaveformLogo, isActive: false}]});
+    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: Hero4, isActive: false}]});
+    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: JoshPortrait, isActive: false}]});
     tempCategorySongStruct.categories[0].songs[0].isActive = true;
 
     this.state = {
@@ -202,6 +202,7 @@ export default class AudioFileShop extends Component {
             </tbody>
           </table>
         </div>
+        <div className="tag-credit"><i>Custom Beat Shop by Marcus Quettan</i></div>
       </div>
     )
   }
