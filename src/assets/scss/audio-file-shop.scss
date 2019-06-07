@@ -45,3 +45,18 @@ $site_dark_accent_color: #3d884d;
 .song-row.playing-true {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+.audio-player .progress-bar-wrapper {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.audio-player .progress-bar {
+  background-color: red;
+  height: 5px;
+}
+
+.audio-player .album-art {
+  height: 150px;
+  width: 150px;
+  background-color: rgba(0, 0, 0, 0.2);
+}

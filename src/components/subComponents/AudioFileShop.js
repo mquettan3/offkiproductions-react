@@ -5,23 +5,14 @@ import React, { Component } from 'react';
 import FlowTing from "../../assets/audio/samples/Rap Type Beats/Flow Ting.mp3"
 import TakeFlight from "../../assets/audio/samples/R&B Beats/Take Flight.mp3"
 
+import MeditatingLogo from "../../assets/images/Logos/MeditatingLogoBlack.svg"
+import WaveformLogo from "../../assets/images/Logos/WaveformLogoBlack.svg"
+
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
 
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
-
-// Reference code for basic audio player:  https://codesandbox.io/s/5y4vjn877x
-
-
-// Fuction for getting timer out of a flat seconds-based duration counter
-function getTime(time) {
-  if (!isNaN(time)) {
-    return (
-      Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
-    );
-  }
-}
 
 export default class AudioFileShop extends Component {
   constructor(props) {
@@ -31,14 +22,27 @@ export default class AudioFileShop extends Component {
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handleStop = this.handleStop.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.handleManualSeek = this.handleManualSeek.bind(this);
+    this.deepCopyCategorySongStruct = this.deepCopyCategorySongStruct.bind(this);
+
     this.player = React.createRef();
 
     var tempCategorySongStruct = {categories: []}
-    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: "", isActive: false}]});
-    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: "", isActive: false}]});
+    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: MeditatingLogo, isActive: false}]});
+    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: WaveformLogo, isActive: false}]});
     tempCategorySongStruct.categories[0].songs[0].isActive = true;
 
-    this.state = {songLocation: FlowTing, player_state: "stopped", currentTime: 0, duration: 0, categorySongStruct: tempCategorySongStruct, currentCategoryId: 0, currentSongId: 0};
+    this.state = {
+      songLocation: FlowTing,
+      player_state: "stopped",
+      currentTime: 0,
+      duration: 0,
+      volume: 100,
+      categorySongStruct: tempCategorySongStruct,
+      currentCategoryId: 0,
+      currentSongId: 0
+    };
     // Request for names of all categories/songs.  Structure it somehow that makes sense.
     // A Javascript Map might make sense.  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
@@ -53,10 +57,31 @@ export default class AudioFileShop extends Component {
         duration: e.target.duration
       });
     });
+
+    // Set the initial audio source to the first song in the first category
+    this.player.src = this.state.categorySongStruct.categories[0].songs[0].songLocation;
   }
 
   componentWillUnmount() {
     this.player.removeEventListener("timeupdate", () => {});
+  }
+
+  deepCopyCategorySongStruct() {
+    var newObject = Object.assign({}, this.state.categorySongStruct);
+    var category = 0;
+    var song = 0;
+
+    newObject.categories = Object.assign({}, this.state.categorySongStruct.categories);
+
+    for (category in this.state.categorySongStruct.categories) {
+      newObject.categories[category] = Object.assign({}, this.state.categorySongStruct.categories[category]);
+      newObject.categories[category].songs = Object.assign({}, this.state.categorySongStruct.categories[category].songs);
+      for (song in this.state.categorySongStruct.categories[category].songs) {
+        newObject.categories[category].songs[song] = Object.assign({}, this.state.categorySongStruct.categories[category].songs[song])
+      }
+    }
+
+    return newObject;
   }
 
   handleSongClick(categoryId, songId) {
@@ -66,19 +91,22 @@ export default class AudioFileShop extends Component {
 
 
     this.player.src = this.state.categorySongStruct.categories[categoryId].songs[songId].songLocation;
+
     // Play the song
     this.player.play();
 
-    var tempState = this.state;
-    tempState.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = false;
-    tempState.categorySongStruct.categories[categoryId].songs[songId].isActive = true;
-    tempState.currentCategoryId = categoryId;
-    tempState.currentSongId = songId;
-    tempState.player_state = "playing"
-    tempState.duration = this.player.duration
+    var tempCategorySongStruct = this.deepCopyCategorySongStruct();
+    tempCategorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = false;
+    tempCategorySongStruct.categories[categoryId].songs[songId].isActive = true;
 
     // Update the state of the audio player to "playing" - update duration to be the length of the new song
-    this.setState(tempState)
+    this.setState({
+      categorySongStruct: tempCategorySongStruct,
+      currentCategoryId: categoryId,
+      currentSongId: songId,
+      player_state: "playing",
+      duration: this.player.duration
+    });
   }
 
   handlePause() {
@@ -102,6 +130,35 @@ export default class AudioFileShop extends Component {
     this.setState({player_state: "stopped", currentTime: 0})
   }
 
+  handleVolumeChange(e) {
+    // Set State - Assign volume
+    this.setState({volume: e.target.value});
+    this.player.volume = this.state.volume / 100;
+  }
+
+  handleManualSeek(e) {
+    // Determine where within div was clicked.
+    // This is done by first determining the total offset from the left of the screen by summing the offets of all parents to each other.
+
+    var totalOffsetLeft = e.currentTarget.offsetLeft;
+    var targetParent = e.currentTarget.offsetParent;
+    while (targetParent) {
+      totalOffsetLeft += targetParent.offsetLeft;
+      targetParent = targetParent.offsetParent;
+    }
+
+    // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
+    var percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
+
+    // Floor to eliminate floating points
+    var newTime =  Math.floor(this.state.duration * percentage);
+
+    // Assign new time, play, and update state.
+    this.player.currentTime = newTime;
+    this.player.play();
+    this.setState({currentTime: newTime, player_state: "playing"});
+  }
+
   render() {
     var songTableList = []
     var category = 0;
@@ -120,22 +177,25 @@ export default class AudioFileShop extends Component {
       }
     }
     return (
-      <div className="temp-wrapper">
+      <div className="audio-file-shop">
     	  <iframe width="100%" height="450" scrolling="no" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/607220478&color=%237d55c7&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser"></iframe>
     	  <div className="music-action">
           <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfK2M1bQxHPFzkcp7of3kOay675brHmSvrzTYGyzxyhW584FA/viewform?usp=sf_link">Buy a Beat</a>
         </div>
-        <AudioPlayer songLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].songLocation}
-        albumArtLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].albumArtLocation}
-        playerState={this.state.player_state}
-        currentTime={this.state.currentTime}
-        duration={this.state.currentDuration}
-        handlePlay={this.handlePlay}
-        handlePause={this.handlePause}
-        handleStop={this.handleStop}
+        <AudioPlayer
+          albumArtLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].albumArtLocation}
+          playerState={this.state.player_state}
+          currentTime={this.state.currentTime}
+          duration={this.state.duration}
+          volume={this.state.volume}
+          handlePlay={this.handlePlay}
+          handlePause={this.handlePause}
+          handleStop={this.handleStop}
+          handleVolumeChange={this.handleVolumeChange}
+          handleManualSeek={this.handleManualSeek}
         />
-        <audio ref={ref => (this.player = ref)} src={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].songLocation} controls="controls"/>
-        <div className="audio-file-shop">
+        <audio ref={ref => (this.player = ref)} />
+        <div className="song-category-table">
           <table>
             <tbody>
                 {songTableList}
