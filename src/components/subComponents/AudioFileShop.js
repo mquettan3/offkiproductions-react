@@ -14,8 +14,6 @@ import AudioPlayer from "./AudioPlayer.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-const CATEGORY_OFFSET=10000;
-
 export default class AudioFileShop extends Component {
   constructor(props) {
     super(props);
@@ -174,7 +172,7 @@ export default class AudioFileShop extends Component {
 
       for (song in this.state.categorySongStruct.categories[category].songs) {
         songTableList.push(
-          <SongRow key={song + category * CATEGORY_OFFSET} songName={this.state.categorySongStruct.categories[category].songs[song].name} songId={song} categoryName={this.state.categorySongStruct.categories[category].name} categoryId={category} handleSongClick={this.handleSongClick} isActive={this.state.categorySongStruct.categories[category].songs[song].isActive} />
+          <SongRow key={song.toString() + category.toString()} songName={this.state.categorySongStruct.categories[category].songs[song].name} songId={song} categoryName={this.state.categorySongStruct.categories[category].name} categoryId={category} handleSongClick={this.handleSongClick} isActive={this.state.categorySongStruct.categories[category].songs[song].isActive} />
         )
       }
     }

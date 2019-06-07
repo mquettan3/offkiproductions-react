@@ -5,8 +5,6 @@ import React, { Component } from 'react';
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-const CATEGORY_OFFSET=10000;
-
 export default class SongRow extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +33,7 @@ export default class SongRow extends Component {
     const license_tier = this.state.license_tier;
     const isChecked = this.state.selected_for_purchase;
     const songName = this.props.songName;
-    const uniqueId = parseInt(this.props.songId) + CATEGORY_OFFSET * parseInt(this.props.categoryId);
+    const uniqueId = this.props.songId.toString() + this.props.categoryId.toString();
 
     return (
       <tr id={songName} className={"song-row playing-" + this.props.isActive.toString()}>
