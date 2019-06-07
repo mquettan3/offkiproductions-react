@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
+const CATEGORY_OFFSET=10000;
+
 export default class SongRow extends Component {
   constructor(props) {
     super(props);
@@ -33,12 +35,14 @@ export default class SongRow extends Component {
     const license_tier = this.state.license_tier;
     const isChecked = this.state.selected_for_purchase;
     const songName = this.props.songName;
+    const uniqueId = parseInt(this.props.songId) + CATEGORY_OFFSET * parseInt(this.props.categoryId);
 
     return (
       <tr id={songName} className={"song-row playing-" + this.props.isActive.toString()}>
         <th className="song-title" onClick={this.handleSongClick}>{songName}</th>
         <td className="shopping-selection">
-          <input type="checkbox" onChange={this.handleSelectionChange} checked={isChecked}/>
+          <input id={"purchaseSong" + uniqueId} value="purchase" type="checkbox" onChange={this.handleSelectionChange} checked={isChecked} />
+          <label htmlFor={"purchaseSong" + uniqueId}>Select For Purchase</label>
           <select name="license-tier" onChange={this.handleLicenseChange} value={license_tier}>
             <option value="Basic">Basic</option>
             <option value="Premium">Premium</option>
