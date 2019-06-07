@@ -15,7 +15,7 @@ export default class SongRow extends Component {
   }
 
   handleSongClick() {
-    this.props.handleSongClick(this.props.songName);
+    this.props.handleSongClick(this.props.categoryId, this.props.songId);
   }
 
   handleLicenseChange(event) {
@@ -35,7 +35,7 @@ export default class SongRow extends Component {
     const songName = this.props.songName;
 
     return (
-      <tr id={songName} className="song-row">
+      <tr id={songName} className={"song-row playing-" + this.props.isActive.toString()}>
         <th className="song-title" onClick={this.handleSongClick}>{songName}</th>
         <td className="shopping-selection">
           <input type="checkbox" onChange={this.handleSelectionChange} checked={isChecked}/>

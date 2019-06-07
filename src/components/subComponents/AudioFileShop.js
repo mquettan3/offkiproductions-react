@@ -3,8 +3,10 @@
 import React, { Component } from 'react';
 
 import FlowTing from "../../assets/audio/samples/Rap Type Beats/Flow Ting.mp3"
+import TakeFlight from "../../assets/audio/samples/R&B Beats/Take Flight.mp3"
 
 import SongRow from "./SongRow.js"
+
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
@@ -29,8 +31,13 @@ export default class AudioFileShop extends Component {
     this.handlePause = this.handlePause.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.player = React.createRef();
-    this.state = {songLocation: FlowTing, player_state: "stopped", currentTime: 0, duration: 0 };
 
+    var tempCategorySongStruct = {categories: []}
+    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: "", isActive: false}]});
+    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: "", isActive: false}]});
+    tempCategorySongStruct.categories[0].songs[0].isActive = true;
+
+    this.state = {songLocation: FlowTing, player_state: "stopped", currentTime: 0, duration: 0, categorySongStruct: tempCategorySongStruct, currentCategoryId: 0, currentSongId: 0};
     // Request for names of all categories/songs.  Structure it somehow that makes sense.
     // A Javascript Map might make sense.  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
@@ -51,18 +58,26 @@ export default class AudioFileShop extends Component {
     this.player.removeEventListener("timeupdate", () => {});
   }
 
-  handleSongClick(songName) {
+  handleSongClick(categoryId, songId) {
     // When the song is clicked.  Update the selected song.  Play the new song.  Update the state of the audio player to "playing"
 
     // Index into the map using the song name / category name - However it's structured.  Populate the src of the audio ref with the location of the new song.
 
+
+    this.player.src = this.state.categorySongStruct.categories[categoryId].songs[songId].songLocation;
     // Play the song
     this.player.play();
 
-    // Update the state of the audio player to "playing" - update duration to be the length of the new song
-    this.setState({player_state: "playing", duration: this.player.duration})
+    var tempState = this.state;
+    tempState.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = false;
+    tempState.categorySongStruct.categories[categoryId].songs[songId].isActive = true;
+    tempState.currentCategoryId = categoryId;
+    tempState.currentSongId = songId;
+    tempState.player_state = "playing"
+    tempState.duration = this.player.duration
 
-    console.log(songName);
+    // Update the state of the audio player to "playing" - update duration to be the length of the new song
+    this.setState(tempState)
   }
 
   handlePause() {
@@ -87,43 +102,46 @@ export default class AudioFileShop extends Component {
   }
 
   render() {
+    var playPauseButton = ""
+    if (this.state.player_state !== "playing") {
+      playPauseButton = <button className="playButton" onClick={this.handlePlay}>Play</button>
+    } else {
+      playPauseButton = <button className="pauseButton" onClick={this.handlePause}>Pause</button>
+    }
+
+    var songTableList = []
+    var category = 0;
+    var song = 0;
+    for(category in this.state.categorySongStruct.categories) {
+      songTableList.push(
+        <tr key={category} className="category-row">
+          <th colSpan="2">{this.state.categorySongStruct.categories[category].name}</th>
+        </tr>
+      )
+
+      for (song in this.state.categorySongStruct.categories[category].songs) {
+        songTableList.push(
+          <SongRow key={song + category * 10000} songName={this.state.categorySongStruct.categories[category].songs[song].name} songId={song} categoryName={this.state.categorySongStruct.categories[category].name} categoryId={category} handleSongClick={this.handleSongClick} isActive={this.state.categorySongStruct.categories[category].songs[song].isActive} />
+        )
+      }
+    }
     return (
       <div className="temp-wrapper">
     	  <iframe width="100%" height="450" scrolling="no" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/607220478&color=%237d55c7&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser"></iframe>
     	  <div className="music-action">
           <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfK2M1bQxHPFzkcp7of3kOay675brHmSvrzTYGyzxyhW584FA/viewform?usp=sf_link">Buy a Beat</a>
         </div>
-
+        <div className="AudioPlayer">
+          {playPauseButton}
+          <button className="stopButton" onClick={this.handleStop}>Stop</button>
+        </div>
         <div className="audio-file-shop">
           <table>
             <tbody>
-              <tr>
-                <th colSpan="2" className="AudioPlayer">
-                  {this.state.player_state !== "playing" ? (
-                    <button className="playButton" onClick={this.handlePlay}>Play</button>
-                  ) : (
-                    ""
-                  )}
-                  {this.state.player_state === "playing" ? (
-                    <button className="pauseButton" onClick={this.handlePause}>Pause</button>
-                  ) : (
-                    ""
-                  )}
-                  <button className="stopButton" onClick={this.handleStop}>Stop</button>
-                </th>
-              </tr>
-              {/* Nested for loop.  For each category - for each song*/}
-
-                {/* For each category, render the category row.*/}
-                <tr className="category-row">
-                  <th colSpan="2">Rap Type Beats</th>
-                </tr>
-
-                {/* For each song within each category, render the song row*/}
-                <SongRow songName="Flow Ting" category="Rap Type Beats" handleSongClick={this.handleSongClick} />
+                {songTableList}
             </tbody>
           </table>
-          <audio ref={ref => (this.player = ref)} src={this.state.songLocation} controls="controls"/>
+          <audio ref={ref => (this.player = ref)} src={this.state.categorySongStruct.categories[0].songs[0].songLocation} controls="controls"/>
         </div>
       </div>
     )

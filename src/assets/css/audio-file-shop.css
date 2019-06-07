@@ -25,3 +25,9 @@
 
 .song-row .shopping-selection input {
   margin-right: 20px; }
+
+.song-row .shopping-selection input {
+  margin-right: 20px; }
+
+.song-row.playing-true {
+  background-color: rgba(0, 0, 0, 0.2); }
