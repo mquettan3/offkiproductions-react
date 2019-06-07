@@ -6,6 +6,7 @@ import FlowTing from "../../assets/audio/samples/Rap Type Beats/Flow Ting.mp3"
 import TakeFlight from "../../assets/audio/samples/R&B Beats/Take Flight.mp3"
 
 import SongRow from "./SongRow.js"
+import AudioPlayer from "./AudioPlayer.js"
 
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
@@ -98,17 +99,10 @@ export default class AudioFileShop extends Component {
     this.player.currentTime = 0;
 
     //TODO: Set selected track to whatever was the first one...  Not sure if I want this to be null or not
-    this.setState({player_state: "stopped"})
+    this.setState({player_state: "stopped", currentTime: 0})
   }
 
   render() {
-    var playPauseButton = ""
-    if (this.state.player_state !== "playing") {
-      playPauseButton = <button className="playButton" onClick={this.handlePlay}>Play</button>
-    } else {
-      playPauseButton = <button className="pauseButton" onClick={this.handlePause}>Pause</button>
-    }
-
     var songTableList = []
     var category = 0;
     var song = 0;
@@ -131,17 +125,22 @@ export default class AudioFileShop extends Component {
     	  <div className="music-action">
           <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfK2M1bQxHPFzkcp7of3kOay675brHmSvrzTYGyzxyhW584FA/viewform?usp=sf_link">Buy a Beat</a>
         </div>
-        <div className="AudioPlayer">
-          {playPauseButton}
-          <button className="stopButton" onClick={this.handleStop}>Stop</button>
-        </div>
+        <AudioPlayer songLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].songLocation}
+        albumArtLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].albumArtLocation}
+        playerState={this.state.player_state}
+        currentTime={this.state.currentTime}
+        duration={this.state.currentDuration}
+        handlePlay={this.handlePlay}
+        handlePause={this.handlePause}
+        handleStop={this.handleStop}
+        />
+        <audio ref={ref => (this.player = ref)} src={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].songLocation} controls="controls"/>
         <div className="audio-file-shop">
           <table>
             <tbody>
                 {songTableList}
             </tbody>
           </table>
-          <audio ref={ref => (this.player = ref)} src={this.state.categorySongStruct.categories[0].songs[0].songLocation} controls="controls"/>
         </div>
       </div>
     )
