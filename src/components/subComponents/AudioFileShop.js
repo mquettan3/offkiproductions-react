@@ -18,19 +18,22 @@ export default class AudioFileShop extends Component {
   constructor(props) {
     super(props);
 
+    this.deepCopyCategorySongStruct = this.deepCopyCategorySongStruct.bind(this);
     this.handleSongClick = this.handleSongClick.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleManualSeek = this.handleManualSeek.bind(this);
-    this.deepCopyCategorySongStruct = this.deepCopyCategorySongStruct.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLicenseChange = this.handleLicenseChange.bind(this);
+    this.handleSelectionChange = this.handleSelectionChange.bind(this);
 
     this.player = React.createRef();
 
     var tempCategorySongStruct = {categories: []}
-    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: Hero4, isActive: false}]});
-    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: JoshPortrait, isActive: false}]});
+    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: Hero4, isActive: false, licenseTier: "Basic", selectedForPurchase: false}]});
+    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: JoshPortrait, isActive: false, licenseTier: "Basic", selectedForPurchase: false}]});
     tempCategorySongStruct.categories[0].songs[0].isActive = true;
 
     this.state = {
@@ -68,15 +71,13 @@ export default class AudioFileShop extends Component {
 
   deepCopyCategorySongStruct() {
     var newObject = Object.assign({}, this.state.categorySongStruct);
-    var category = 0;
-    var song = 0;
 
     newObject.categories = Object.assign({}, this.state.categorySongStruct.categories);
 
-    for (category in this.state.categorySongStruct.categories) {
+    for (let category in this.state.categorySongStruct.categories) {
       newObject.categories[category] = Object.assign({}, this.state.categorySongStruct.categories[category]);
       newObject.categories[category].songs = Object.assign({}, this.state.categorySongStruct.categories[category].songs);
-      for (song in this.state.categorySongStruct.categories[category].songs) {
+      for (let song in this.state.categorySongStruct.categories[category].songs) {
         newObject.categories[category].songs[song] = Object.assign({}, this.state.categorySongStruct.categories[category].songs[song])
       }
     }
@@ -140,15 +141,15 @@ export default class AudioFileShop extends Component {
     // Determine where within div was clicked.
     // This is done by first determining the total offset from the left of the screen by summing the offets of all parents to each other.
 
-    var totalOffsetLeft = e.currentTarget.offsetLeft;
-    var targetParent = e.currentTarget.offsetParent;
+    let totalOffsetLeft = e.currentTarget.offsetLeft;
+    let targetParent = e.currentTarget.offsetParent;
     while (targetParent) {
       totalOffsetLeft += targetParent.offsetLeft;
       targetParent = targetParent.offsetParent;
     }
 
     // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
-    var percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
+    let percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
 
     // Floor to eliminate floating points
     var newTime =  Math.floor(this.state.duration * percentage);
@@ -159,20 +160,69 @@ export default class AudioFileShop extends Component {
     this.setState({currentTime: newTime, player_state: "playing"});
   }
 
+  handleLicenseChange(event, categoryId, songId) {
+    // Update State - Deep copy to do this because if not, only references to all objects will be copied and thus the state will change without calling setState.
+    var tempCategorySongStruct = this.deepCopyCategorySongStruct();
+    tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier = event.target.value;
+
+    // Update State
+    this.setState({
+      categorySongStruct: tempCategorySongStruct
+    });
+  }
+
+  handleSelectionChange(event, categoryId, songId) {
+    // Update State - Deep copy to do this because if not, only references to all objects will be copied and thus the state will change without calling setState.
+    var tempCategorySongStruct = this.deepCopyCategorySongStruct();
+    tempCategorySongStruct.categories[categoryId].songs[songId].selectedForPurchase = event.target.checked;
+
+    // Update State
+    this.setState({
+      categorySongStruct: tempCategorySongStruct
+    });
+  }
+
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let shoppingCart = [];
+
+    for(let category in this.state.categorySongStruct.categories) {
+      for(let song in this.state.categorySongStruct.categories[category].songs) {
+        if (this.state.categorySongStruct.categories[category].songs[song].selectedForPurchase) {
+          shoppingCart.push({songName: this.state.categorySongStruct.categories[category].songs[song].name,
+            category: this.state.categorySongStruct.categories[category].songs[song].category,
+            location: this.state.categorySongStruct.categories[category].songs[song].songLocation,
+            licenseTier: this.state.categorySongStruct.categories[category].songs[song].licenseTier});
+        }
+      }
+    }
+
+    console.log("You've opted to purchase" + JSON.stringify(shoppingCart));
+  }
+
   render() {
-    var songTableList = []
-    var category = 0;
-    var song = 0;
-    for(category in this.state.categorySongStruct.categories) {
+    let songTableList = []
+    for(let category in this.state.categorySongStruct.categories) {
       songTableList.push(
         <tr key={category} className="category-row">
           <th colSpan="2">{this.state.categorySongStruct.categories[category].name}</th>
         </tr>
       )
 
-      for (song in this.state.categorySongStruct.categories[category].songs) {
+      for (let song in this.state.categorySongStruct.categories[category].songs) {
         songTableList.push(
-          <SongRow key={song.toString() + category.toString()} songName={this.state.categorySongStruct.categories[category].songs[song].name} songId={song} categoryName={this.state.categorySongStruct.categories[category].name} categoryId={category} handleSongClick={this.handleSongClick} isActive={this.state.categorySongStruct.categories[category].songs[song].isActive} />
+          <SongRow
+            key={song.toString() + category.toString()}
+            songName={this.state.categorySongStruct.categories[category].songs[song].name}
+            songId={song}
+            categoryName={this.state.categorySongStruct.categories[category].name}
+            categoryId={category}
+            handleSongClick={this.handleSongClick}
+            handleSelectionChange={this.handleSelectionChange}
+            handleLicenseChange={this.handleLicenseChange}
+            isActive={this.state.categorySongStruct.categories[category].songs[song].isActive}
+          />
         )
       }
     }
@@ -195,7 +245,7 @@ export default class AudioFileShop extends Component {
           handleManualSeek={this.handleManualSeek}
         />
         <audio ref={ref => (this.player = ref)} />
-        <form className="purchase-music-form">
+        <form className="purchase-music-form" onSubmit={this.handleSubmit}>
           <div className="song-category-table">
             <table>
               <tbody>
