@@ -8,6 +8,8 @@ import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
 // Require Axios for HTTP requests
 const axios = require('axios');
 
+var serverLocation = "10.0.0.100"
+
 export default class Promo extends Component {
   constructor(props) {
     super(props);
@@ -22,18 +24,17 @@ export default class Promo extends Component {
     var images = [Hero1]
 
     // Request from server the full list of files to scroll through
-    axios.get('http://192.168.56.102:4000/herofiles')
+    axios.get('http://' + serverLocation + ':4000/herofiles')
       .then(function (response) {
         // handle success
 
         // Parse the response
-        var count = 0;
-        for(count in response.data) {
+        response.data.forEach(function(value, index) {
           // Skip the first image because the first one is sent along with the React App.  All subsequent images are queried for so this hides the loading.
-          if (count !== 0) {
-            images.push('http://192.168.56.102:4000/herofiles/' + response.data[count])
+          if (index !== 0) {
+            images.push('http://' + serverLocation + ':4000/herofiles/' + value)
           }
-        }
+        });
       })
       .catch(function (error) {
         // handle error
