@@ -195,13 +195,16 @@ export default class AudioFileShop extends Component {
           handleManualSeek={this.handleManualSeek}
         />
         <audio ref={ref => (this.player = ref)} />
-        <div className="song-category-table">
-          <table>
-            <tbody>
-                {songTableList}
-            </tbody>
-          </table>
-        </div>
+        <form className="purchase-music-form">
+          <div className="song-category-table">
+            <table>
+              <tbody>
+                  {songTableList}
+              </tbody>
+            </table>
+          </div>
+          <input type="submit" value="Purchase Selected Music!"/>
+        </form>
         <div className="tag-credit"><i>Custom Beat Shop by Marcus Quettan</i></div>
       </div>
     )
