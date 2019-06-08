@@ -78,7 +78,7 @@ export default class AudioPlayer extends Component {
 
     return (
       <div className="audio-player">
-        <img className="album-art" src={this.props.albumArtLocation} />
+        <img className="album-art" src={this.props.albumArtLocation} alt="AlbumArt"/>
         {playPauseButton}
         <button className="stop-button" onClick={this.handleStop}>Stop</button>
         <span className="current-time">{getTime(this.props.currentTime)}</span>
