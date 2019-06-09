@@ -62,6 +62,13 @@ export default class AudioFileShop extends Component {
         duration: e.target.duration
       });
     });
+
+    // Initialize necessary information as soon as all data is known.
+    this.player.addEventListener("loadedmetadata", e => {
+      this.setState({
+        duration: e.target.duration
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -266,7 +273,6 @@ export default class AudioFileShop extends Component {
     	  <div className="music-action">
           <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfK2M1bQxHPFzkcp7of3kOay675brHmSvrzTYGyzxyhW584FA/viewform?usp=sf_link">Buy a Beat</a>
         </div>
-        <audio ref={ref => (this.player = ref)} />
         {audioPlayer}
         <form className="purchase-music-form" onSubmit={this.handleSubmit}>
           <div className="song-category-table">
@@ -279,6 +285,7 @@ export default class AudioFileShop extends Component {
           <input type="submit" value="Purchase Selected Music!"/>
         </form>
         <div className="tag-credit"><i>Custom Beat Shop by Marcus Quettan</i></div>
+        <audio ref={ref => (this.player = ref)} preload="metadata"/>
       </div>
     )
   }
