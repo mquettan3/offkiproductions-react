@@ -5,12 +5,6 @@ import React, { Component } from 'react';
 // Require Axios for HTTP requests
 const axios = require('axios');
 
-import FlowTing from "../../assets/audio/samples/Rap Type Beats/Flow Ting.mp3"
-import TakeFlight from "../../assets/audio/samples/R&B Beats/Take Flight.mp3"
-
-import Hero4 from "../../assets/images/hero-4.jpg"
-import JoshPortrait from "../../assets/images/JoshPortrait.PNG"
-
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
 
