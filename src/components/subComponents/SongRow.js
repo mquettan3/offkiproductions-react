@@ -10,7 +10,6 @@ export default class SongRow extends Component {
     super(props);
     this.handleSongClick = this.handleSongClick.bind(this)
     this.handleLicenseChange = this.handleLicenseChange.bind(this)
-    this.handleSelectionChange = this.handleSelectionChange.bind(this)
   }
 
   handleSongClick() {
@@ -22,14 +21,8 @@ export default class SongRow extends Component {
     this.props.handleLicenseChange(event, this.props.categoryId, this.props.songId);
   }
 
-  handleSelectionChange(event) {
-    // Lift State
-    this.props.handleSelectionChange(event, this.props.categoryId, this.props.songId);
-  }
-
   render() {
     const license_tier = this.props.licenseTier;
-    const isChecked = this.props.selectedForPurchase;
     const songName = this.props.songName;
 
     return (
@@ -37,14 +30,14 @@ export default class SongRow extends Component {
         <th className="song-title" onClick={this.handleSongClick}>{songName}</th>
         <td className="shopping-selection">
           <label>
-            <input value="purchase" type="checkbox" onChange={this.handleSelectionChange} checked={isChecked} />
-            Select For Purchase
-          </label>
-          <select name="license-tier" onChange={this.handleLicenseChange} value={license_tier}>
-            <option value="Basic">Basic</option>
-            <option value="Premium">Premium</option>
-            <option value="Exclusive">Exclusive</option>
-          </select>
+            Select License Tier to Purchase
+            <select name="license-tier" onChange={this.handleLicenseChange} value={license_tier}>
+              <option value="None">None</option>
+              <option value="Basic">Basic - $30</option>
+              <option value="Premium">Premium - $100</option>
+              <option value="Exclusive">Exclusive - $3000</option>
+            </select>
+        </label>
         </td>
       </tr>
     )

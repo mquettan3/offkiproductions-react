@@ -26,7 +26,6 @@ export default class AudioFileShop extends Component {
     this.handleManualSeek = this.handleManualSeek.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
-    this.handleSelectionChange = this.handleSelectionChange.bind(this);
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
 
     this.player = React.createRef();
@@ -85,7 +84,7 @@ export default class AudioFileShop extends Component {
             songLocation: 'http://' + serverLocation + ':4000/samplemusic/' + property + "/" + response.data[property][index],
             albumArtLocation: 'http://' + serverLocation + ':4000/albumart/' + property + "/" + albumArtName,
             isActive: false,
-            licenseTier: "Basic",
+            licenseTier: "None",
             selectedForPurchase: false
           });
         }
@@ -199,25 +198,13 @@ export default class AudioFileShop extends Component {
     });
   }
 
-  handleSelectionChange(event, categoryId, songId) {
-    // Update State - Deep copy to do this because if not, only references to all objects will be copied and thus the state will change without calling setState.
-    var tempCategorySongStruct = this.deepCopyCategorySongStruct();
-    tempCategorySongStruct.categories[categoryId].songs[songId].selectedForPurchase = event.target.checked;
-
-    // Update State
-    this.setState({
-      categorySongStruct: tempCategorySongStruct
-    });
-  }
-
-
   handleSubmit(e) {
     e.preventDefault();
     let shoppingCart = [];
 
     for(let category in this.state.categorySongStruct.categories) {
       for(let song in this.state.categorySongStruct.categories[category].songs) {
-        if (this.state.categorySongStruct.categories[category].songs[song].selectedForPurchase) {
+        if (this.state.categorySongStruct.categories[category].songs[song].licenseTier !== "None") {
           shoppingCart.push({songName: this.state.categorySongStruct.categories[category].songs[song].name,
             category: this.state.categorySongStruct.categories[category].songs[song].category,
             location: this.state.categorySongStruct.categories[category].songs[song].songLocation,
@@ -252,7 +239,6 @@ export default class AudioFileShop extends Component {
               categoryName={this.state.categorySongStruct.categories[category].name}
               categoryId={category}
               handleSongClick={this.handleSongClick}
-              handleSelectionChange={this.handleSelectionChange}
               handleLicenseChange={this.handleLicenseChange}
               isActive={this.state.categorySongStruct.categories[category].songs[song].isActive}
             />
