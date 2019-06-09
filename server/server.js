@@ -12,6 +12,7 @@ const cors = require('cors');
 // Glob and path Used for file manipulation
 const glob = require('glob');
 const path = require('path');
+const fs = require('fs');
 
 // Define configuration variables
 const PORT = 4000;
@@ -51,10 +52,79 @@ app.get('/herofiles/:fileName', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName), function(err) {
     if(err) {
-      console.log(err);      
+      console.log(err);
     }
   });
 
   // Server debug print
   console.log("Sent file: " + path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName));
+});
+
+// Respond with the names of all relevant files in /home/mquettan3/workspace/offkiproductions-react/src/assets/images
+// TODO - The paths in production will likely be different
+app.get('/musiclist', function (req, res) {
+  var count = 0;
+  var directorySongObject = {}
+  // Send the list of files from the specified location
+  glob(__dirname + '/../src/assets/audio/samples/**', function (er, items) {
+    var currentCategory = "None";
+
+    for(count in items) {
+      var stats = fs.statSync(items[count]);
+
+      if(stats.isDirectory()) {
+        // items[count] gives a full absolute path.  The following logic forces the last directory name to be the category name.
+        var arr = items[count].split('/');
+
+        // This allows for /path/to/last///// to still work.
+        currentCategory = (function findLast(i) {
+          return arr[i] || findLast(i-1);
+        })(arr.length-1);
+
+      } else if (stats.isFile()) {
+        // Ignore all files that aren't mp3s
+        if (!path.basename(items[count]).includes(".mp3"))
+          continue;
+
+        if(directorySongObject[currentCategory]) {
+          directorySongObject[currentCategory].push(path.basename(items[count]));
+        } else {
+          directorySongObject[currentCategory] = [path.basename(items[count])]
+        }
+      }
+    }
+    res.json(directorySongObject);
+
+    // Server debug print
+    console.log("Sent directory list " + JSON.stringify(directorySongObject));
+  });
+});
+
+// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/audio/samples
+// TODO - The paths in production will likely be different
+app.get('/samplemusic/:categoryName/:songName', function (req, res) {
+  // Send the file requested from the static location
+  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  req.params.songName, function(err) {
+    if(err) {
+      console.log(err);
+    }
+  });
+
+  // Server debug print
+  console.log("Sent Music file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + req.params.songName);
+});
+
+// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/audio/samples
+// TODO - The paths in production will likely be different
+app.get('/albumart/:categoryName/:songName', function (req, res) {
+  var albumArtName = req.params.songName.split(".")[0] + ".jpg";
+  // Send the file requested from the static location
+  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  albumArtName, function(err) {
+    if(err) {
+      console.log(err);
+    }
+  });
+
+  // Server debug print
+  console.log("Sent AlbumArt file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + albumArtName);
 });

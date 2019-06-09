@@ -2,6 +2,9 @@
 
 import React, { Component } from 'react';
 
+// Require Axios for HTTP requests
+const axios = require('axios');
+
 import FlowTing from "../../assets/audio/samples/Rap Type Beats/Flow Ting.mp3"
 import TakeFlight from "../../assets/audio/samples/R&B Beats/Take Flight.mp3"
 
@@ -13,6 +16,8 @@ import AudioPlayer from "./AudioPlayer.js"
 
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
+
+var serverLocation = "10.0.0.100"
 
 export default class AudioFileShop extends Component {
   constructor(props) {
@@ -28,31 +33,35 @@ export default class AudioFileShop extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
     this.handleSelectionChange = this.handleSelectionChange.bind(this);
+    this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
 
     this.player = React.createRef();
 
-    var tempCategorySongStruct = {categories: []}
-    tempCategorySongStruct.categories.push({name: "Rap Type Beats", songs: [{name: "Flow Ting", category: "Rap Type Beats", songLocation: FlowTing, albumArtLocation: Hero4, isActive: false, licenseTier: "Basic", selectedForPurchase: false}]});
-    tempCategorySongStruct.categories.push({name: "R&B Beats", songs: [{name: "Take Flight", category: "R&B Beats", songLocation: TakeFlight, albumArtLocation: JoshPortrait, isActive: false, licenseTier: "Basic", selectedForPurchase: false}]});
-    tempCategorySongStruct.categories[0].songs[0].isActive = true;
-
     this.state = {
-      songLocation: FlowTing,
       player_state: "stopped",
       currentTime: 0,
       duration: 0,
       volume: 100,
-      categorySongStruct: tempCategorySongStruct,
+      categorySongStruct: null,
       currentCategoryId: 0,
       currentSongId: 0
     };
-    // Request for names of all categories/songs.  Structure it somehow that makes sense.
-    // A Javascript Map might make sense.  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
-
-    // For each song, update it's location to match the location defined by the API on the server
   }
 
   componentDidMount() {
+    // Request for names of all categories/songs.  Structure it somehow that makes sense.
+    axios.get('http://' + serverLocation + ':4000/musiclist')
+      .then(this.handleMusicListResponse)
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+
+        // Set the initial audio source to the first song in the first category
+      });
+
     // Continuously update progress
     this.player.addEventListener("timeupdate", e => {
       this.setState({
@@ -60,13 +69,38 @@ export default class AudioFileShop extends Component {
         duration: e.target.duration
       });
     });
-
-    // Set the initial audio source to the first song in the first category
-    this.player.src = this.state.categorySongStruct.categories[0].songs[0].songLocation;
   }
 
   componentWillUnmount() {
     this.player.removeEventListener("timeupdate", () => {});
+  }
+
+  handleMusicListResponse(response) {
+      // handle success
+      var categoryIndex = 0;
+      var tempCategorySongStruct = {categories: []}
+
+      // Parse the response
+      for(var property in response.data) {
+        tempCategorySongStruct.categories[categoryIndex] = {name: property, songs: []};
+        for(var index in response.data[property]) {
+          var albumArtName = response.data[property][index].split(".")[0] + ".jpg";
+          tempCategorySongStruct.categories[categoryIndex].songs.push({
+            name: response.data[property][index],
+            category: property,
+            songLocation: 'http://' + serverLocation + ':4000/samplemusic/' + property + "/" + response.data[property][index],
+            albumArtLocation: 'http://' + serverLocation + ':4000/albumart/' + property + "/" + albumArtName,
+            isActive: false,
+            licenseTier: "Basic",
+            selectedForPurchase: false
+          });
+        }
+
+        categoryIndex += 1;
+      }
+
+      this.setState({categorySongStruct: tempCategorySongStruct});
+      this.player.src = this.state.categorySongStruct.categories[0].songs[0].songLocation;
   }
 
   deepCopyCategorySongStruct() {
@@ -202,6 +236,10 @@ export default class AudioFileShop extends Component {
   }
 
   render() {
+    if(!this.state.categorySongStruct)
+      return (
+      <audio ref={ref => (this.player = ref)} />);
+
     let songTableList = []
     for(let category in this.state.categorySongStruct.categories) {
       songTableList.push(
