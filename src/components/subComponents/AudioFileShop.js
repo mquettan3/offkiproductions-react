@@ -230,40 +230,37 @@ export default class AudioFileShop extends Component {
   }
 
   render() {
-    if(!this.state.categorySongStruct)
-      return (
-      <audio ref={ref => (this.player = ref)} />);
+    let songTableList = [];
+    let audioPlayer = "";
 
-    let songTableList = []
-    for(let category in this.state.categorySongStruct.categories) {
-      songTableList.push(
-        <tr key={category} className="category-row">
-          <th colSpan="2">{this.state.categorySongStruct.categories[category].name}</th>
-        </tr>
-      )
+    if(this.state.categorySongStruct) {
+      // Create the Audio table entires based off of what was received from the server, but only if it's been received.
 
-      for (let song in this.state.categorySongStruct.categories[category].songs) {
+      for(let category in this.state.categorySongStruct.categories) {
         songTableList.push(
-          <SongRow
-            key={song.toString() + category.toString()}
-            songName={this.state.categorySongStruct.categories[category].songs[song].name}
-            songId={song}
-            categoryName={this.state.categorySongStruct.categories[category].name}
-            categoryId={category}
-            handleSongClick={this.handleSongClick}
-            handleSelectionChange={this.handleSelectionChange}
-            handleLicenseChange={this.handleLicenseChange}
-            isActive={this.state.categorySongStruct.categories[category].songs[song].isActive}
-          />
+          <tr key={category} className="category-row">
+            <th colSpan="2">{this.state.categorySongStruct.categories[category].name}</th>
+          </tr>
         )
+
+        for (let song in this.state.categorySongStruct.categories[category].songs) {
+          songTableList.push(
+            <SongRow
+              key={song.toString() + category.toString()}
+              songName={this.state.categorySongStruct.categories[category].songs[song].name}
+              songId={song}
+              categoryName={this.state.categorySongStruct.categories[category].name}
+              categoryId={category}
+              handleSongClick={this.handleSongClick}
+              handleSelectionChange={this.handleSelectionChange}
+              handleLicenseChange={this.handleLicenseChange}
+              isActive={this.state.categorySongStruct.categories[category].songs[song].isActive}
+            />
+          )
+        }
       }
-    }
-    return (
-      <div className="audio-file-shop">
-    	  <iframe width="100%" height="450" scrolling="no" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/607220478&color=%237d55c7&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser"></iframe>
-    	  <div className="music-action">
-          <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfK2M1bQxHPFzkcp7of3kOay675brHmSvrzTYGyzxyhW584FA/viewform?usp=sf_link">Buy a Beat</a>
-        </div>
+
+      audioPlayer =
         <AudioPlayer
           albumArtLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].albumArtLocation}
           playerState={this.state.player_state}
@@ -275,8 +272,16 @@ export default class AudioFileShop extends Component {
           handleStop={this.handleStop}
           handleVolumeChange={this.handleVolumeChange}
           handleManualSeek={this.handleManualSeek}
-        />
+        />;
+    }
+    return (
+      <div className="audio-file-shop">
+    	  <iframe width="100%" height="450" scrolling="no" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/607220478&color=%237d55c7&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser"></iframe>
+    	  <div className="music-action">
+          <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfK2M1bQxHPFzkcp7of3kOay675brHmSvrzTYGyzxyhW584FA/viewform?usp=sf_link">Buy a Beat</a>
+        </div>
         <audio ref={ref => (this.player = ref)} />
+        {audioPlayer}
         <form className="purchase-music-form" onSubmit={this.handleSubmit}>
           <div className="song-category-table">
             <table>
