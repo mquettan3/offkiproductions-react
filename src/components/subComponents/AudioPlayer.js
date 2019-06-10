@@ -76,18 +76,29 @@ export default class AudioPlayer extends Component {
       width: "0%"
     })
 
+    const volumeWidth = {width: this.props.volume + "%"};
+
     return (
       <div className="audio-player">
-        <img className="album-art" src={this.props.albumArtLocation} alt="AlbumArt"/>
-        {playPauseButton}
-        <button className="stop-button" onClick={this.handleStop}>Stop</button>
-        <span className="current-time">{getTime(this.props.currentTime)}</span>
-        <span className="time-separator">/</span>
-        <span className="duration">{getTime(this.props.duration)}</span>
-        <div className="progress-bar-wrapper" onMouseDown={this.handleManualSeek}>
-          <div className="progress-bar" style={progressWidth}></div>
+        <div className="album-art">
+          <img src={this.props.albumArtLocation} alt="AlbumArt"/>
         </div>
-        <input className="volume-slider" type="range" min="0" max="100" step="1" onChange={this.handleVolumeChange} value={this.props.volume} />
+        <div className="audio-player-controls">
+          {playPauseButton}
+          <button className="stop-button" onClick={this.handleStop}>Stop</button>
+          <span className="current-time">{getTime(this.props.currentTime)}</span>
+          <span className="time-separator">/</span>
+          <span className="duration">{getTime(this.props.duration)}</span>
+          <div className="progress-bar-wrapper" onMouseDown={this.handleManualSeek}>
+            <div className="progress-bar" style={progressWidth}></div>
+          </div>
+          <div className="volume">
+            <i className="fa fa-volume-down"></i>
+            <input className="slider" type="range" min="0" max="100" step="1" onChange={this.handleVolumeChange} value={this.props.volume} />
+            <div className="slider-min" style={volumeWidth} />
+        		<i className="fa fa-volume-up"></i>
+          </div>
+        </div>
       </div>
     )
   }

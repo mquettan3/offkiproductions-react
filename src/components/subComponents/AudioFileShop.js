@@ -11,7 +11,7 @@ import AudioPlayer from "./AudioPlayer.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-var serverLocation = "10.0.0.100"
+var serverLocation = "192.168.56.102"
 
 export default class AudioFileShop extends Component {
   constructor(props) {
@@ -288,7 +288,7 @@ export default class AudioFileShop extends Component {
           </form>
           <audio ref={ref => (this.player = ref)} preload="metadata"/>
         </div>
-        <div class="music-action">
+        <div className="music-action">
           <input className="btn btn-ghost-primary" type="submit" value="Purchase Selected Music!"/>
         </div>
       </div>
