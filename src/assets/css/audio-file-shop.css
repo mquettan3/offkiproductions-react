@@ -4,15 +4,13 @@
 .audio-file-shop {
   background-color: whitesmoke;
   border: 1px solid;
-  border-color: #d9d9d9;
-  position: relative; }
+  border-color: #d9d9d9; }
   .audio-file-shop table {
     display: block;
     width: 100%;
     overflow-y: auto;
     height: 300px; }
   .audio-file-shop .category-row {
-    border-top: 2px solid;
     border-bottom: 2px solid;
     border-color: #b9b9b9; }
   .audio-file-shop .song-row {
@@ -43,16 +41,100 @@
   background-color: rgba(0, 0, 0, 0.1); }
 
 .audio-player {
-  height: 170px; }
-  .audio-player .progress-bar-wrapper {
-    background-color: rgba(0, 0, 0, 0.2); }
-  .audio-player .progress-bar {
-    background-color: red;
-    height: 5px; }
+  position: relative;
+  height: 162px;
+  width: 100%;
+  border-bottom: 1px solid;
+  border-color: #b9b9b9; }
+  .audio-player .audio-player-controls {
+    display: inline-block;
+    width: calc(100% - 162px);
+    padding: 6px 6px 6px 0px;
+    height: 100%; }
+    .audio-player .audio-player-controls .progress-bar-wrapper {
+      background-color: rgba(0, 0, 0, 0.2); }
+    .audio-player .audio-player-controls .progress-bar {
+      background-color: red;
+      height: 5px; }
+    .audio-player .audio-player-controls .volume {
+      position: absolute;
+      right: 25px;
+      bottom: 10px;
+      width: 100px;
+      height: 5px;
+      /* The slider itself */
+      /* Mouse-over effects */
+      /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ }
+      .audio-player .audio-player-controls .volume .fa-volume-down {
+        position: absolute;
+        left: 0;
+        margin-top: -5px;
+        color: #666;
+        margin-left: -18px; }
+      .audio-player .audio-player-controls .volume .fa-volume-up {
+        position: absolute;
+        right: 0;
+        margin-top: -5px;
+        color: #666;
+        margin-right: -22px; }
+      .audio-player .audio-player-controls .volume .slider {
+        -webkit-appearance: none;
+        /* Override default CSS styles */
+        appearance: none;
+        position: absolute;
+        left: 0;
+        margin: 0 auto;
+        height: 100%;
+        width: 100%;
+        background: #555;
+        border-radius: 15px; }
+      .audio-player .audio-player-controls .volume .slider-min {
+        position: absolute;
+        left: 0;
+        margin: 0 auto;
+        height: 100%;
+        width: 100%;
+        background: #3d884d;
+        border-radius: 15px; }
+      .audio-player .audio-player-controls .volume .slider:hover {
+        opacity: 1;
+        /* Fully shown on mouse-over */ }
+      .audio-player .audio-player-controls .volume .slider:focus {
+        outline: none;
+        /* Fully shown on mouse-over */ }
+      .audio-player .audio-player-controls .volume .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        /* Override default look */
+        appearance: none;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        background: #FFF;
+        cursor: pointer;
+        outline: none;
+        z-index: 6; }
+      .audio-player .audio-player-controls .volume .slider::-moz-range-thumb {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        background: #FFF;
+        margin-left: -8px;
+        margin-top: -8px;
+        cursor: pointer;
+        outline: none;
+        z-index: 6; }
   .audio-player .album-art {
     height: 150px;
     width: 150px;
-    background-color: rgba(0, 0, 0, 0.2); }
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+    margin: 6px; }
+    .audio-player .album-art img {
+      width: auto;
+      height: 100%; }
   .audio-player img {
     top: 9px;
     left: 9px;
