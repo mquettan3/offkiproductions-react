@@ -23,11 +23,14 @@ export default class SongRow extends Component {
 
   render() {
     const license_tier = this.props.licenseTier;
-    const songName = this.props.songName;
+    const songName = this.props.songName.split(".")[0];
 
     return (
       <tr id={songName} className={"song-row playing-" + this.props.isActive.toString()}>
-        <th className="song-title" onClick={this.handleSongClick}>{songName}</th>
+        <th className="song-title" onClick={this.handleSongClick}>
+          <img src={this.props.albumArtLocation} alt="Album Art" />
+          {songName}
+        </th>
         <td className="shopping-selection">
           <label>
             Select License Tier to Purchase

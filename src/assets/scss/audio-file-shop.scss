@@ -6,57 +6,72 @@ $section_background_color: rgb(245, 245, 245);
 $site_accent_color: #6eceb2;
 $site_dark_accent_color: #3d884d;
 
-.audio-file-shop table {
-  border: 2px solid;
-  width: 100%;
-}
+.audio-file-shop {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid;
+  border-color: rgb(217, 217, 217);
 
-.audio-file-shop .category-row {
-  border: 2px solid;
-}
+  table {
+    width: 100%;
+  }
 
-.audio-file-shop .song-row {
-  border: 2px solid;
-}
+  .category-row {
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    border-color: rgb(185, 185, 185);
+  }
 
-.song-row .song-title {
-  text-align: left;
-  padding-left: 20px;
-}
+  .song-row {
+    background-color: white;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: rgb(217, 217, 217);
+    height: 30px;
 
-.song-row .shopping-selection {
-  text-align: right;
-  width: 173px;
-}
+    img {
+      height: 20px;
+      width: 20px;
+      margin: 5px;
+    }
+    .song-title {
+      text-align: left;
+      width: 100%;
+      font-weight: 100;
+    }
 
-.song-row .shopping-selection select {
-  padding-right: 20px;
-  margin-right: 20px;
-}
-
-.song-row .shopping-selection input {
-  margin-right: 20px;
-}
-
-.song-row .shopping-selection input {
-  margin-right: 20px;
+    .shopping-selection {
+      white-space: nowrap;
+    }
+    .shopping-selection {
+      select {
+        margin-left: 20px;
+      }
+      label {
+        margin-right: 20px;
+        margin-top: auto;
+        margin-bottom: auto;
+        color: $site_dark_accent_color;
+      }
+    }
+  }
 }
 
 .song-row.playing-true {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.audio-player .progress-bar-wrapper {
-  background-color: rgba(0, 0, 0, 0.2);
-}
+.audio-player {
+  .progress-bar-wrapper {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .progress-bar {
+    background-color: red;
+    height: 5px;
+  }
 
-.audio-player .progress-bar {
-  background-color: red;
-  height: 5px;
-}
-
-.audio-player .album-art {
-  height: 150px;
-  width: 150px;
-  background-color: rgba(0, 0, 0, 0.2);
+  .album-art {
+   height: 150px;
+   width: 150px;
+   background-color: rgba(0, 0, 0, 0.2);
+ }
 }

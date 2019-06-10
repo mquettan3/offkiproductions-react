@@ -233,7 +233,7 @@ export default class AudioFileShop extends Component {
       for(let category in this.state.categorySongStruct.categories) {
         songTableList.push(
           <tr key={category} className="category-row">
-            <th colSpan="2">{this.state.categorySongStruct.categories[category].name}</th>
+            <th colSpan="3">{this.state.categorySongStruct.categories[category].name}</th>
           </tr>
         )
 
@@ -248,6 +248,7 @@ export default class AudioFileShop extends Component {
               handleSongClick={this.handleSongClick}
               handleLicenseChange={this.handleLicenseChange}
               isActive={this.state.categorySongStruct.categories[category].songs[song].isActive}
+              albumArtLocation={this.state.categorySongStruct.categories[category].songs[song].albumArtLocation}
             />
           )
         }
@@ -268,24 +269,28 @@ export default class AudioFileShop extends Component {
         />;
     }
     return (
-      <div className="audio-file-shop">
-    	  <iframe width="100%" height="450" scrolling="no" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/607220478&color=%237d55c7&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser"></iframe>
-    	  <div className="music-action">
+      <div className="audio-file-shop-wrapper">
+        <iframe width="100%" height="450" scrolling="no" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/607220478&color=%237d55c7&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser"></iframe>
+        <div className="music-action">
           <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfK2M1bQxHPFzkcp7of3kOay675brHmSvrzTYGyzxyhW584FA/viewform?usp=sf_link">Buy a Beat</a>
         </div>
-        {audioPlayer}
-        <form className="purchase-music-form" onSubmit={this.handleSubmit}>
-          <div className="song-category-table">
-            <table>
-              <tbody>
-                  {songTableList}
-              </tbody>
-            </table>
-          </div>
-          <input type="submit" value="Purchase Selected Music!"/>
-        </form>
-        <div className="tag-credit"><i>Custom Beat Shop by Marcus Quettan</i></div>
-        <audio ref={ref => (this.player = ref)} preload="metadata"/>
+        <br />
+        <div className="audio-file-shop">
+          {audioPlayer}
+          <form className="purchase-music-form" onSubmit={this.handleSubmit}>
+            <div className="song-category-table">
+              <table>
+                <tbody>
+                    {songTableList}
+                </tbody>
+              </table>
+            </div>
+          </form>
+          <audio ref={ref => (this.player = ref)} preload="metadata"/>
+        </div>
+        <div class="music-action">
+          <input className="btn btn-ghost-primary" type="submit" value="Purchase Selected Music!"/>
+        </div>
       </div>
     )
   }
