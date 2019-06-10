@@ -288,7 +288,7 @@ export default class AudioFileShop extends Component {
           </form>
           <audio ref={ref => (this.player = ref)} preload="metadata"/>
         </div>
-        <div class="music-action">
+        <div className="music-action">
           <input className="btn btn-ghost-primary" type="submit" value="Purchase Selected Music!"/>
         </div>
       </div>

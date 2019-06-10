@@ -4,9 +4,13 @@
 .audio-file-shop {
   background-color: whitesmoke;
   border: 1px solid;
-  border-color: #d9d9d9; }
+  border-color: #d9d9d9;
+  position: relative; }
   .audio-file-shop table {
-    width: 100%; }
+    display: block;
+    width: 100%;
+    overflow-y: auto;
+    height: 300px; }
   .audio-file-shop .category-row {
     border-top: 2px solid;
     border-bottom: 2px solid;
@@ -38,14 +42,19 @@
 .song-row.playing-true {
   background-color: rgba(0, 0, 0, 0.1); }
 
-.audio-player .progress-bar-wrapper {
-  background-color: rgba(0, 0, 0, 0.2); }
-
-.audio-player .progress-bar {
-  background-color: red;
-  height: 5px; }
-
-.audio-player .album-art {
-  height: 150px;
-  width: 150px;
-  background-color: rgba(0, 0, 0, 0.2); }
+.audio-player {
+  height: 170px; }
+  .audio-player .progress-bar-wrapper {
+    background-color: rgba(0, 0, 0, 0.2); }
+  .audio-player .progress-bar {
+    background-color: red;
+    height: 5px; }
+  .audio-player .album-art {
+    height: 150px;
+    width: 150px;
+    background-color: rgba(0, 0, 0, 0.2); }
+  .audio-player img {
+    top: 9px;
+    left: 9px;
+    display: block;
+    position: absolute; }
