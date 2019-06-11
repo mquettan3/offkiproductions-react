@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 
 // Require Axios for HTTP requests
 const axios = require('axios');
+const wavesurfer = require("wavesurfer");
 
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
@@ -11,7 +12,7 @@ import AudioPlayer from "./AudioPlayer.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-var serverLocation = "192.168.56.102"
+var serverLocation = "10.0.0.100"
 
 export default class AudioFileShop extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export default class AudioFileShop extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
+    this.updateWavesurf = this.updateWavesurf.bind(this);
 
     this.player = React.createRef();
 
@@ -37,7 +39,8 @@ export default class AudioFileShop extends Component {
       volume: 100,
       categorySongStruct: null,
       currentCategoryId: 0,
-      currentSongId: 0
+      currentSongId: 0,
+      wavesurfer_element: null
     };
   }
 
@@ -73,6 +76,11 @@ export default class AudioFileShop extends Component {
 
   componentWillUnmount() {
     this.player.removeEventListener("timeupdate", () => {});
+  }
+
+  updateWavesurf(wavesurf) {
+    this.setState({wavesurfer_element: wavesurf});
+    this.state.wavesurfer_element.load(this.player.src);
   }
 
   handleMusicListResponse(response) {
@@ -257,6 +265,7 @@ export default class AudioFileShop extends Component {
       audioPlayer =
         <AudioPlayer
           albumArtLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].albumArtLocation}
+          songLocation={this.state.categorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].songLocation}
           playerState={this.state.player_state}
           currentTime={this.state.currentTime}
           duration={this.state.duration}

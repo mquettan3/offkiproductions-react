@@ -17,10 +17,11 @@ $current_song_background: rgba(0, 0, 0, 0.1);
   border-color: $light_border_color;
 
   table {
-    display: block;
     width: 100%;
-    overflow-y: auto;
-    height: 300px;
+    // Commented for now, add back in when I want the table to scroll
+    // display: block;  // Not sure I need this at all.
+    // overflow-y: auto;
+    // height: 300px;
   }
 
   .category-row {
@@ -185,12 +186,5 @@ $current_song_background: rgba(0, 0, 0, 0.1);
      width: auto;
      height: 100%;
    }
- }
-
- img {
-  top: 9px;
-  left: 9px;
-  display: block;
-  position: absolute;
  }
 }

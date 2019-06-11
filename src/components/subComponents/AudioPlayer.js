@@ -1,12 +1,10 @@
 // AudioFileShop.component.js
 
 import React, { Component } from 'react';
+import Waveform from './Waveform.js'
 
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
-
-// Reference code for basic audio player:  https://codesandbox.io/s/5y4vjn877x
-
 
 // Fuction for getting timer out of a flat seconds-based duration counter
 function getTime(time) {
@@ -28,12 +26,6 @@ export default class AudioPlayer extends Component {
     this.handleStop = this.handleStop.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleManualSeek = this.handleManualSeek.bind(this);
-
-    this.state = {};
-    // Request for names of all categories/songs.  Structure it somehow that makes sense.
-    // A Javascript Map might make sense.  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
-
-    // For each song, update it's location to match the location defined by the API on the server
   }
 
   handlePause() {
@@ -92,6 +84,7 @@ export default class AudioPlayer extends Component {
           <div className="progress-bar-wrapper" onMouseDown={this.handleManualSeek}>
             <div className="progress-bar" style={progressWidth}></div>
           </div>
+          <Waveform songLocation={this.props.songLocation} />
           <div className="volume">
             <i className="fa fa-volume-down"></i>
             <input className="slider" type="range" min="0" max="100" step="1" onChange={this.handleVolumeChange} value={this.props.volume} />
