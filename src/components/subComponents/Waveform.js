@@ -10,8 +10,6 @@ export default class Waveform extends Component {
   constructor(props) {
     super(props);
 
-    this.loadWavesurfer = this.loadWavesurfer.bind(this);
-
     this.state = {loaded: false, waveform: null};
   }
 
@@ -24,15 +22,13 @@ export default class Waveform extends Component {
       responsive: true
     });
 
-    wavesurf.load(this.props.songLocation);
-
-    this.setState({waveform: wavesurf, loaded: true);
-  }
-
-  loadWavesurfer() {
+    this.setState({waveform: wavesurf, loaded: true});
   }
 
   render() {
+    if(this.state.loaded)
+    	this.state.waveform.load(this.props.songLocation);
+
     return (
       <div className="waveform-wrapper">
           <div id="waveform"></div>
