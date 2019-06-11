@@ -10,28 +10,96 @@ export default class Waveform extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {loaded: false, waveform: null};
+    this.handleSeek = this.handleSeek.bind(this);
+    this.handleNewLoad = this.handleNewLoad.bind(this);
+    this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
+
+    this.state = {loaded: false, waveform: null, previousState: "stopped", previousSongLocation: "", previousVolume: 100};
   }
 
   componentDidMount() {
     var wavesurf = wavesurfer.create({
       container: '#waveform',
       waveColor: 'black',
-      progressColor: 'violet',
+      progressColor: 'rgb(100, 59, 176)',
       backend: 'MediaElement',
-      responsive: true
+      responsive: false,
+      barWidth: 1,
+      fillParent: true,
+      scrollParent: false,
+      cursorWidth: 0,
+      height: 100
     });
 
     this.setState({waveform: wavesurf, loaded: true});
+
+    wavesurfer.on('seek', this.handleSeek);
+    wavesurfer.on('audioprocess', this.handleCurrentTimeChange);
+    wavesurfer.on('ready', this.handleNewLoad);
+  }
+
+  componentWillUnmount() {
+    wavesurfer.unAll();
+  }
+
+  handleSeek(progress) {
+    // On Seek - Pass up progress - Float from 0 to 1
+    this.props.handleSeek(progress);
+  }
+
+  handleNewLoad() {
+    // Every time the duration of the song changes, pass up the value
+    var duration = this.state.waveform.getDuration();
+    this.props.handleDurationChange(duration);
+  }
+
+  handleCurrentTimeChange() {
+    // Every time the duration of the song changes, pass up the value
+    var time = this.state.waveform.getCurrentTime();
+    this.props.handleCurrentTimeChange(time);
+  }
+
+  playPauseStopLogic() {
+    if (this.state.previousState !== this.props.playerState) {
+      switch(this.props.playerState) {
+        case "playing":
+          this.state.waveform.play();
+          this.setState({previousState: "playing"});
+          break;
+        case "paused":
+          this.state.waveform.pause();
+          this.setState({previousState: "paused"});
+          break;
+        case "stopped":
+          this.state.waveform.stop();
+          this.setState({previousState: "stopped"});
+          break;
+        default:
+          // do nothing
+          break;
+      }
+    }
+  }
+
+  componentDidUpdate() {
+    // Each time the song location has updated
+    if(this.props.songLocation !== this.state.previousSongLocation) {
+  	  this.state.waveform.load(this.props.songLocation);
+      this.setState({previousSongLocation: this.props.songLocation, previousState: "stopped"});
+    }
+
+    if(this.state.previousVolume !== this.props.volume) {
+      this.state.waveform.setVolume(this.props.volume / 100);
+      this.setState({previousVolume: this.props.volume})
+    }
+
+    this.playPauseStopLogic()
   }
 
   render() {
-    if(this.state.loaded)
-    	this.state.waveform.load(this.props.songLocation);
-
     return (
       <div className="waveform-wrapper">
-          <div id="waveform"></div>
+        <div id="waveform"></div>
       </div>
     )
   }

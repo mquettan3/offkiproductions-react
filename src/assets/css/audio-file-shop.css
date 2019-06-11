@@ -44,6 +44,7 @@
   border-bottom: 1px solid;
   border-color: #b9b9b9; }
   .audio-player .audio-player-controls {
+    position: relative;
     display: inline-block;
     width: calc(100% - 162px);
     padding: 6px 6px 6px 0px;
@@ -96,6 +97,9 @@
       .audio-player .audio-player-controls .volume .slider:hover {
         opacity: 1;
         /* Fully shown on mouse-over */ }
+      .audio-player .audio-player-controls .volume .slider-min:hover {
+        opacity: 1;
+        /* Fully shown on mouse-over */ }
       .audio-player .audio-player-controls .volume .slider:focus {
         outline: none;
         /* Fully shown on mouse-over */ }
@@ -110,7 +114,7 @@
         background: #FFF;
         cursor: pointer;
         outline: none;
-        z-index: 6; }
+        z-index: 1; }
       .audio-player .audio-player-controls .volume .slider::-moz-range-thumb {
         position: relative;
         width: 20px;
@@ -121,7 +125,7 @@
         margin-top: -8px;
         cursor: pointer;
         outline: none;
-        z-index: 6; }
+        z-index: 1; }
   .audio-player .album-art {
     height: 150px;
     width: 150px;
@@ -132,3 +136,13 @@
     .audio-player .album-art img {
       width: auto;
       height: 100%; }
+
+.waveform-wrapper {
+  overflow: hidden;
+  position: absolute;
+  top: 30;
+  left: 0;
+  padding-right: 6px;
+  width: 100%;
+  padding-top: auto;
+  padding-bottom: auto; }

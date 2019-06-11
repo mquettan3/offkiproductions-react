@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 
 // Require Axios for HTTP requests
 const axios = require('axios');
-const wavesurfer = require("wavesurfer");
 
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
@@ -12,7 +11,8 @@ import AudioPlayer from "./AudioPlayer.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-var serverLocation = "10.0.0.100"
+// var serverLocation = "10.0.0.100"
+var serverLocation = "192.168.56.102"
 
 export default class AudioFileShop extends Component {
   constructor(props) {
@@ -24,13 +24,12 @@ export default class AudioFileShop extends Component {
     this.handlePause = this.handlePause.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
-    this.handleManualSeek = this.handleManualSeek.bind(this);
+    this.handleSeek = this.handleSeek.bind(this);
+    this.handleDurationChange = this.handleDurationChange.bind(this);
+    this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
-    this.updateWavesurf = this.updateWavesurf.bind(this);
-
-    this.player = React.createRef();
 
     this.state = {
       player_state: "stopped",
@@ -39,8 +38,7 @@ export default class AudioFileShop extends Component {
       volume: 100,
       categorySongStruct: null,
       currentCategoryId: 0,
-      currentSongId: 0,
-      wavesurfer_element: null
+      currentSongId: 0
     };
   }
 
@@ -57,30 +55,6 @@ export default class AudioFileShop extends Component {
 
         // Set the initial audio source to the first song in the first category
       });
-
-    // Continuously update progress
-    this.player.addEventListener("timeupdate", e => {
-      this.setState({
-        currentTime: e.target.currentTime,
-        duration: e.target.duration
-      });
-    });
-
-    // Initialize necessary information as soon as all data is known.
-    this.player.addEventListener("loadedmetadata", e => {
-      this.setState({
-        duration: e.target.duration
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    this.player.removeEventListener("timeupdate", () => {});
-  }
-
-  updateWavesurf(wavesurf) {
-    this.setState({wavesurfer_element: wavesurf});
-    this.state.wavesurfer_element.load(this.player.src);
   }
 
   handleMusicListResponse(response) {
@@ -108,7 +82,6 @@ export default class AudioFileShop extends Component {
       }
 
       this.setState({categorySongStruct: tempCategorySongStruct});
-      this.player.src = this.state.categorySongStruct.categories[0].songs[0].songLocation;
   }
 
   deepCopyCategorySongStruct() {
@@ -129,15 +102,6 @@ export default class AudioFileShop extends Component {
 
   handleSongClick(categoryId, songId) {
     // When the song is clicked.  Update the selected song.  Play the new song.  Update the state of the audio player to "playing"
-
-    // Index into the map using the song name / category name - However it's structured.  Populate the src of the audio ref with the location of the new song.
-
-
-    this.player.src = this.state.categorySongStruct.categories[categoryId].songs[songId].songLocation;
-
-    // Play the song
-    this.player.play();
-
     var tempCategorySongStruct = this.deepCopyCategorySongStruct();
     tempCategorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = false;
     tempCategorySongStruct.categories[categoryId].songs[songId].isActive = true;
@@ -147,59 +111,41 @@ export default class AudioFileShop extends Component {
       categorySongStruct: tempCategorySongStruct,
       currentCategoryId: categoryId,
       currentSongId: songId,
-      player_state: "playing",
-      duration: this.player.duration
+      player_state: "playing"
     });
   }
 
   handlePause() {
     // Pause - Update state
-    this.player.pause();
-    this.setState({player_state: "paused"})
+    this.setState({player_state: "paused"});
   }
 
   handlePlay() {
     // Play - Update state
-    this.player.play();
-    this.setState({player_state: "playing"})
+    this.setState({player_state: "playing"});
   }
 
   handleStop() {
     // Pause.  Reset progress.
-    this.player.pause();
-    this.player.currentTime = 0;
-
-    //TODO: Set selected track to whatever was the first one...  Not sure if I want this to be null or not
-    this.setState({player_state: "stopped", currentTime: 0})
+    this.setState({player_state: "stopped", currentTime: 0});
   }
 
   handleVolumeChange(e) {
     // Set State - Assign volume
     this.setState({volume: e.target.value});
-    this.player.volume = this.state.volume / 100;
   }
 
-  handleManualSeek(e) {
-    // Determine where within div was clicked.
-    // This is done by first determining the total offset from the left of the screen by summing the offets of all parents to each other.
+  handleSeek(progress) {
+    // On Seek - Receive progress - Float from 0 to 1
+    this.setState({currentTime: this.state.duration * progress });
+  }
 
-    let totalOffsetLeft = e.currentTarget.offsetLeft;
-    let targetParent = e.currentTarget.offsetParent;
-    while (targetParent) {
-      totalOffsetLeft += targetParent.offsetLeft;
-      targetParent = targetParent.offsetParent;
-    }
+  handleDurationChange(currentDuration) {
+    this.setState({duration: currentDuration});
+  }
 
-    // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
-    let percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
-
-    // Floor to eliminate floating points
-    var newTime =  Math.floor(this.state.duration * percentage);
-
-    // Assign new time, play, and update state.
-    this.player.currentTime = newTime;
-    this.player.play();
-    this.setState({currentTime: newTime, player_state: "playing"});
+  handleCurrentTimeChange(time) {
+    this.setState({currentTime: time});
   }
 
   handleLicenseChange(event, categoryId, songId) {
@@ -274,7 +220,9 @@ export default class AudioFileShop extends Component {
           handlePause={this.handlePause}
           handleStop={this.handleStop}
           handleVolumeChange={this.handleVolumeChange}
-          handleManualSeek={this.handleManualSeek}
+          handleSeek={this.handleSeek}
+          handleDurationChange={this.handleDurationChange}
+          handleCurrentTimeChange={this.handleCurrentTimeChange}
         />;
     }
     return (
@@ -295,7 +243,6 @@ export default class AudioFileShop extends Component {
               </table>
             </div>
           </form>
-          <audio ref={ref => (this.player = ref)} preload="metadata"/>
         </div>
         <div className="music-action">
           <input className="btn btn-ghost-primary" type="submit" value="Purchase Selected Music!"/>

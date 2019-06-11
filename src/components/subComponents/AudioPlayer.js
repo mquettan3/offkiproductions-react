@@ -25,7 +25,9 @@ export default class AudioPlayer extends Component {
     this.handlePause = this.handlePause.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
-    this.handleManualSeek = this.handleManualSeek.bind(this);
+    this.handleDurationChange = this.handleDurationChange.bind(this);
+    this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
+    this.handleSeek = this.handleSeek.bind(this);
   }
 
   handlePause() {
@@ -48,9 +50,18 @@ export default class AudioPlayer extends Component {
     this.props.handleVolumeChange(e);
   }
 
-  handleManualSeek(e) {
+  handleDurationChange(e) {
     // Seek to where user clicked.
-    this.props.handleManualSeek(e);
+    this.props.handleDurationChange(e);
+  }
+
+  handleSeek(e) {
+    // Seek to where user clicked.
+    this.props.handleSeek(e);
+  }
+
+  handleCurrentTimeChange(time) {
+    this.props.handleCurrentTimeChange(time);
   }
 
   render() {
@@ -60,13 +71,6 @@ export default class AudioPlayer extends Component {
     } else {
       playPauseButton = <button className="pause-button" onClick={this.handlePause}>Pause</button>
     }
-
-    const progressPercentage = (this.props.currentTime / this.props.duration) * 100;
-    const progressWidth = (this.props.duration ? {
-      width: progressPercentage.toString() + "%"
-    } : {
-      width: "0%"
-    })
 
     const volumeWidth = {width: this.props.volume + "%"};
 
@@ -81,10 +85,14 @@ export default class AudioPlayer extends Component {
           <span className="current-time">{getTime(this.props.currentTime)}</span>
           <span className="time-separator">/</span>
           <span className="duration">{getTime(this.props.duration)}</span>
-          <div className="progress-bar-wrapper" onMouseDown={this.handleManualSeek}>
-            <div className="progress-bar" style={progressWidth}></div>
-          </div>
-          <Waveform songLocation={this.props.songLocation} />
+          <Waveform
+            songLocation={this.props.songLocation}
+            playerState={this.props.playerState}
+            volume={this.props.volume}
+            handleSeek={this.handleSeek}
+            handleDurationChange={this.handleDurationChange}
+            handleCurrentTimeChange={this.handleCurrentTimeChange}
+          />
           <div className="volume">
             <i className="fa fa-volume-down"></i>
             <input className="slider" type="range" min="0" max="100" step="1" onChange={this.handleVolumeChange} value={this.props.volume} />
