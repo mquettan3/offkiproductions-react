@@ -88,6 +88,9 @@ export default class Waveform extends Component {
     let percentage = (e.clientX - this.state.totalOffsetLeft) / this.state.waveformOffsetWidth;
     if (percentage > 1)
       percentage = 1;
+    else if (percentage < 0)
+      percentage = 0;
+      
     this.state.waveform.seekTo(percentage);
   }
 
