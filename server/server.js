@@ -15,7 +15,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Define configuration variables
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const app = express();
 
 // Apply all middlewares to our server
@@ -128,3 +128,13 @@ app.get('/albumart/:categoryName/:songName', function (req, res) {
   // Server debug print
   console.log("Sent AlbumArt file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + albumArtName);
 });
+
+// Serve static assets if in productions
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  // If we hit any paths that aren't otherwise specified - serve the index.html built by react npm build
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
