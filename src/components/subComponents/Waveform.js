@@ -86,6 +86,8 @@ export default class Waveform extends Component {
   mouseMove(e) {
     // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
     let percentage = (e.clientX - this.state.totalOffsetLeft) / this.state.waveformOffsetWidth;
+    if (percentage > 1)
+      percentage = 1;
     this.state.waveform.seekTo(percentage);
   }
 
