@@ -8,6 +8,9 @@ import WaveformBackground from '../../assets/images/WaveformBackground.png'
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
+// TODO:  Requested Features
+// Update seek on mouse drag
+
 export default class Waveform extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +20,7 @@ export default class Waveform extends Component {
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.resizeWaveform = this.resizeWaveform.bind(this);
 
-    this.state = {loaded: false, waveform: null, previousState: "paused", previousSongLocation: "", previousVolume: 100, togglePlayPauseStyle: ""};
+    this.state = {loaded: false, waveform: null, previousState: "paused", previousSongLocation: "", previousVolume: 100, togglePlayPauseStyle: "", preResizeProgress: null};
   }
 
   componentDidMount() {
@@ -34,14 +37,17 @@ export default class Waveform extends Component {
     this.setState({waveform: wavesurf, loaded: true});
 
     wavesurfer.on('seek', this.handleSeek);
-    wavesurfer.on('audioprocess', this.handleCurrentTimeChange);
     wavesurfer.on('ready', this.handleNewLoad);
+    wavesurfer.on('audioprocess', wavesurfer.util.debounce(this.handleCurrentTimeChange, 0.25));
 
     // This adds the responsive nature to the waveform.
-    window.addEventListener('resize', this.resizeWaveform);
+    window.addEventListener('resize', wavesurfer.util.debounce(this.resizeWaveform, 25));
   }
 
   resizeWaveform() {
+    // Store previous progress
+    this.setState({preResizeProgress: this.state.waveform.getCurrentTime() / this.state.waveform.getDuration()})
+
     // Each time the window resizes, empty the canvas then redraw it.
     this.state.waveform.empty();
     this.state.waveform.drawBuffer();
@@ -65,6 +71,15 @@ export default class Waveform extends Component {
   }
 
   handleCurrentTimeChange() {
+    // If we just got resized:
+    if(this.state.preResizeProgress) {
+      this.state.waveform.seekTo(this.state.preResizeProgress);
+      if(this.props.playerState === "playing") {
+        this.state.waveform.play();
+      }
+      this.setState({preResizeProgress: null});
+    }
+
     // Every time the duration of the song changes, pass up the value
     var time = this.state.waveform.getCurrentTime();
     this.props.handleCurrentTimeChange(time);
