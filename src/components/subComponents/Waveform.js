@@ -13,8 +13,9 @@ export default class Waveform extends Component {
     this.handleSeek = this.handleSeek.bind(this);
     this.handleNewLoad = this.handleNewLoad.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
+    this.resizeWaveform = this.resizeWaveform.bind(this);
 
-    this.state = {loaded: false, waveform: null, previousState: "stopped", previousSongLocation: "", previousVolume: 100};
+    this.state = {loaded: false, waveform: null, previousState: "paused", previousSongLocation: "", previousVolume: 100};
   }
 
   componentDidMount() {
@@ -23,10 +24,7 @@ export default class Waveform extends Component {
       waveColor: 'black',
       progressColor: 'rgb(100, 59, 176)',
       backend: 'MediaElement',
-      responsive: false,
-      barWidth: 1,
-      fillParent: true,
-      scrollParent: false,
+      barWidth: 0,
       cursorWidth: 0,
       height: 100
     });
@@ -36,10 +34,20 @@ export default class Waveform extends Component {
     wavesurfer.on('seek', this.handleSeek);
     wavesurfer.on('audioprocess', this.handleCurrentTimeChange);
     wavesurfer.on('ready', this.handleNewLoad);
+
+    // This adds the responsive nature to the waveform.
+    window.addEventListener('resize', this.resizeWaveform);
+  }
+
+  resizeWaveform() {
+    // Each time the window resizes, empty the canvas then redraw it.
+    this.state.waveform.empty();
+    this.state.waveform.drawBuffer();
   }
 
   componentWillUnmount() {
     wavesurfer.unAll();
+    window.removeEventListener('resize');
   }
 
   handleSeek(progress) {
@@ -70,10 +78,6 @@ export default class Waveform extends Component {
           this.state.waveform.pause();
           this.setState({previousState: "paused"});
           break;
-        case "stopped":
-          this.state.waveform.stop();
-          this.setState({previousState: "stopped"});
-          break;
         default:
           // do nothing
           break;
@@ -85,7 +89,7 @@ export default class Waveform extends Component {
     // Each time the song location has updated
     if(this.props.songLocation !== this.state.previousSongLocation) {
   	  this.state.waveform.load(this.props.songLocation);
-      this.setState({previousSongLocation: this.props.songLocation, previousState: "stopped"});
+      this.setState({previousSongLocation: this.props.songLocation, previousState: "paused"});
     }
 
     if(this.state.previousVolume !== this.props.volume) {

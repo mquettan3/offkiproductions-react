@@ -11,8 +11,8 @@ import AudioPlayer from "./AudioPlayer.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-// var serverLocation = "10.0.0.100"
-var serverLocation = "192.168.56.102"
+var serverLocation = "10.0.0.100"
+// var serverLocation = "192.168.56.102"
 
 export default class AudioFileShop extends Component {
   constructor(props) {
@@ -22,7 +22,6 @@ export default class AudioFileShop extends Component {
     this.handleSongClick = this.handleSongClick.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
-    this.handleStop = this.handleStop.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleSeek = this.handleSeek.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
@@ -32,7 +31,7 @@ export default class AudioFileShop extends Component {
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
 
     this.state = {
-      player_state: "stopped",
+      player_state: "paused",
       currentTime: 0,
       duration: 0,
       volume: 100,
@@ -125,11 +124,6 @@ export default class AudioFileShop extends Component {
     this.setState({player_state: "playing"});
   }
 
-  handleStop() {
-    // Pause.  Reset progress.
-    this.setState({player_state: "stopped", currentTime: 0});
-  }
-
   handleVolumeChange(e) {
     // Set State - Assign volume
     this.setState({volume: e.target.value});
@@ -218,7 +212,6 @@ export default class AudioFileShop extends Component {
           volume={this.state.volume}
           handlePlay={this.handlePlay}
           handlePause={this.handlePause}
-          handleStop={this.handleStop}
           handleVolumeChange={this.handleVolumeChange}
           handleSeek={this.handleSeek}
           handleDurationChange={this.handleDurationChange}

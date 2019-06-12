@@ -23,7 +23,6 @@ export default class AudioPlayer extends Component {
 
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
-    this.handleStop = this.handleStop.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
@@ -38,11 +37,6 @@ export default class AudioPlayer extends Component {
   handlePlay() {
     // Play
     this.props.handlePlay();
-  }
-
-  handleStop() {
-    // Pause.  Reset progress.
-    this.props.handleStop();
   }
 
   handleVolumeChange(e) {
@@ -81,7 +75,6 @@ export default class AudioPlayer extends Component {
         </div>
         <div className="audio-player-controls">
           {playPauseButton}
-          <button className="stop-button" onClick={this.handleStop}>Stop</button>
           <span className="current-time">{getTime(this.props.currentTime)}</span>
           <span className="time-separator">/</span>
           <span className="duration">{getTime(this.props.duration)}</span>
