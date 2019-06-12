@@ -97,6 +97,8 @@ $current_song_background: rgba(0, 0, 0, 0.1);
       bottom: 10px;
       width: 100px;
       height: 5px;
+      opacity: 0.8;
+      transition: opacity 500ms;
 
     	.fa-volume-down {
         position: absolute;
@@ -137,14 +139,6 @@ $current_song_background: rgba(0, 0, 0, 0.1);
       	border-radius: 15px;
       }
 
-      /* Mouse-over effects */
-      .slider:hover {
-        opacity: 1; /* Fully shown on mouse-over */
-      }
-      .slider-min:hover {
-        opacity: 1; /* Fully shown on mouse-over */
-      }
-
       .slider:focus {
         outline: none; /* Fully shown on mouse-over */
       }
@@ -176,6 +170,11 @@ $current_song_background: rgba(0, 0, 0, 0.1);
         z-index: 1;
       }
     }
+
+    .volume:hover {
+      opacity: 1;
+      transition: opacity 500ms;
+    }
   }
 
   .album-art {
@@ -202,4 +201,20 @@ $current_song_background: rgba(0, 0, 0, 0.1);
   width: 100%;
   padding-top: auto;
   padding-bottom: auto;
+  opacity: 0.8;
+  transition: opacity 500ms;
+}
+
+.waveform-wrapper:hover {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.waveform-playing {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.hidden {
+  display: none;
 }

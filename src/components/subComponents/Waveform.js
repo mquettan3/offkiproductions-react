@@ -15,14 +15,14 @@ export default class Waveform extends Component {
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.resizeWaveform = this.resizeWaveform.bind(this);
 
-    this.state = {loaded: false, waveform: null, previousState: "paused", previousSongLocation: "", previousVolume: 100};
+    this.state = {loaded: false, waveform: null, previousState: "paused", previousSongLocation: "", previousVolume: 100, togglePlayPauseStyle: ""};
   }
 
   componentDidMount() {
     var wavesurf = wavesurfer.create({
       container: '#waveform',
       waveColor: 'black',
-      progressColor: 'rgb(100, 59, 176)',
+      progressColor: 'rgba(100, 59, 176, 1)',
       backend: 'MediaElement',
       barWidth: 0,
       cursorWidth: 0,
@@ -52,6 +52,7 @@ export default class Waveform extends Component {
 
   handleSeek(progress) {
     // On Seek - Pass up progress - Float from 0 to 1
+    this.state.waveform.play();
     this.props.handleSeek(progress);
   }
 
@@ -72,11 +73,11 @@ export default class Waveform extends Component {
       switch(this.props.playerState) {
         case "playing":
           this.state.waveform.play();
-          this.setState({previousState: "playing"});
+          this.setState({previousState: "playing", togglePlayPauseStyle: "waveform-playing"});
           break;
         case "paused":
           this.state.waveform.pause();
-          this.setState({previousState: "paused"});
+          this.setState({previousState: "paused", togglePlayPauseStyle: ""});
           break;
         default:
           // do nothing
@@ -94,7 +95,7 @@ export default class Waveform extends Component {
 
     if(this.state.previousVolume !== this.props.volume) {
       this.state.waveform.setVolume(this.props.volume / 100);
-      this.setState({previousVolume: this.props.volume})
+      this.setState({previousVolume: this.props.volume});
     }
 
     this.playPauseStopLogic()
@@ -102,7 +103,7 @@ export default class Waveform extends Component {
 
   render() {
     return (
-      <div className="waveform-wrapper">
+      <div className={"waveform-wrapper " + this.state.togglePlayPauseStyle}>
         <div id="waveform"></div>
       </div>
     )

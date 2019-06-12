@@ -49,9 +49,9 @@ export default class AudioPlayer extends Component {
     this.props.handleDurationChange(e);
   }
 
-  handleSeek(e) {
+  handleSeek(progress) {
     // Seek to where user clicked.
-    this.props.handleSeek(e);
+    this.props.handleSeek(progress);
   }
 
   handleCurrentTimeChange(time) {
@@ -59,11 +59,14 @@ export default class AudioPlayer extends Component {
   }
 
   render() {
-    var playPauseButton = ""
+    var showHidePlayButton = "";
+    var showHidePauseButton = "";
     if (this.props.playerState !== "playing") {
-      playPauseButton = <button className="play-button" onClick={this.handlePlay}>Play</button>
+      showHidePauseButton = "hidden";
+      showHidePlayButton = ""
     } else {
-      playPauseButton = <button className="pause-button" onClick={this.handlePause}>Pause</button>
+      showHidePauseButton = "";
+      showHidePlayButton = "hidden"
     }
 
     const volumeWidth = {width: this.props.volume + "%"};
@@ -74,7 +77,8 @@ export default class AudioPlayer extends Component {
           <img src={this.props.albumArtLocation} alt="AlbumArt"/>
         </div>
         <div className="audio-player-controls">
-          {playPauseButton}
+          <button className={"play-button " + showHidePlayButton} onClick={this.handlePlay}><i className="fa fa-play"></i></button>
+          <button className={"pause-button " + showHidePauseButton} onClick={this.handlePause}><i className="fa fa-pause"></i></button>
           <span className="current-time">{getTime(this.props.currentTime)}</span>
           <span className="time-separator">/</span>
           <span className="duration">{getTime(this.props.duration)}</span>

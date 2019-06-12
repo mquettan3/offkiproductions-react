@@ -105,13 +105,22 @@ export default class AudioFileShop extends Component {
     tempCategorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = false;
     tempCategorySongStruct.categories[categoryId].songs[songId].isActive = true;
 
-    // Update the state of the audio player to "playing" - update duration to be the length of the new song
-    this.setState({
-      categorySongStruct: tempCategorySongStruct,
-      currentCategoryId: categoryId,
-      currentSongId: songId,
-      player_state: "playing"
-    });
+    // If you clicked the song that's already selected.  Toggle Play/Pause.
+    if(categoryId === this.state.currentCategoryId && songId === this.state.currentSongId) {
+      if (this.state.player_state === "paused") {
+        this.setState({player_state: "playing"});
+      } else if (this.state.player_state === "playing") {
+        this.setState({player_state: "paused"});
+      }
+    } else {
+      // Update the state of the audio player to "playing" - update duration to be the length of the new song
+      this.setState({
+        categorySongStruct: tempCategorySongStruct,
+        currentCategoryId: categoryId,
+        currentSongId: songId,
+        player_state: "playing"
+      });
+    }
   }
 
   handlePause() {
@@ -130,8 +139,10 @@ export default class AudioFileShop extends Component {
   }
 
   handleSeek(progress) {
-    // On Seek - Receive progress - Float from 0 to 1
-    this.setState({currentTime: this.state.duration * progress });
+    // On Seek - Play - Receive progress - Float from 0 to 1
+
+    // Don't need to do anything but play.  handleDurationChange keeps track of the current time accurately.
+    this.setState({player_state: "playing"});
   }
 
   handleDurationChange(currentDuration) {
