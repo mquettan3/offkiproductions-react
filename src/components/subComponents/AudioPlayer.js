@@ -23,6 +23,7 @@ export default class AudioPlayer extends Component {
 
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
+    this.togglePlayPause = this.togglePlayPause.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
@@ -37,6 +38,14 @@ export default class AudioPlayer extends Component {
   handlePlay() {
     // Play
     this.props.handlePlay();
+  }
+
+  togglePlayPause() {
+    if (this.props.playerState === "playing") {
+      this.props.handlePause();
+    } else {
+      this.props.handlePlay();
+    }
   }
 
   handleVolumeChange(e) {
@@ -61,12 +70,15 @@ export default class AudioPlayer extends Component {
   render() {
     var showHidePlayButton = "";
     var showHidePauseButton = "";
+    var showHidePlayPauseButton = "";
     if (this.props.playerState !== "playing") {
       showHidePauseButton = "hidden";
-      showHidePlayButton = ""
+      showHidePlayButton = "";
+      showHidePlayPauseButton = "";
     } else {
       showHidePauseButton = "";
-      showHidePlayButton = "hidden"
+      showHidePlayButton = "hidden";
+      showHidePlayPauseButton = "o-play-btn--playing";
     }
 
     const volumeWidth = {width: this.props.volume + "%"};
@@ -77,10 +89,12 @@ export default class AudioPlayer extends Component {
           <img src={this.props.albumArtLocation} alt="AlbumArt"/>
         </div>
         <div className="audio-player-controls">
-          <button className={"play-button " + showHidePlayButton} onClick={this.handlePlay}><i className="fa fa-play"></i></button>
-          <button className={"pause-button " + showHidePauseButton} onClick={this.handlePause}><i className="fa fa-pause"></i></button>
+          <button className={"o-play-btn " + showHidePlayPauseButton} onClick={this.togglePlayPause}>
+            <i className="o-play-btn__icon">
+              <div className="o-play-btn__mask"></div>
+            </i>
+          </button>
           <span className="current-time">{getTime(this.props.currentTime)}</span>
-          <span className="time-separator">/</span>
           <span className="duration">{getTime(this.props.duration)}</span>
           <Waveform
             songLocation={this.props.songLocation}

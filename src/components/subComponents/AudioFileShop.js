@@ -164,6 +164,22 @@ export default class AudioFileShop extends Component {
     });
   }
 
+////// Keeping this for reference.  I want to add in a continuous seek on mouse drag and this will be useful.
+  // handleManualSeek(e) {
+  //   // Determine where within div was clicked.
+  //   // This is done by first determining the total offset from the left of the screen by summing the offets of all parents to each other.
+  //
+  //   let totalOffsetLeft = e.currentTarget.offsetLeft;
+  //   let targetParent = e.currentTarget.offsetParent;
+  //   while (targetParent) {
+  //     totalOffsetLeft += targetParent.offsetLeft;
+  //     targetParent = targetParent.offsetParent;
+  //   }
+  //
+  //   // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
+  //   let percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
+  // }
+
   handleSubmit(e) {
     e.preventDefault();
     let shoppingCart = [];
