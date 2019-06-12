@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 const wavesurfer = require("wavesurfer");
 
+import WaveformBackground from '../../assets/images/WaveformBackground.png'
+
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
@@ -21,8 +23,8 @@ export default class Waveform extends Component {
   componentDidMount() {
     var wavesurf = wavesurfer.create({
       container: '#waveform',
-      waveColor: 'black',
-      progressColor: 'rgba(100, 59, 176, 1)',
+      waveColor: 'rgba(68, 0, 153, 0.6)',
+      progressColor: '#ad1aac',
       backend: 'MediaElement',
       barWidth: 0,
       cursorWidth: 0,
@@ -102,8 +104,14 @@ export default class Waveform extends Component {
   }
 
   render() {
+    var waveformBackgroundStyle = {
+      backgroundImage: 'url(' + WaveformBackground + ')',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat'
+    }
+
     return (
-      <div className={"waveform-wrapper " + this.state.togglePlayPauseStyle}>
+      <div className={"waveform-wrapper " + this.state.togglePlayPauseStyle} style={waveformBackgroundStyle}>
         <div id="waveform"></div>
       </div>
     )

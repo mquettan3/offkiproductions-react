@@ -68,7 +68,7 @@ export default class AudioPlayer extends Component {
   }
 
   render() {
-    
+
     var showHidePlayPauseButton = "";
     if (this.props.playerState !== "playing") {
       showHidePlayPauseButton = "";
