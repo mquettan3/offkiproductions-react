@@ -254,7 +254,7 @@ export default class AudioFileShop extends Component {
         <br />
         <div className="audio-file-shop">
           {audioPlayer}
-          <form className="purchase-music-form" onSubmit={this.handleSubmit}>
+          <form className="purchase-music-form">
             <div className="song-category-table">
               <table>
                 <tbody>
@@ -265,7 +265,7 @@ export default class AudioFileShop extends Component {
           </form>
         </div>
         <div className="music-action">
-          <input className="btn btn-ghost-primary" type="submit" value="Purchase Selected Music!"/>
+          <input className="btn btn-ghost-primary" onClick={this.handleSubmit} type="submit" value="Purchase Selected Music!"/>
         </div>
       </div>
     )
