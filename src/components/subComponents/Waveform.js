@@ -9,9 +9,6 @@ import WaveformBackground from '../../assets/images/WaveformBackground.png'
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-// TODO:  Requested Features
-// Update seek on mouse drag
-
 export default class Waveform extends Component {
   constructor(props) {
     super(props);
