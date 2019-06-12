@@ -11,8 +11,8 @@ import AudioPlayer from "./AudioPlayer.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-var serverLocation = "10.0.0.100"
-// var serverLocation = "192.168.56.102"
+// var serverLocation = "10.0.0.100"
+var serverLocation = "192.168.56.102"
 
 export default class AudioFileShop extends Component {
   constructor(props) {

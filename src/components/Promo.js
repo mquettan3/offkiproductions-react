@@ -8,8 +8,8 @@ import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
 // Require Axios for HTTP requests
 const axios = require('axios');
 
-var serverLocation = "10.0.0.100"
-// var serverLocation = "192.168.56.102"
+// var serverLocation = "10.0.0.100"
+var serverLocation = "192.168.56.102"
 
 export default class Promo extends Component {
   constructor(props) {

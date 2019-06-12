@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 const wavesurfer = require("wavesurfer");
+const debounce = require('debounce');
 
 import WaveformBackground from '../../assets/images/WaveformBackground.png'
 
@@ -19,8 +20,26 @@ export default class Waveform extends Component {
     this.handleNewLoad = this.handleNewLoad.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.resizeWaveform = this.resizeWaveform.bind(this);
+    this.mouseDown = this.mouseDown.bind(this);
+    this.mouseMove = this.mouseMove.bind(this);
+    this.mouseUp = this.mouseUp.bind(this);
 
-    this.state = {loaded: false, waveform: null, previousState: "paused", previousSongLocation: "", previousVolume: 100, togglePlayPauseStyle: "", preResizeProgress: null};
+    this.state = {
+      loaded: false,
+      waveform: null,
+      previousState: "paused",
+      previousSongLocation: "",
+      previousVolume: 100,
+      togglePlayPauseStyle: "",
+      preResizeProgress: null,
+      totalOffsetLeft: 0,
+      waveformOffsetWidth: 0
+    };
+
+
+    this.debouncedMouseMove = debounce(this.mouseMove, 5);
+    this.debouncedResizeWaveform = debounce(this.resizeWaveform, 200);
+    this.debouncedHandleCurrentTimeChange = debounce(this.handleCurrentTimeChange, 10);
   }
 
   componentDidMount() {
@@ -38,10 +57,44 @@ export default class Waveform extends Component {
 
     wavesurfer.on('seek', this.handleSeek);
     wavesurfer.on('ready', this.handleNewLoad);
-    wavesurfer.on('audioprocess', wavesurfer.util.debounce(this.handleCurrentTimeChange, 0.25));
+    wavesurfer.on('audioprocess', this.debouncedHandleCurrentTimeChange);
 
     // This adds the responsive nature to the waveform.
-    window.addEventListener('resize', wavesurfer.util.debounce(this.resizeWaveform, 25));
+    window.addEventListener('resize', this.debouncedResizeWaveform);
+  }
+
+  componentWillUnmount() {
+    wavesurfer.unAll();
+    window.removeEventListener('resize', this.debouncedResizeWaveform);
+  }
+
+  mouseDown(e) {
+    let totalOffsetLeft = e.currentTarget.offsetLeft;
+    let targetParent = e.currentTarget.offsetParent;
+    while (targetParent) {
+      totalOffsetLeft += targetParent.offsetLeft;
+      targetParent = targetParent.offsetParent;
+    }
+
+    // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
+    let percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
+    this.state.waveform.seekTo(percentage);
+
+    this.setState({totalOffsetLeft: totalOffsetLeft, waveformOffsetWidth: e.currentTarget.offsetWidth});
+
+    document.addEventListener('mousemove', this.debouncedMouseMove);
+    document.addEventListener('mouseup', this.mouseUp);
+  }
+
+  mouseMove(e) {
+    // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
+    let percentage = (e.clientX - this.state.totalOffsetLeft) / this.state.waveformOffsetWidth;
+    this.state.waveform.seekTo(percentage);
+  }
+
+  mouseUp(e) {
+    document.removeEventListener('mousemove', this.debouncedMouseMove);
+    document.removeEventListener('mouseup', this.mouseUp);
   }
 
   resizeWaveform() {
@@ -51,11 +104,6 @@ export default class Waveform extends Component {
     // Each time the window resizes, empty the canvas then redraw it.
     this.state.waveform.empty();
     this.state.waveform.drawBuffer();
-  }
-
-  componentWillUnmount() {
-    wavesurfer.unAll();
-    window.removeEventListener('resize');
   }
 
   handleSeek(progress) {
@@ -127,7 +175,7 @@ export default class Waveform extends Component {
 
     return (
       <div className={"waveform-wrapper " + this.state.togglePlayPauseStyle} style={waveformBackgroundStyle}>
-        <div id="waveform"></div>
+        <div id="waveform" onMouseDown={this.mouseDown}></div>
       </div>
     )
   }

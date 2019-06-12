@@ -15,7 +15,8 @@
     height: 300px; }
   .audio-file-shop .category-row {
     border-bottom: 2px solid;
-    border-color: #b9b9b9; }
+    border-color: #b9b9b9;
+    background-color: gainsboro; }
   .audio-file-shop .song-row {
     background-color: white;
     border-top: 1px solid;
