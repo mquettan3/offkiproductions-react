@@ -65,7 +65,7 @@ export default class AudioFileShop extends Component {
       for(var property in response.data) {
         tempCategorySongStruct.categories[categoryIndex] = {name: property, songs: []};
         for(var index in response.data[property]) {
-          var albumArtName = response.data[property][index].split(".")[0] + ".jpg";
+          var albumArtName = response.data[property][index].split(".").slice(0, -1).join('.') + ".jpg";
           tempCategorySongStruct.categories[categoryIndex].songs.push({
             name: response.data[property][index],
             category: property,

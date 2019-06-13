@@ -117,7 +117,7 @@ app.get('/samplemusic/:categoryName/:songName', function (req, res) {
 // Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/audio/samples
 // TODO - The paths in production will likely be different
 app.get('/albumart/:categoryName/:songName', function (req, res) {
-  var albumArtName = req.params.songName.split(".")[0] + ".jpg";
+  var albumArtName = req.params.songName.split(".").slice(0, -1).join('.') + ".jpg";
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  albumArtName, function(err) {
     if(err) {

@@ -9,6 +9,8 @@ import WaveformBackground from '../../assets/images/WaveformBackground.png'
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
+// TODO:  Add event on song ending to play the next song.
+
 export default class Waveform extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +92,7 @@ export default class Waveform extends Component {
       percentage = 1;
     else if (percentage < 0)
       percentage = 0;
-      
+
     this.state.waveform.seekTo(percentage);
   }
 

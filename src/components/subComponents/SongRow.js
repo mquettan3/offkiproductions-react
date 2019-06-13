@@ -23,7 +23,7 @@ export default class SongRow extends Component {
 
   render() {
     const license_tier = this.props.licenseTier;
-    const songName = this.props.songName.split(".")[0];
+    const songName = this.props.songName.split(".").slice(0, -1).join('.');
 
     return (
       <tr id={songName} className={"song-row playing-" + this.props.isActive.toString()}>
