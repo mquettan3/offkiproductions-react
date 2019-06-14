@@ -40,9 +40,30 @@
       margin-top: auto;
       margin-bottom: auto;
       color: #3d884d; }
+  .audio-file-shop .song-row.playing-true {
+    background-color: rgba(0, 0, 0, 0.1); }
 
-.song-row.playing-true {
-  background-color: rgba(0, 0, 0, 0.1); }
+@media (max-width: 546.9px) {
+  .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
+    height: auto;
+    max-height: 170px;
+    -webkit-transition: max-height 2s;
+    transition: max-height 2s;
+    overflow: hidden; } }
+
+@media (min-width: 547px) {
+  .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
+    height: auto;
+    max-height: 200px;
+    -webkit-transition: max-height 2s;
+    transition: max-height 2s;
+    overflow: hidden; } }
+
+.audio-file-shop-wrapper .paypal-buttons-wrapper-hidden {
+  max-height: 0px;
+  -webkit-transition: max-height 2s;
+  transition: max-height 2s;
+  overflow: hidden; }
 
 .audio-player {
   position: relative;

@@ -7,8 +7,6 @@ const axios = require('axios');
 
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
-import PayWithPayPalImage from "../../assets/images/paypal-mark.jpg"
-import PayWithCreditCardImage from "../../assets/images/card-mark.png"
 
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
@@ -47,7 +45,10 @@ export default class AudioFileShop extends Component {
       categorySongStruct: null,
       currentCategoryId: 0,
       currentSongId: 0,
-      shoppingCart: []
+      shoppingCart: [],
+      checkedPaypal: true,
+      checkedCard: false,
+      showPayPal: false
     };
   }
 
@@ -170,25 +171,10 @@ export default class AudioFileShop extends Component {
 
     // Update State
     this.setState({
-      categorySongStruct: tempCategorySongStruct
+      categorySongStruct: tempCategorySongStruct,
+      showPayPal: false
     });
   }
-
-////// Keeping this for reference.  I want to add in a continuous seek on mouse drag and this will be useful.
-  // handleManualSeek(e) {
-  //   // Determine where within div was clicked.
-  //   // This is done by first determining the total offset from the left of the screen by summing the offets of all parents to each other.
-  //
-  //   let totalOffsetLeft = e.currentTarget.offsetLeft;
-  //   let targetParent = e.currentTarget.offsetParent;
-  //   while (targetParent) {
-  //     totalOffsetLeft += targetParent.offsetLeft;
-  //     targetParent = targetParent.offsetParent;
-  //   }
-  //
-  //   // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
-  //   let percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
-  // }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -225,7 +211,7 @@ export default class AudioFileShop extends Component {
       }
     }
 
-    this.setState({shoppingCart: shoppingCart});
+    this.setState({shoppingCart: shoppingCart, showPayPal: true});
     console.log("You've opted to purchase" + JSON.stringify(shoppingCart));
   }
 
@@ -279,6 +265,10 @@ export default class AudioFileShop extends Component {
   render() {
     let songTableList = [];
     let audioPlayer = "";
+    let payPalStyle = "paypal-buttons-wrapper-hidden"
+    if (this.state.showPayPal) {
+      payPalStyle = "paypal-buttons-wrapper-showing"
+    }
 
     if(this.state.categorySongStruct) {
       // Create the Audio table entires based off of what was received from the server, but only if it's been received.
@@ -340,26 +330,15 @@ export default class AudioFileShop extends Component {
         <div className="music-action">
           <input className="btn btn-ghost-primary" onClick={this.handleSubmit} type="submit" value="Purchase Selected Music!"/>
         </div>
-        <label>
-            <input type="radio" name="payment-option" value="paypal" checked={this.state.checkedPaypal} onChange={this.changePaypalSelection}/>
-            <img src={PayWithPayPalImage} alt="Pay with Paypal"/>
-        </label>
-
-        <label>
-            <input type="radio" name="payment-option" value="card" checked={this.state.checkedCard} onChange={this.changeCardSelection}/>
-            <img src={PayWithCreditCardImage} alt="Accepting Visa, Mastercard, Discover and American Express"/>
-        </label>
-
-        <PayPalButton
-          createOrder={this.createPaymentOrder}
-          onSuccess={this.handlePaymentSuccess}
-          options={{
-              clientId: "AczEaQP7d-VqHIIsmMRe2wugcUqJiQrD27NucJNOEy_SDCkUXzRMJHpVqvABtyyYBAgJ_R3zyhj-KCwk"
-          }}
-          style={{
-            layout: "horizontal"
-          }}
-        />
+        <div className={payPalStyle}>
+          <PayPalButton
+            createOrder={this.createPaymentOrder}
+            onSuccess={this.handlePaymentSuccess}
+            options={{
+                clientId: "AczEaQP7d-VqHIIsmMRe2wugcUqJiQrD27NucJNOEy_SDCkUXzRMJHpVqvABtyyYBAgJ_R3zyhj-KCwk"
+            }}
+          />
+        </div>
       </div>
     )
   }
