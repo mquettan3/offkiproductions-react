@@ -46,7 +46,8 @@ export default class AudioFileShop extends Component {
       volume: 100,
       categorySongStruct: null,
       currentCategoryId: 0,
-      currentSongId: 0
+      currentSongId: 0,
+      shoppingCart: []
     };
   }
 
@@ -191,51 +192,67 @@ export default class AudioFileShop extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let shoppingCart = [];
+    var shoppingCart = [];
 
     for(let category in this.state.categorySongStruct.categories) {
       for(let song in this.state.categorySongStruct.categories[category].songs) {
         if (this.state.categorySongStruct.categories[category].songs[song].licenseTier !== "None") {
-          shoppingCart.push({songName: this.state.categorySongStruct.categories[category].songs[song].name,
-            category: this.state.categorySongStruct.categories[category].songs[song].category,
-            location: this.state.categorySongStruct.categories[category].songs[song].songLocation,
-            licenseTier: this.state.categorySongStruct.categories[category].songs[song].licenseTier});
+          var licenseTier = this.state.categorySongStruct.categories[category].songs[song].licenseTier;
+          var songName = this.state.categorySongStruct.categories[category].songs[song].name.split(".").slice(0, -1).join('.');
+          var categoryName = this.state.categorySongStruct.categories[category].name;
+          var cost = "0";
+
+          if (licenseTier === "Basic") {
+            cost = "30"
+          } else if (licenseTier === "Premium") {
+            cost = "100"
+          } else if (licenseTier === "Exclusive") {
+            cost = "3000"
+          }
+
+          shoppingCart.push({
+            name: songName,
+            unit_amount: {
+              currency_code: "USD",
+              value: cost
+            },
+            quantity: "1",
+            description: "Song Name: " + songName + " - Category Name: " + categoryName + " - License Tier: " + licenseTier,
+            sku: "OK" + category + "-" + song + "-" + licenseTier,
+            category: "DIGITAL_GOODS"
+          });
         }
       }
     }
 
+    this.setState({shoppingCart: shoppingCart});
     console.log("You've opted to purchase" + JSON.stringify(shoppingCart));
   }
 
   createPaymentOrder(data, actions) {
+    var totalCost = 0;
+    for (let item in this.state.shoppingCart) {
+      totalCost += parseFloat(this.state.shoppingCart[item].unit_amount.value);
+    }
+
     let orderObject = {
       intent: "CAPTURE",
       purchase_units: [{
         amount: {
           currency_code: "USD",
-          value: "0.01",
+          value: totalCost,
           breakdown: {
             item_total: {
               currency_code: "USD",
-              value: "0.01"
+              value: totalCost
             }
           }
         },
-        description: "You are purchasing from the one and only Off Ki.",
-        items: [{
-          name: "Flow Ting - Premium",
-          unit_amount: {
-            currency_code: "USD",
-            value: "0.01"
-          },
-          quantity: "1",
-          description: "Flow Ting 1",
-          sku: "C137",
-          category: "DIGITAL_GOODS"
-        }],
+        description: "You are purchasing from the one and only Off Ki Productions.",
+        items: this.state.shoppingCart,
       }],
       application_context: {
-        brand_name: "Off Ki Test Productions",
+        brand_name: "Off Ki Productions",
         landing_page: "LOGIN",
         shipping_preference: "NO_SHIPPING",
         user_action: "CONTINUE",
@@ -324,12 +341,12 @@ export default class AudioFileShop extends Component {
           <input className="btn btn-ghost-primary" onClick={this.handleSubmit} type="submit" value="Purchase Selected Music!"/>
         </div>
         <label>
-            <input type="radio" name="payment-option" value="paypal"/>
+            <input type="radio" name="payment-option" value="paypal" checked={this.state.checkedPaypal} onChange={this.changePaypalSelection}/>
             <img src={PayWithPayPalImage} alt="Pay with Paypal"/>
         </label>
 
         <label>
-            <input type="radio" name="payment-option" value="card"/>
+            <input type="radio" name="payment-option" value="card" checked={this.state.checkedCard} onChange={this.changeCardSelection}/>
             <img src={PayWithCreditCardImage} alt="Accepting Visa, Mastercard, Discover and American Express"/>
         </label>
 
