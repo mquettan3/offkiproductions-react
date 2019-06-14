@@ -180,6 +180,11 @@ export default class AudioFileShop extends Component {
     e.preventDefault();
     var shoppingCart = [];
 
+    if(this.state.shoppingCart.length === 0) {
+      alert("Please select a song to purchase!");
+      return;
+    }
+
     for(let category in this.state.categorySongStruct.categories) {
       for(let song in this.state.categorySongStruct.categories[category].songs) {
         if (this.state.categorySongStruct.categories[category].songs[song].licenseTier !== "None") {
