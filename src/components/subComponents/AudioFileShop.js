@@ -7,12 +7,19 @@ const axios = require('axios');
 
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
+import PayWithPayPalImage from "../../assets/images/paypal-mark.jpg"
+import PayWithCreditCardImage from "../../assets/images/card-mark.png"
 
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
+// paypal
+import { PayPalButton } from "react-paypal-button-v2";
+
 // var serverLocation = "10.0.0.100"
 var serverLocation = "192.168.56.102"
+
+// TODO: On initial load, the first song that is selected is not highlighted.
 
 export default class AudioFileShop extends Component {
   constructor(props) {
@@ -29,6 +36,8 @@ export default class AudioFileShop extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
+    this.createPaymentOrder = this.createPaymentOrder.bind(this);
+    this.onPaymentSuccess = this.onPaymentSuccess.bind(this);
 
     this.state = {
       player_state: "paused",
@@ -198,6 +207,58 @@ export default class AudioFileShop extends Component {
     console.log("You've opted to purchase" + JSON.stringify(shoppingCart));
   }
 
+  createPaymentOrder(data, actions) {
+    let orderObject = {
+      intent: "CAPTURE",
+      purchase_units: [{
+        amount: {
+          currency_code: "USD",
+          value: "0.01",
+          breakdown: {
+            item_total: {
+              currency_code: "USD",
+              value: "0.01"
+            }
+          }
+        },
+        description: "You are purchasing from the one and only Off Ki.",
+        items: [{
+          name: "Flow Ting - Premium",
+          unit_amount: {
+            currency_code: "USD",
+            value: "0.01"
+          },
+          quantity: "1",
+          description: "Flow Ting 1",
+          sku: "C137",
+          category: "DIGITAL_GOODS"
+        }],
+      }],
+      application_context: {
+        brand_name: "Off Ki Test Productions",
+        landing_page: "LOGIN",
+        shipping_preference: "NO_SHIPPING",
+        user_action: "CONTINUE",
+        return_url: "http://192.168.56.102:3000",
+        cancel_url: "http://192.168.56.102:3000"
+      }
+    }
+
+    return actions.order.create(orderObject);
+  }
+
+  onPaymentSuccess(details) {
+    alert("Transaction completed by " + details.payer.name.given_name);
+
+    // OPTIONAL: Call your server to save the transaction
+    // return fetch("/paypal-transaction-complete", {
+    //   method: "post",
+    //   body: JSON.stringify({
+    //     orderID: data.orderID
+    //   })
+    // });
+  }
+
   render() {
     let songTableList = [];
     let audioPlayer = "";
@@ -262,6 +323,26 @@ export default class AudioFileShop extends Component {
         <div className="music-action">
           <input className="btn btn-ghost-primary" onClick={this.handleSubmit} type="submit" value="Purchase Selected Music!"/>
         </div>
+        <label>
+            <input type="radio" name="payment-option" value="paypal"/>
+            <img src={PayWithPayPalImage} alt="Pay with Paypal"/>
+        </label>
+
+        <label>
+            <input type="radio" name="payment-option" value="card"/>
+            <img src={PayWithCreditCardImage} alt="Accepting Visa, Mastercard, Discover and American Express"/>
+        </label>
+
+        <PayPalButton
+          createOrder={this.createPaymentOrder}
+          onSuccess={this.handlePaymentSuccess}
+          options={{
+              clientId: "AczEaQP7d-VqHIIsmMRe2wugcUqJiQrD27NucJNOEy_SDCkUXzRMJHpVqvABtyyYBAgJ_R3zyhj-KCwk"
+          }}
+          style={{
+            layout: "horizontal"
+          }}
+        />
       </div>
     )
   }
