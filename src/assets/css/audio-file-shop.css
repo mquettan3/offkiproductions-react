@@ -47,22 +47,22 @@
   .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
     height: auto;
     max-height: 170px;
-    -webkit-transition: max-height 2s;
-    transition: max-height 2s;
+    -webkit-transition: max-height 1s;
+    transition: max-height 1s;
     overflow: hidden; } }
 
 @media (min-width: 547px) {
   .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
     height: auto;
     max-height: 200px;
-    -webkit-transition: max-height 2s;
-    transition: max-height 2s;
+    -webkit-transition: max-height 1s;
+    transition: max-height 1s;
     overflow: hidden; } }
 
 .audio-file-shop-wrapper .paypal-buttons-wrapper-hidden {
   max-height: 0px;
-  -webkit-transition: max-height 2s;
-  transition: max-height 2s;
+  -webkit-transition: max-height 1s;
+  transition: max-height 1s;
   overflow: hidden; }
 
 .audio-player {

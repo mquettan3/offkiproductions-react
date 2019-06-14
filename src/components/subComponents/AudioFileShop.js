@@ -260,6 +260,8 @@ export default class AudioFileShop extends Component {
     //     orderID: data.orderID
     //   })
     // });
+
+    // On success, call the server and tell it to email the purchaser with a link for all of their music.
   }
 
   render() {
