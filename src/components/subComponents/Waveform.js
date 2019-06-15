@@ -17,6 +17,7 @@ export default class Waveform extends Component {
 
     this.handleSeek = this.handleSeek.bind(this);
     this.handleNewLoad = this.handleNewLoad.bind(this);
+    this.handleNextSong = this.handleNextSong.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.resizeWaveform = this.resizeWaveform.bind(this);
     this.mouseDown = this.mouseDown.bind(this);
@@ -57,6 +58,7 @@ export default class Waveform extends Component {
     wavesurfer.on('seek', this.handleSeek);
     wavesurfer.on('ready', this.handleNewLoad);
     wavesurfer.on('audioprocess', this.debouncedHandleCurrentTimeChange);
+    wavesurfer.on('finish', this.handleNextSong);
 
     // This adds the responsive nature to the waveform.
     window.addEventListener('resize', this.debouncedResizeWaveform);
@@ -122,6 +124,11 @@ export default class Waveform extends Component {
     this.props.handleDurationChange(duration);
   }
 
+  handleNextSong() {
+    // Every time a song finishes, progress to the next song
+    this.props.handleNextSong();
+  }
+
   handleCurrentTimeChange() {
     // If we just got resized:
     if(this.state.preResizeProgress) {
@@ -132,7 +139,7 @@ export default class Waveform extends Component {
       this.setState({preResizeProgress: null});
     }
 
-    // Every time the duration of the song changes, pass up the value
+    // Every time the current time of the song changes, pass up the value
     var time = this.state.waveform.getCurrentTime();
     this.props.handleCurrentTimeChange(time);
   }

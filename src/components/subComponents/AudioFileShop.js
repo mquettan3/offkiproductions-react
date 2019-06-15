@@ -14,8 +14,8 @@ import '../../assets/css/audio-file-shop.css';
 // paypal
 import { PayPalButton } from "react-paypal-button-v2";
 
-// var serverLocation = "10.0.0.100"
-var serverLocation = "192.168.56.102"
+var serverLocation = "10.0.0.100"
+// var serverLocation = "192.168.56.102"
 
 // TODO: On initial load, the first song that is selected is not highlighted.
 
@@ -36,6 +36,7 @@ export default class AudioFileShop extends Component {
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
     this.createPaymentOrder = this.createPaymentOrder.bind(this);
     this.onPaymentSuccess = this.onPaymentSuccess.bind(this);
+    this.handleNextSong = this.handleNextSong.bind(this);
 
     this.state = {
       player_state: "paused",
@@ -90,6 +91,8 @@ export default class AudioFileShop extends Component {
 
         categoryIndex += 1;
       }
+
+      tempCategorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = true;
 
       this.setState({categorySongStruct: tempCategorySongStruct});
   }
@@ -154,6 +157,29 @@ export default class AudioFileShop extends Component {
 
     // Don't need to do anything but play.  handleDurationChange keeps track of the current time accurately.
     this.setState({player_state: "playing"});
+  }
+
+  handleNextSong() {
+    // Advance to the next song
+    let newSongId = this.state.currentSongId;
+    let newCategoryId = this.state.currentCategoryId;
+
+    if(this.state.currentSongId < this.state.categorySongStruct.categories[this.state.currentCategoryId].songs.length - 1) {
+      newSongId = this.state.currentSongId + 1;
+    } else {
+      newSongId = 0;
+      if(this.state.currentCategoryId < this.state.categorySongStruct.categories.length - 1) {
+        newCategoryId = this.state.currentCategoryId + 1;
+      } else {
+        newCategoryId = 0;
+      }
+    }
+
+    var tempCategorySongStruct = this.deepCopyCategorySongStruct();
+    tempCategorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = false;
+    tempCategorySongStruct.categories[newCategoryId].songs[newSongId].isActive = true;
+
+    this.setState({currentSongId: newSongId, currentCategoryId: newCategoryId, categorySongStruct: tempCategorySongStruct});
   }
 
   handleDurationChange(currentDuration) {
@@ -318,6 +344,7 @@ export default class AudioFileShop extends Component {
           handleSeek={this.handleSeek}
           handleDurationChange={this.handleDurationChange}
           handleCurrentTimeChange={this.handleCurrentTimeChange}
+          handleNextSong={this.handleNextSong}
         />;
     }
     return (

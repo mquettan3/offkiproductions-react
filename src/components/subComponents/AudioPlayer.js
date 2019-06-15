@@ -28,6 +28,7 @@ export default class AudioPlayer extends Component {
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.handleSeek = this.handleSeek.bind(this);
+    this.handleNextSong = this.handleNextSong.bind(this);
   }
 
   handlePause() {
@@ -61,6 +62,11 @@ export default class AudioPlayer extends Component {
   handleSeek(progress) {
     // Seek to where user clicked.
     this.props.handleSeek(progress);
+  }
+
+  handleNextSong() {
+    // Seek to where user clicked.
+    this.props.handleNextSong();
   }
 
   handleCurrentTimeChange(time) {
@@ -98,6 +104,7 @@ export default class AudioPlayer extends Component {
             handleSeek={this.handleSeek}
             handleDurationChange={this.handleDurationChange}
             handleCurrentTimeChange={this.handleCurrentTimeChange}
+            handleNextSong={this.handleNextSong}
           />
           <div className="volume">
             <i className="fa fa-volume-down"></i>
