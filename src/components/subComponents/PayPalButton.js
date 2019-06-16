@@ -58,13 +58,16 @@ class PayPalButton extends Component {
       sandbox: 'AYHNtFj0PqXWC3WwFaJ6MJOggD2M1H3WjDyPvip_y7GLSFCr1qJyvfOVWvbqkmkoC3EY__-UkTIi9wqN',
       production: 'xxxXXX',
     };
+    var total = "0.01"
+    var currency = "USD"
 
     const payment = () =>
       paypal.rest.payment.create(env, CLIENT, {
         transactions: [
           {
             amount: {
-              "0.01"
+              total,
+              currency,
             }
           },
         ],
