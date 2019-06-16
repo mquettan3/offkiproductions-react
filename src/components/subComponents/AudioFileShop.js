@@ -1,18 +1,17 @@
 // AudioFileShop.component.js
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 // Require Axios for HTTP requests
 const axios = require('axios');
 
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
+import PayPalButton from "./PayPalButton.js"
 
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
-
-// paypal
-import { PayPalButton } from "react-paypal-button-v2";
 
 var serverLocation = "10.0.0.100"
 // var serverLocation = "192.168.56.102"
@@ -51,6 +50,9 @@ export default class AudioFileShop extends Component {
       checkedCard: false,
       showPayPal: false
     };
+
+    window.React = React;
+    window.ReactDOM = ReactDOM;
   }
 
   componentDidMount() {
@@ -293,6 +295,24 @@ export default class AudioFileShop extends Component {
     // });
 
     // On success, call the server and tell it to email the purchaser with a link for all of their music.
+
+    // Request from server the full list of files to scroll through
+    axios.post('http://' + serverLocation + ':4000/purchaseValidation', {
+      orderID: details.orderID,
+
+    }).then(function (response) {
+        // handle success
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+
+        // Do nothing
+      });
   }
 
   render() {
@@ -367,10 +387,7 @@ export default class AudioFileShop extends Component {
         <div className={payPalStyle}>
           <PayPalButton
             createOrder={this.createPaymentOrder}
-            onSuccess={this.handlePaymentSuccess}
-            options={{
-                clientId: "AczEaQP7d-VqHIIsmMRe2wugcUqJiQrD27NucJNOEy_SDCkUXzRMJHpVqvABtyyYBAgJ_R3zyhj-KCwk"
-            }}
+            onApprove={this.handlePaymentSuccess}
           />
         </div>
       </div>
