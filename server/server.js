@@ -163,12 +163,10 @@ app.post('/purchaseValidation', async function (req, res) {
     return res.sendStatus(500);
   }
 
-  console.log(JSON.stringify(order));
-
   let songList_array = [];
 
-  for (item in order.result.purchase_units.items) {
-    songList_array.push(order.result.purchase_units.items[item].description);
+  for (item in order.result.purchase_units[0].items) {
+    songList_array.push(order.result.purchase_units[0].items[item].description);
   }
 
   // Send Email to Josh to notify him of the purchaser
@@ -177,15 +175,17 @@ app.post('/purchaseValidation', async function (req, res) {
   to: order.result.payer.email_address,
   subject: 'Off Ki Productions - Your Purchase Confirmation',
   text: 'Thank you for purchasing the following: \n' + songList_array.join("\n")
-};
+  };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+  console.log("Songs Purchased:\n" + songList_array.join("\n"));
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 
   // Send Email to customer containing their purchase or their "Make an Offer" instructions
 
