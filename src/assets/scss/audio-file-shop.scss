@@ -77,9 +77,10 @@ $current_song_background: rgba(0, 0, 0, 0.1);
   @media (max-width: 546.9px) {
     .paypal-buttons-wrapper-showing {
       height: auto;
-      max-height: 170px;
-      -webkit-transition: max-height 1s;
-      transition: max-height 1s;
+      padding-top: 30px;
+      max-height: 200px;
+      -webkit-transition: all 1s;
+      transition: all 1s;
       overflow: hidden;
     }
   }
@@ -87,17 +88,19 @@ $current_song_background: rgba(0, 0, 0, 0.1);
   @media (min-width: 547px) {
     .paypal-buttons-wrapper-showing {
       height: auto;
-      max-height: 200px;
-      -webkit-transition: max-height 1s;
-      transition: max-height 1s;
+      padding-top: 30px;
+      max-height: 230px;
+      -webkit-transition: all 1s;
+      transition: all 1s;
       overflow: hidden;
     }
   }
 
   .paypal-buttons-wrapper-hidden {
     max-height: 0px;
-    -webkit-transition: max-height 1s;
-    transition: max-height 1s;
+    padding-top: 0px;
+    -webkit-transition: all 1s;
+    transition: all 1s;
     overflow: hidden;
   }
 }
