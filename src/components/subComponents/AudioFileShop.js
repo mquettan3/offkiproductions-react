@@ -13,8 +13,8 @@ import PayPalButton from "./PayPalButton.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-var serverLocation = "10.0.0.100"
-// var serverLocation = "192.168.56.102"
+//var serverLocation = "10.0.0.100"
+var serverLocation = "192.168.56.102"
 
 // TODO: On initial load, the first song that is selected is not highlighted.
 
@@ -284,22 +284,10 @@ export default class AudioFileShop extends Component {
   }
 
   onPaymentSuccess(details) {
-    alert("Transaction completed by " + details.payer.name.given_name);
-
-    // OPTIONAL: Call your server to save the transaction
-    // return fetch("/paypal-transaction-complete", {
-    //   method: "post",
-    //   body: JSON.stringify({
-    //     orderID: data.orderID
-    //   })
-    // });
-
     // On success, call the server and tell it to email the purchaser with a link for all of their music.
-
-    // Request from server the full list of files to scroll through
     axios.post('http://' + serverLocation + ':4000/purchaseValidation', {
       orderID: details.orderID,
-
+      payerID: details.payerID
     }).then(function (response) {
         // handle success
         console.log(response);
@@ -387,7 +375,7 @@ export default class AudioFileShop extends Component {
         <div className={payPalStyle}>
           <PayPalButton
             createOrder={this.createPaymentOrder}
-            onApprove={this.handlePaymentSuccess}
+            onApprove={this.onPaymentSuccess}
           />
         </div>
       </div>

@@ -1,7 +1,6 @@
 // PayPalButton.component.js
 
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 // Script Loader
 import scriptLoader from 'react-async-script-loader';
@@ -47,58 +46,19 @@ class PayPalButton extends Component {
   }
 
   render() {
-    let PayPalButtonVar = null;
     if(!this.state.showButton)
       return(<div></div>)
-    const paypal = window.PAYPAL;
-    PayPalButtonVar = paypal.Button.driver('react', { React, ReactDOM });
+    const paypal = window.paypal;
+    paypal.Buttons({
+      createOrder: this.props.createOrder,
+      onApprove: this.props.onApprove
+    }).render("#paypal-button-container");
 
-    const env = "sandbox";
-    const CLIENT = {
-      sandbox: 'AYHNtFj0PqXWC3WwFaJ6MJOggD2M1H3WjDyPvip_y7GLSFCr1qJyvfOVWvbqkmkoC3EY__-UkTIi9wqN',
-      production: 'xxxXXX',
-    };
-    var total = "0.01"
-    var currency = "USD"
-
-    const payment = () =>
-      paypal.rest.payment.create(env, CLIENT, {
-        transactions: [
-          {
-            amount: {
-              total,
-              currency,
-            }
-          },
-        ],
-      });
-
-    const onAuthorize = (data, actions) =>
-      actions.payment.execute()
-        .then(() => {
-          const payment = {
-            paid: true,
-            cancelled: false,
-            payerID: data.payerID,
-            paymentID: data.paymentID,
-            paymentToken: data.paymentToken,
-            returnUrl: data.returnUrl,
-          };
-
-          this.props.onSuccess(payment);
-        });
 
     return(
-      <div id="paypal-button-container">
-      {this.state.showButton && <PayPalButtonVar
-        env={env}
-        client={CLIENT}
-        onAuthorize={onAuthorize}
-        payment={payment}
-        />}
-      </div>
+      <div id="paypal-button-container"></div>
     )
   }
 }
 
-export default scriptLoader('https://www.paypalobjects.com/api/checkout.js')(PayPalButton)
+export default scriptLoader('https://www.paypal.com/sdk/js?client-id=AYHNtFj0PqXWC3WwFaJ6MJOggD2M1H3WjDyPvip_y7GLSFCr1qJyvfOVWvbqkmkoC3EY__-UkTIi9wqN')(PayPalButton)

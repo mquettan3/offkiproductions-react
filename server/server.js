@@ -14,6 +14,21 @@ const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
 
+// Import the Paypal SDK package
+const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
+const payPalClient = require('./payPalClient.js');
+
+// Import the emailer
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_NAME,
+    pass: process.env.EMAIL_PASSWORD
+  }
+});
+
 // Define configuration variables
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -127,6 +142,63 @@ app.get('/albumart/:categoryName/:songName', function (req, res) {
 
   // Server debug print
   console.log("Sent AlbumArt file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + albumArtName);
+});
+
+// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/audio/samples
+// TODO - The paths in production will likely be different
+app.post('/purchaseValidation', async function (req, res) {
+  // 2a. Get the order ID from the request body
+  const orderID = req.body.orderID;
+  console.log(JSON.stringify(orderID));
+  // 3. Call PayPal to get the transaction details
+  let request = new checkoutNodeJssdk.orders.OrdersGetRequest(orderID);
+
+  let order;
+  try {
+    order = await payPalClient.client().execute(request);
+  } catch (err) {
+
+    // 4. Handle any errors from the call
+    console.error(err);
+    return res.sendStatus(500);
+  }
+
+  console.log(JSON.stringify(order));
+
+  let songList_array = [];
+
+  for (item in order.result.purchase_units.items) {
+    songList_array.push(order.result.purchase_units.items[item].description);
+  }
+
+  // Send Email to Josh to notify him of the purchaser
+  var mailOptions = {
+  from: process.env.EMAIL_NAME,
+  to: order.result.payer.email_address,
+  subject: 'Off Ki Productions - Your Purchase Confirmation',
+  text: 'Thank you for purchasing the following: \n' + songList_array.join("\n")
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+  // Send Email to customer containing their purchase or their "Make an Offer" instructions
+
+  // 5. Validate the transaction details are as expected
+  // if (order.result.purchase_units[0].amount.value !== '220.00') {
+  //   return res.send(400);
+  // }
+
+  // 6. Save the transaction in your database
+  // await database.saveTransaction(orderID);
+
+  // 7. Return a successful response to the client
+  return res.sendStatus(200);
 });
 
 // Serve static assets if in productions
