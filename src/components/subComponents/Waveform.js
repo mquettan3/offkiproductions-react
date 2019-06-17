@@ -50,7 +50,8 @@ export default class Waveform extends Component {
       backend: 'MediaElement',
       barWidth: 0,
       cursorWidth: 0,
-      height: 100
+      height: 100,
+      interact: false
     });
 
     this.setState({waveform: wavesurf, loaded: true});
