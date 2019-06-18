@@ -134,9 +134,13 @@ export default class Promo extends Component {
     if(this.state.animationRunning) {
       CurrentBackgroundImage.animationPlayState = 'running';
       CurrentBackgroundImage.animationDirection = 'normal';
+      CurrentBackgroundImage.WebkitAnimationPlayState = 'running';
+      CurrentBackgroundImage.WebkitAnimationDirection = 'normal';
     } else {
       CurrentBackgroundImage.animationPlayState = 'paused';
       CurrentBackgroundImage.animationDirection = 'reverse';
+      CurrentBackgroundImage.WebkitAnimationPlayState = 'paused';
+      CurrentBackgroundImage.WebkitAnimationDirection = 'reverse';
     }
 
     return (
