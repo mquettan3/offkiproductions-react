@@ -181,7 +181,8 @@ export default class Waveform extends Component {
   render() {
     var waveformBackgroundStyle = {
       backgroundImage: 'url(' + WaveformBackground + ')',
-      backgroundSize: 'cover',
+      backgroundSize: '100% 100%',
+      backgroundPosition: "left center",
       backgroundRepeat: 'no-repeat'
     }
 
