@@ -830,10 +830,18 @@ section:nth-child(even) {
   padding: 0 0;
   opacity: 1;
   position: absolute;
-  -webkit-animation: zoomin 3s infinte;
-  -moz-animation: zoomin 3s infinte;
-  -o-animation: zoomin 3s infinte;
-  animation: zoomin 3s infinte;
+  -webkit-animation-name: zoomin;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-name: zoomin;
+  -moz-animation-duration: 3s;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-name: zoomin;
+  -o-animation-duration: 3s;
+  -o-animation-iteration-count: infinite;
+  animation-name: zoomin;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
 }
 
 .promo-previous-slide {
@@ -878,10 +886,18 @@ section:nth-child(even) {
 .promo-progress-bar {
   height: 2px;
   position: absolute;
-  -webkit-animation: progress_bar 8s infinite;
-  -moz-animation: progress_bar 8s infinite;
-  -o-animation: progress_bar 8s infinite;
-  animation: progress_bar 8s infinite;
+  -webkit-animation-name: progress_bar;
+  -webkit-animation-duration: 8s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-name: progress_bar;
+  -moz-animation-duration: 8s;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-name: progress_bar;
+  -o-animation-duration: 8s;
+  -o-animation-iteration-count: infinite;
+  animation-name: progress_bar;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
   background-color: rgb(110, 206, 178);
   bottom: 0px;
 }
