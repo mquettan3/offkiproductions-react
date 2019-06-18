@@ -818,6 +818,9 @@ section:nth-child(even) {
   padding: 0 0;
   opacity: 1;
   position: absolute;
+  -webkit-animation-name: zoomin;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
   animation-name: zoomin;
   animation-duration: 3s;
   animation-iteration-count: infinite;
@@ -855,6 +858,9 @@ section:nth-child(even) {
 .promo-progress-bar {
   height: 2px;
   position: absolute;
+  -webkit-animation-name: progress_bar;
+  -webkit-animation-duration: 8s;
+  -webkit-animation-iteration-count: infinite;
   animation-name: progress_bar;
   animation-duration: 8s;
   animation-iteration-count: infinite;
