@@ -136,11 +136,19 @@ export default class Promo extends Component {
       CurrentBackgroundImage.animationDirection = 'normal';
       CurrentBackgroundImage.WebkitAnimationPlayState = 'running';
       CurrentBackgroundImage.WebkitAnimationDirection = 'normal';
+      CurrentBackgroundImage.MozAnimationPlayState = 'running';
+      CurrentBackgroundImage.MozAnimationDirection = 'normal';
+      CurrentBackgroundImage.OAnimationPlayState = 'running';
+      CurrentBackgroundImage.OAnimationDirection = 'normal';
     } else {
       CurrentBackgroundImage.animationPlayState = 'paused';
       CurrentBackgroundImage.animationDirection = 'reverse';
       CurrentBackgroundImage.WebkitAnimationPlayState = 'paused';
       CurrentBackgroundImage.WebkitAnimationDirection = 'reverse';
+      CurrentBackgroundImage.MozAnimationPlayState = 'paused';
+      CurrentBackgroundImage.MozAnimationDirection = 'reverse';
+      CurrentBackgroundImage.OAnimationPlayState = 'paused';
+      CurrentBackgroundImage.OAnimationDirection = 'reverse';
     }
 
     return (
