@@ -18,6 +18,8 @@ export default class Promo extends Component {
     // Bind all private methods to allow this pointer to be available to them.
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
+    this.handleAnimationStart = this.handleAnimationStart.bind(this);
+    this.triggerAnimationStart = this.triggerAnimationStart.bind(this);
     this.assignImages = this.assignImages.bind(this);
 
     // Initializng images with Hero1 here beacuse waiting for the axios.get response took too much time.
@@ -49,6 +51,9 @@ export default class Promo extends Component {
       // Assign the initial state
       this.state = { animationRunning: true, width: 0, height: 0, images: images, currentImageIndex: 0, previousImageIndex: 0};
 
+      // Create timer for the slideshow - in ms
+      this.timer = setInterval(this.triggerAnimationStart, 8000);
+
   }
 
   assignImages(er, files) {
@@ -58,12 +63,15 @@ export default class Promo extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    this.refs.visibleSlide.addEventListener("animationiteration", this.handleAnimationEnd, false);
+    this.refs.visibleSlide.addEventListener("animationend", this.handleAnimationEnd);
+    this.refs.visibleSlide.addEventListener("animationstart", this.handleAnimationStart);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
-    this.refs.visibleSlide.removeEventListener("animationiteration", this.handleAnimationEnd);
+    this.refs.visibleSlide.removeEventListener("animationend", this.handleAnimationEnd);
+    this.refs.visibleSlide.removeEventListener("animationstart", this.handleAnimationStart);
+    clearInterval(this.timer);
   }
 
   updateWindowDimensions() {
@@ -84,17 +92,21 @@ export default class Promo extends Component {
     this.setState({ width: width, height: height});
   }
 
+  triggerAnimationStart() {
+    this.setState({animated: "animated"})
+  }
+
   handleAnimationEnd() {
+    // Update the previous image to be the current image
+    this.setState({previousImageIndex: this.state.currentImageIndex, animated: ""});
+  }
+
+  handleAnimationStart() {
+    // Update the current image to be the next image.
     if((this.state.currentImageIndex + 1)  === this.state.images.length) {
       this.setState({currentImageIndex: 0});
     } else {
       this.setState({currentImageIndex: this.state.currentImageIndex + 1});
-    }
-
-    if(this.state.currentImageIndex === 0) {
-      this.setState({previousImageIndex: this.state.images.length - 1})
-    } else {
-      this.setState({previousImageIndex: this.state.currentImageIndex - 1})
     }
   }
 
@@ -119,7 +131,7 @@ export default class Promo extends Component {
     return (
       <section id="promo" className="promo-section" style={PromoSectionSizeStyle}>
         <div className="promo-previous-slide" style={PreviousBackgroundImage}></div>
-        <div className="promo-current-slide"  style={CurrentBackgroundImage} ref="visibleSlide"></div>
+        <div className={"promo-current-slide " + this.state.animated}  style={CurrentBackgroundImage} ref="visibleSlide"></div>
         <div className="promo-overlay" style={PromoSectionSizeStyle}></div>
         <div className="promo-progress-bar" />
         <div className="promo-content-wrapper"  style={PromoSectionSizeStyle}>
