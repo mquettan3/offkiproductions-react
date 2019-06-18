@@ -203,10 +203,10 @@ app.post('/purchaseValidation', async function (req, res) {
 
 // Serve static assets if in productions
 if(process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('../build'));
 
   // If we hit any paths that aren't otherwise specified - serve the index.html built by react npm build
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });
 }
