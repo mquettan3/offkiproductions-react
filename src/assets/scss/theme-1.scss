@@ -810,6 +810,18 @@ section:nth-child(even) {
   }
 }
 
+@-webkit-keyframes zoomin {
+  0% {
+    opacity: 0;
+    transform: scale(3);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .promo-current-slide {
   background-size: cover;
   overflow: hidden;
@@ -844,6 +856,16 @@ section:nth-child(even) {
 }
 
 @keyframes progress_bar {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@-webkit-keyframes progress_bar {
   0% {
     width: 0;
   }
