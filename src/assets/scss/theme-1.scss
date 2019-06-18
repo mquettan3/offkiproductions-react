@@ -804,9 +804,13 @@ section:nth-child(even) {
     transform: scale(3);
   }
 
-  100% {
+  38% {
     opacity: 1;
     transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
@@ -814,6 +818,11 @@ section:nth-child(even) {
   0% {
     opacity: 0;
     transform: scale(3);
+  }
+
+  38% {
+    opacity: 1;
+    transform: scale(1);
   }
 
   100% {
@@ -831,16 +840,10 @@ section:nth-child(even) {
   opacity: 1;
   position: absolute;
   -webkit-animation-name: zoomin;
-  -webkit-animation-duration: 3s;
+  -webkit-animation-duration: 8s;
   -webkit-animation-iteration-count: infinite;
-  -moz-animation-name: zoomin;
-  -moz-animation-duration: 3s;
-  -moz-animation-iteration-count: infinite;
-  -o-animation-name: zoomin;
-  -o-animation-duration: 3s;
-  -o-animation-iteration-count: infinite;
   animation-name: zoomin;
-  animation-duration: 3s;
+  animation-duration: 8s;
   animation-iteration-count: infinite;
 }
 
@@ -889,12 +892,6 @@ section:nth-child(even) {
   -webkit-animation-name: progress_bar;
   -webkit-animation-duration: 8s;
   -webkit-animation-iteration-count: infinite;
-  -moz-animation-name: progress_bar;
-  -moz-animation-duration: 8s;
-  -moz-animation-iteration-count: infinite;
-  -o-animation-name: progress_bar;
-  -o-animation-duration: 8s;
-  -o-animation-iteration-count: infinite;
   animation-name: progress_bar;
   animation-duration: 8s;
   animation-iteration-count: infinite;

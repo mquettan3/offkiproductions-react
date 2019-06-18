@@ -17,8 +17,7 @@ export default class Promo extends Component {
 
     // Bind all private methods to allow this pointer to be available to them.
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    this.handleTimer = this.handleTimer.bind(this);
-    this.stopAnimation = this.stopAnimation.bind(this);
+    this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
     this.assignImages = this.assignImages.bind(this);
 
     // Initializng images with Hero1 here beacuse waiting for the axios.get response took too much time.
@@ -48,7 +47,7 @@ export default class Promo extends Component {
       });
 
       // Assign the initial state
-      this.state = { animationRunning: true, width: 0, height: 0, images: images, currentImageIndex: 0, previousImageIndex: 0, intervalId: 0 };
+      this.state = { animationRunning: true, width: 0, height: 0, images: images, currentImageIndex: 0, previousImageIndex: 0};
 
   }
 
@@ -59,14 +58,12 @@ export default class Promo extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    this.refs.visibleSlide.addEventListener("animationiteration", this.stopAnimation, false);
-
-    this.setState({intervalId: setInterval(this.handleTimer, 8000)});
+    this.refs.visibleSlide.addEventListener("animationiteration", this.handleAnimationEnd, false);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
-    clearInterval(this.state.intervalId);
+    this.refs.visibleSlide.removeEventListener("animationiteration", this.handleAnimationEnd);
   }
 
   updateWindowDimensions() {
@@ -87,7 +84,7 @@ export default class Promo extends Component {
     this.setState({ width: width, height: height});
   }
 
-  handleTimer() {
+  handleAnimationEnd() {
     if((this.state.currentImageIndex + 1)  === this.state.images.length) {
       this.setState({currentImageIndex: 0});
     } else {
@@ -99,13 +96,6 @@ export default class Promo extends Component {
     } else {
       this.setState({previousImageIndex: this.state.currentImageIndex - 1})
     }
-
-    // Resume Animation
-    this.setState({animationRunning: true})
-  }
-
-  stopAnimation() {
-    this.setState({animationRunning: false})
   }
 
   render() {
@@ -133,22 +123,8 @@ export default class Promo extends Component {
 
     if(this.state.animationRunning) {
       CurrentBackgroundImage.animationPlayState = 'running';
-      CurrentBackgroundImage.animationDirection = 'normal';
-      CurrentBackgroundImage.WebkitAnimationPlayState = 'running';
-      CurrentBackgroundImage.WebkitAnimationDirection = 'normal';
-      CurrentBackgroundImage.MozAnimationPlayState = 'running';
-      CurrentBackgroundImage.MozAnimationDirection = 'normal';
-      CurrentBackgroundImage.OAnimationPlayState = 'running';
-      CurrentBackgroundImage.OAnimationDirection = 'normal';
     } else {
-      CurrentBackgroundImage.animationPlayState = 'paused';
-      CurrentBackgroundImage.animationDirection = 'reverse';
-      CurrentBackgroundImage.WebkitAnimationPlayState = 'paused';
-      CurrentBackgroundImage.WebkitAnimationDirection = 'reverse';
-      CurrentBackgroundImage.MozAnimationPlayState = 'paused';
-      CurrentBackgroundImage.MozAnimationDirection = 'reverse';
-      CurrentBackgroundImage.OAnimationPlayState = 'paused';
-      CurrentBackgroundImage.OAnimationDirection = 'reverse';
+      CurrentBackgroundImage.animationPlayState = 'running';
     }
 
     return (
