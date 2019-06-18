@@ -14,7 +14,7 @@ import PayPalButton from "./PayPalButton.js"
 import '../../assets/css/audio-file-shop.css';
 
 //var serverLocation = "10.0.0.100"
-var serverLocation = "192.168.56.102"
+var serverLocation = process.env.SERVER_LOCATION;
 
 // TODO: On initial load, the first song that is selected is not highlighted.
 
