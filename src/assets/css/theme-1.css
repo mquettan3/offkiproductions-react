@@ -675,8 +675,7 @@ section:nth-child(even) {
     opacity: 1;
     transform: scale(1); }
   100% {
-    opacity: 1;
-    transform: scale(1); } }
+    opacity: 1; } }
 
 .promo-current-slide {
   background-size: cover;

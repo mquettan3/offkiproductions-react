@@ -99,7 +99,7 @@ export default class Promo extends Component {
   }
 
   render() {
-    var PromoSectionHeight = {
+    var PromoSectionSizeStyle = {
       height: this.state.height,
       width: this.state.width
     }
@@ -116,24 +116,13 @@ export default class Promo extends Component {
       width: this.state.width
     }
 
-    var OverlayStyle = {
-      height: this.state.height,
-      width: this.state.width
-    }
-
-    if(this.state.animationRunning) {
-      CurrentBackgroundImage.animationPlayState = 'running';
-    } else {
-      CurrentBackgroundImage.animationPlayState = 'running';
-    }
-
     return (
-      <section id="promo" className="promo-section" style={PromoSectionHeight}>
+      <section id="promo" className="promo-section" style={PromoSectionSizeStyle}>
         <div className="promo-previous-slide" style={PreviousBackgroundImage}></div>
         <div className="promo-current-slide"  style={CurrentBackgroundImage} ref="visibleSlide"></div>
-        <div className="promo-overlay" style={OverlayStyle}></div>
+        <div className="promo-overlay" style={PromoSectionSizeStyle}></div>
         <div className="promo-progress-bar" />
-        <div className="promo-content-wrapper"  style={PromoSectionHeight}>
+        <div className="promo-content-wrapper"  style={PromoSectionSizeStyle}>
           <div className="container text-center promo-content">
             <div className="upper-wrapper">
               <div className="logo-holder">
