@@ -11,6 +11,8 @@ const axios = require('axios');
 //var serverLocation = "10.0.0.100"
 var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
+// TODO:  The height of this can be dynamic but the width needs to be whatever the size of the container is.  Bootstrap will handle it from there with @media events.
+
 export default class Promo extends Component {
   constructor(props) {
     super(props);
