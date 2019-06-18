@@ -13,8 +13,7 @@ import PayPalButton from "./PayPalButton.js"
 // Custom Styles
 import '../../assets/css/audio-file-shop.css';
 
-//var serverLocation = "10.0.0.100"
-var serverLocation = process.env.SERVER_LOCATION;
+var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
 // TODO: On initial load, the first song that is selected is not highlighted.
 

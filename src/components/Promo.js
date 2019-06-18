@@ -9,7 +9,7 @@ import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
 const axios = require('axios');
 
 //var serverLocation = "10.0.0.100"
-var serverLocation = process.env.SERVER_LOCATION;
+var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
 export default class Promo extends Component {
   constructor(props) {
