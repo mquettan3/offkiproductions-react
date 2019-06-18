@@ -50,13 +50,19 @@ $current_song_background: rgba(0, 0, 0, 0.1);
       font-weight: 100;
     }
 
-    .shopping-selection {
-      white-space: nowrap;
-    }
-    .shopping-selection {
-      select {
-        margin-left: 20px;
+    @media (min-width: 992px) {
+      .shopping-selection {
+        white-space: nowrap;
+        select {
+          margin-left: 20px;
+        }
+        label {
+          margin-right: 20px;
+        }
       }
+    }
+
+    .shopping-selection {
       label {
         margin-right: 20px;
         margin-top: auto;
@@ -75,10 +81,14 @@ $current_song_background: rgba(0, 0, 0, 0.1);
 .audio-file-shop-wrapper {
 
   @media (max-width: 546.9px) {
+    $paypal_buttons_height: 200px;
+    @supports (-webkit-overflow-scrolling: touch) {
+      $paypal_buttons_height: 259px;
+    }
     .paypal-buttons-wrapper-showing {
       height: auto;
       padding-top: 30px;
-      max-height: 200px;
+      max-height: $paypal_buttons_height;
       -webkit-transition: all 1s;
       transition: all 1s;
       overflow: hidden;
@@ -86,10 +96,14 @@ $current_song_background: rgba(0, 0, 0, 0.1);
   }
 
   @media (min-width: 547px) {
+    $paypal_buttons_height: 230px;
+    @supports (-webkit-overflow-scrolling: touch) {
+      $paypal_buttons_height: 289px;
+    }
     .paypal-buttons-wrapper-showing {
       height: auto;
       padding-top: 30px;
-      max-height: 230px;
+      max-height: $paypal_buttons_height;
       -webkit-transition: all 1s;
       transition: all 1s;
       overflow: hidden;
@@ -171,6 +185,8 @@ $current_song_background: rgba(0, 0, 0, 0.1);
       /* The slider itself */
       .slider {
         -webkit-appearance: none;  /* Override default CSS styles */
+        -moz-appearance: none; /* Override default look */
+        -o-appearance: none; /* Override default look */
         appearance: none;
         position: absolute;
       	left: 0;
@@ -206,6 +222,8 @@ $current_song_background: rgba(0, 0, 0, 0.1);
       	background: #FFF;
       	cursor: pointer;
       	outline: none;
+        -webkit-z-index: 1;
+        -moz-z-index: 1;
         z-index: 1;
       }
 
@@ -219,6 +237,8 @@ $current_song_background: rgba(0, 0, 0, 0.1);
         margin-top: -8px;
         cursor: pointer;
         outline: none;
+        -webkit-z-index: 1;
+        -moz-z-index: 1;
         z-index: 1;
       }
     }

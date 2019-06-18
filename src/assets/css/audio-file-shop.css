@@ -31,10 +31,13 @@
       text-align: left;
       width: 100%;
       font-weight: 100; }
-    .audio-file-shop .song-row .shopping-selection {
-      white-space: nowrap; }
-    .audio-file-shop .song-row .shopping-selection select {
-      margin-left: 20px; }
+    @media (min-width: 992px) {
+      .audio-file-shop .song-row .shopping-selection {
+        white-space: nowrap; }
+        .audio-file-shop .song-row .shopping-selection select {
+          margin-left: 20px; }
+        .audio-file-shop .song-row .shopping-selection label {
+          margin-right: 20px; } }
     .audio-file-shop .song-row .shopping-selection label {
       margin-right: 20px;
       margin-top: auto;
@@ -47,7 +50,7 @@
   .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
     height: auto;
     padding-top: 30px;
-    max-height: 200px;
+    max-height: 259px;
     -webkit-transition: all 1s;
     transition: all 1s;
     overflow: hidden; } }
@@ -56,7 +59,7 @@
   .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
     height: auto;
     padding-top: 30px;
-    max-height: 230px;
+    max-height: 289px;
     -webkit-transition: all 1s;
     transition: all 1s;
     overflow: hidden; } }
@@ -118,6 +121,10 @@
       .audio-player .audio-player-controls .volume .slider {
         -webkit-appearance: none;
         /* Override default CSS styles */
+        -moz-appearance: none;
+        /* Override default look */
+        -o-appearance: none;
+        /* Override default look */
         appearance: none;
         position: absolute;
         left: 0;
@@ -148,6 +155,8 @@
         background: #FFF;
         cursor: pointer;
         outline: none;
+        -webkit-z-index: 1;
+        -moz-z-index: 1;
         z-index: 1; }
       .audio-player .audio-player-controls .volume .slider::-moz-range-thumb {
         position: relative;
@@ -159,6 +168,8 @@
         margin-top: -8px;
         cursor: pointer;
         outline: none;
+        -webkit-z-index: 1;
+        -moz-z-index: 1;
         z-index: 1; }
     .audio-player .audio-player-controls .volume:hover {
       opacity: 1;
