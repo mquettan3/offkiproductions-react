@@ -13,7 +13,7 @@ export default class SongRow extends Component {
   }
 
   handleSongClick() {
-    this.props.handleSongClick(parseInt(this.props.categoryId), parseInt(this.props.songId));
+    this.props.handleSongClick(parseInt(this.props.categoryId, 10), parseInt(this.props.songId, 10));
   }
 
   handleLicenseChange(event) {
