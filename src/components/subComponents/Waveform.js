@@ -23,6 +23,7 @@ export default class Waveform extends Component {
     this.mouseDown = this.mouseDown.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
     this.mouseUp = this.mouseUp.bind(this);
+    this.handleLoadingProgress = this.handleLoadingProgress.bind(this);
 
     this.state = {
       loaded: false,
@@ -52,7 +53,8 @@ export default class Waveform extends Component {
       barWidth: 0,
       cursorWidth: 0,
       height: 100,
-      interact: false
+      interact: false,
+      isLoaded: false
     });
 
     this.setState({waveform: wavesurf, loaded: true});
@@ -61,6 +63,7 @@ export default class Waveform extends Component {
     wavesurfer.on('ready', this.handleNewLoad);
     wavesurfer.on('audioprocess', this.debouncedHandleCurrentTimeChange);
     wavesurfer.on('finish', this.handleNextSong);
+    wavesurfer.on('loading', this.handleLoadingProgress);
 
     // This adds the responsive nature to the waveform.
     window.addEventListener('resize', this.debouncedResizeWaveform);
@@ -69,6 +72,13 @@ export default class Waveform extends Component {
   componentWillUnmount() {
     wavesurfer.unAll();
     window.removeEventListener('resize', this.debouncedResizeWaveform);
+  }
+
+  handleLoadingProgress(progress, e) {
+    this.setState({isLoaded: false});
+    if (progress === 100) {
+      this.setState({isLoaded: true});
+    }
   }
 
   mouseDown(e) {
@@ -126,7 +136,12 @@ export default class Waveform extends Component {
 
   handleNewLoad() {
     // Every time the duration of the song changes, pass up the value
-    var duration = this.state.waveform.getDuration();
+    if (this.state.isLoaded) {
+      var duration = this.state.waveform.getDuration();
+    } else {
+      var debounceRecursive = debounce(this.handleNewLoad, 5);
+      debounceRecursive()
+    }
     this.props.handleDurationChange(duration);
   }
 
@@ -146,7 +161,9 @@ export default class Waveform extends Component {
     }
 
     // Every time the current time of the song changes, pass up the value
-    var time = this.state.waveform.getCurrentTime();
+    if(this.state.isLoaded) {
+      var time = this.state.waveform.getCurrentTime();
+    }
     this.props.handleCurrentTimeChange(time);
   }
 
