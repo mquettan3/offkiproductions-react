@@ -91,9 +91,11 @@ export default class Waveform extends Component {
 
     // Once the total offset is known.  Take the X position of the click.  Subtract the offset.  Divide the X value within the target by the widgth of the target.
     let percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
-    this.state.waveform.seekTo(percentage);
-
-    this.setState({totalOffsetLeft: totalOffsetLeft, waveformOffsetWidth: e.currentTarget.offsetWidth});
+    
+    if (this.state.isLoaded) {
+      this.state.waveform.seekTo(percentage);
+      this.setState({totalOffsetLeft: totalOffsetLeft, waveformOffsetWidth: e.currentTarget.offsetWidth});
+    }
 
     document.addEventListener('mousemove', this.debouncedMouseMove);
     document.addEventListener('mouseup', this.mouseUp);
@@ -107,7 +109,9 @@ export default class Waveform extends Component {
     else if (percentage < 0)
       percentage = 0;
 
-    this.state.waveform.seekTo(percentage);
+    if (this.state.isLoaded) {
+      this.state.waveform.seekTo(percentage);
+    }
   }
 
   mouseUp(e) {
@@ -116,22 +120,26 @@ export default class Waveform extends Component {
   }
 
   resizeWaveform() {
-    // Store previous progress
-    this.setState({preResizeProgress: this.state.waveform.getCurrentTime() / this.state.waveform.getDuration()})
+    if (this.state.isLoaded) {
+      // Store previous progress
+      this.setState({preResizeProgress: this.state.waveform.getCurrentTime() / this.state.waveform.getDuration()})
 
-    // Each time the windows width resizes, empty the canvas then redraw it.  Only on width changes.
-    if (this.state.previousWindowWidth !== window.innerWidth) {
-      this.state.waveform.empty();
-      this.state.waveform.drawBuffer();
-      
-      this.setState({previousWindowWidth: window.innerWidth});
+      // Each time the windows width resizes, empty the canvas then redraw it.  Only on width changes.
+      if (this.state.previousWindowWidth !== window.innerWidth) {
+        this.state.waveform.empty();
+        this.state.waveform.drawBuffer();
+        
+        this.setState({previousWindowWidth: window.innerWidth});
+      }
     }
   }
 
   handleSeek(progress) {
     // On Seek - Pass up progress - Float from 0 to 1
-    this.state.waveform.play();
-    this.props.handleSeek(progress);
+    if (this.state.isLoaded) {
+      this.state.waveform.play();
+      this.props.handleSeek(progress);
+    }
   }
 
   handleNewLoad() {
@@ -152,7 +160,7 @@ export default class Waveform extends Component {
 
   handleCurrentTimeChange() {
     // If we just got resized:
-    if(this.state.preResizeProgress) {
+    if(this.state.preResizeProgress && this.state.isLoaded) {
       this.state.waveform.seekTo(this.state.preResizeProgress);
       if(this.props.playerState === "playing") {
         this.state.waveform.play();
@@ -163,20 +171,25 @@ export default class Waveform extends Component {
     // Every time the current time of the song changes, pass up the value
     if(this.state.isLoaded) {
       var time = this.state.waveform.getCurrentTime();
+      this.props.handleCurrentTimeChange(time);
     }
-    this.props.handleCurrentTimeChange(time);
   }
 
   playPauseStopLogic() {
     if (this.state.previousState !== this.props.playerState) {
       switch(this.props.playerState) {
         case "playing":
-          this.state.waveform.play();
-          this.setState({previousState: "playing", togglePlayPauseStyle: "waveform-playing"});
+          
+          if(this.state.isLoaded) {
+            this.state.waveform.play();
+            this.setState({previousState: "playing", togglePlayPauseStyle: "waveform-playing"});
+          }
           break;
         case "paused":
-          this.state.waveform.pause();
-          this.setState({previousState: "paused", togglePlayPauseStyle: ""});
+          if(this.state.isLoaded) {
+            this.state.waveform.pause();
+            this.setState({previousState: "paused", togglePlayPauseStyle: ""});
+          }
           break;
         default:
           // do nothing
@@ -192,7 +205,7 @@ export default class Waveform extends Component {
       this.setState({previousSongLocation: this.props.songLocation, previousState: "paused"});
     }
 
-    if(this.state.previousVolume !== this.props.volume) {
+    if((this.state.previousVolume !== this.props.volume) && this.state.isLoaded) {
       this.state.waveform.setVolume(this.props.volume / 100);
       this.setState({previousVolume: this.props.volume});
     }
