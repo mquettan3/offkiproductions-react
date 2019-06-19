@@ -166,11 +166,11 @@ export default class AudioFileShop extends Component {
     let newCategoryId = this.state.currentCategoryId;
 
     if(this.state.currentSongId < Object.keys(this.state.categorySongStruct.categories[this.state.currentCategoryId].songs).length - 1) {
-      newSongId = parseInt(this.state.currentSongId) + 1;
+      newSongId = this.state.currentSongId + 1;
     } else {
       newSongId = 0;
       if(this.state.currentCategoryId < Object.keys(this.state.categorySongStruct.categories).length - 1) {
-        newCategoryId = parseInt(this.state.currentCategoryId) + 1;
+        newCategoryId = this.state.currentCategoryId + 1;
       } else {
         newCategoryId = 0;
       }
