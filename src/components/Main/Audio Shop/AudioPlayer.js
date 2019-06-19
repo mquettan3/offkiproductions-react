@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Waveform from './Waveform.js'
 
 // Custom Styles
-import '../../assets/css/audio-file-shop.css';
+import '../../../assets/css/audio-file-shop.css';
 
 // Fuction for getting timer out of a flat seconds-based duration counter
 function getTime(time) {

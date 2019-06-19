@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from "react-router-dom";
 
 // Require Axios for HTTP requests
 const axios = require('axios');
@@ -9,11 +10,9 @@ const axios = require('axios');
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
 import PayPalButton from "./PayPalButton.js"
-import Checkout from './Checkout.js';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 // Custom Styles
-import '../../assets/css/audio-file-shop.css';
+import '../../../assets/css/audio-file-shop.css';
 
 var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
@@ -357,34 +356,32 @@ export default class AudioFileShop extends Component {
         />;
     }
     return (
-      <Router>
-        <div className="audio-file-shop-wrapper">
-          <div className="audio-file-shop">
-            {audioPlayer}
-            <form className="purchase-music-form">
-              <div className="song-category-table">
-                <table>
-                  <tbody>
-                      {songTableList}
-                  </tbody>
-                </table>
-              </div>
-            </form>
-          </div>
-          <Link to="/checkout">
-            <div className="music-action">
-              <input className="btn btn-ghost-primary" onClick={this.handleSubmit} type="submit" value="Purchase Selected Music!"/>
+      <div className="audio-file-shop-wrapper">
+        <div className="audio-file-shop">
+          {audioPlayer}
+          <form className="purchase-music-form">
+            <div className="song-category-table">
+              <table>
+                <tbody>
+                    {songTableList}
+                </tbody>
+              </table>
             </div>
-          </Link>
-          <div className={payPalStyle}>
-            <PayPalButton
-              createOrder={this.createPaymentOrder}
-              onApprove={this.onPaymentSuccess}
-            />
-          </div>
-          <Route path="/checkout" component={Checkout} />
+          </form>
         </div>
-      </Router>
+        <Link to={{pathname: "/checkout", state: {shoppingCart: this.state.shoppingCart}}}>
+          Checkout!
+        </Link>
+        <div className="music-action">
+          <input className="btn btn-ghost-primary" onClick={this.handleSubmit} type="submit" value="Purchase Selected Music!"/>
+        </div>
+        <div className={payPalStyle}>
+          <PayPalButton
+            createOrder={this.createPaymentOrder}
+            onApprove={this.onPaymentSuccess}
+          />
+        </div>
+      </div>
     )
   }
 }

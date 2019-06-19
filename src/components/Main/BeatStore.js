@@ -1,7 +1,7 @@
 // BeatStore.component.js
 
 import React, { Component } from 'react';
-import AudioShop from './subComponents/AudioFileShop.js'
+import AudioShop from './Audio Shop/AudioFileShop.js'
 
 export default class BeatStore extends Component {
   render() {

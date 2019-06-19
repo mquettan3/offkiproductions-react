@@ -12,7 +12,8 @@ class PayPalButton extends Component {
 
     this.state = {
       showbutton: false,
-      isScriptLoaded: false
+      isScriptLoaded: false,
+      buttonRendered: false
     }
   }
 
@@ -23,7 +24,7 @@ class PayPalButton extends Component {
       } = this.props;
 
       if (isScriptLoaded && isScriptLoadSucceed) {
-        this.setState({ showButton: true });
+        this.setState({ showButton: true, componentMounted: true });
       }
   }
 
@@ -41,16 +42,23 @@ class PayPalButton extends Component {
     if (isLoadedButWasntLoadedBefore) {
       if (isScriptLoadSucceed) {
         this.setState({ showButton: true });
-        const paypal = window.paypal;
-
-        paypal.Buttons({
-          createOrder: this.props.createOrder,
-          onApprove: this.props.onApprove
-        }).render("#paypal-button-container");
       }
     }
 
     return true;
+  }
+
+  componentDidUpdate() {
+    if (this.state.showButton && !this.state.buttonRendered) {
+      const paypal = window.paypal;
+
+      paypal.Buttons({
+        createOrder: this.props.createOrder,
+        onApprove: this.props.onApprove
+      }).render("#paypal-button-container");
+
+      this.setState({buttonRendered: true});
+    }
   }
 
   render() {

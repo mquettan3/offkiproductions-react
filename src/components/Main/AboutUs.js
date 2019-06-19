@@ -1,7 +1,7 @@
 // AboutUs.component.js
 import React, { Component } from 'react';
 
-import JoshPortrait from '../assets/images/JoshPortraitCircle.png';
+import JoshPortrait from '../../assets/images/JoshPortraitCircle.png';
 
 export default class AboutUs extends Component {
   render() {

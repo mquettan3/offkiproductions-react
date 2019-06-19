@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 
-import Hero1 from "../assets/images/hero-1.jpg"
-import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
+import Hero1 from "../../assets/images/hero-1.jpg"
+import MeditatingManSolo from '../../assets/images/Logos/MeditatingManSolo.svg';
 
 // Require Axios for HTTP requests
 const axios = require('axios');

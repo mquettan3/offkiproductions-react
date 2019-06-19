@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 // Custom Styles
-import '../../assets/css/audio-file-shop.css';
+import '../../../assets/css/audio-file-shop.css';
 
 export default class SongRow extends Component {
   constructor(props) {

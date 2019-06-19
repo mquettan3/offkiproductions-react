@@ -4,10 +4,10 @@ import React, { PureComponent } from 'react';
 const wavesurfer = require("wavesurfer");
 const debounce = require('debounce');
 
-import WaveformBackground from '../../assets/images/WaveformBackground.png'
+import WaveformBackground from '../../../assets/images/WaveformBackground.png'
 
 // Custom Styles
-import '../../assets/css/audio-file-shop.css';
+import '../../../assets/css/audio-file-shop.css';
 
 // TODO:  The @resize should only redraw if the width has changed.  Not if only the height has changed.
 
