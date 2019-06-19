@@ -1,6 +1,6 @@
 // AudioFileShop.component.js
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 const wavesurfer = require("wavesurfer");
 const debounce = require('debounce');
 
@@ -11,7 +11,7 @@ import '../../assets/css/audio-file-shop.css';
 
 // TODO:  The @resize should only redraw if the width has changed.  Not if only the height has changed.
 
-export default class Waveform extends Component {
+export default class Waveform extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -35,8 +35,7 @@ export default class Waveform extends Component {
       preResizeProgress: null,
       totalOffsetLeft: 0,
       waveformOffsetWidth: 0,
-      previousWindowWidth: window.innerWidth,
-      updateRequired: true
+      previousWindowWidth: window.innerWidth
     };
 
 
@@ -76,18 +75,25 @@ export default class Waveform extends Component {
     window.removeEventListener('resize', this.debouncedResizeWaveform);
   }
 
-  shouldComponentUpdate(nextProps, nextstate) {
-    if(this.state.updateRequired) {
-      return true;
-    } else {
-      this.setState({updateRequired: false});
-      return false;
+  componentDidUpdate() {
+    // Each time the song location has updated
+    if(this.props.songLocation !== this.state.previousSongLocation) {
+      this.state.waveform.load(this.props.songLocation);
+      this.setState({previousSongLocation: this.props.songLocation, previousState: "paused"});
     }
+
+    if((this.state.previousVolume !== this.props.volume) && this.state.isLoaded) {
+      this.state.waveform.setVolume(this.props.volume / 100);
+      this.setState({previousVolume: this.props.volume});
+    }
+
+    this.playPauseStopLogic()
   }
 
   handleLoadingProgress(progress, e) {
     this.setState({isLoaded: false});
     if (progress === 100) {
+      this.forceUpdate();
       this.setState({isLoaded: true});
     }
   }
@@ -190,7 +196,6 @@ export default class Waveform extends Component {
     if (this.state.previousState !== this.props.playerState) {
       switch(this.props.playerState) {
         case "playing":
-          
           if(this.state.isLoaded) {
             this.state.waveform.play();
             this.setState({previousState: "playing", togglePlayPauseStyle: "waveform-playing"});
@@ -207,21 +212,6 @@ export default class Waveform extends Component {
           break;
       }
     }
-  }
-
-  componentDidUpdate() {
-    // Each time the song location has updated
-    if(this.props.songLocation !== this.state.previousSongLocation) {
-  	  this.state.waveform.load(this.props.songLocation);
-      this.setState({previousSongLocation: this.props.songLocation, previousState: "paused"});
-    }
-
-    if((this.state.previousVolume !== this.props.volume) && this.state.isLoaded) {
-      this.state.waveform.setVolume(this.props.volume / 100);
-      this.setState({previousVolume: this.props.volume});
-    }
-
-    this.playPauseStopLogic()
   }
 
   render() {
