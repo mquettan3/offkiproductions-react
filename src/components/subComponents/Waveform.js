@@ -35,13 +35,15 @@ export default class Waveform extends Component {
       preResizeProgress: null,
       totalOffsetLeft: 0,
       waveformOffsetWidth: 0,
-      previousWindowWidth: window.innerWidth
+      previousWindowWidth: window.innerWidth,
+      updateRequired: true
     };
 
 
     this.debouncedMouseMove = debounce(this.mouseMove, 5);
     this.debouncedResizeWaveform = debounce(this.resizeWaveform, 200);
     this.debouncedHandleCurrentTimeChange = debounce(this.handleCurrentTimeChange, 10);
+
   }
 
   componentDidMount() {
@@ -72,6 +74,15 @@ export default class Waveform extends Component {
   componentWillUnmount() {
     wavesurfer.unAll();
     window.removeEventListener('resize', this.debouncedResizeWaveform);
+  }
+
+  shouldComponentUpdate(nextProps, nextstate) {
+    if(this.state.updateRequired) {
+      return true;
+    } else {
+      this.setState({updateRequired: false});
+      return false;
+    }
   }
 
   handleLoadingProgress(progress, e) {
