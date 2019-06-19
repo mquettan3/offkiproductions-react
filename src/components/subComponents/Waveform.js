@@ -33,7 +33,8 @@ export default class Waveform extends Component {
       togglePlayPauseStyle: "",
       preResizeProgress: null,
       totalOffsetLeft: 0,
-      waveformOffsetWidth: 0
+      waveformOffsetWidth: 0,
+      previousWindowWidth: window.innerWidth
     };
 
 
@@ -108,9 +109,13 @@ export default class Waveform extends Component {
     // Store previous progress
     this.setState({preResizeProgress: this.state.waveform.getCurrentTime() / this.state.waveform.getDuration()})
 
-    // Each time the window resizes, empty the canvas then redraw it.
-    this.state.waveform.empty();
-    this.state.waveform.drawBuffer();
+    // Each time the windows width resizes, empty the canvas then redraw it.  Only on width changes.
+    if (this.state.previousWindowWidth !== window.innerWidth) {
+      this.state.waveform.empty();
+      this.state.waveform.drawBuffer();
+      
+      this.setState({previousWindowWidth: window.innerWidth});
+    }
   }
 
   handleSeek(progress) {

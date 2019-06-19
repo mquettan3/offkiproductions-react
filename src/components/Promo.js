@@ -8,7 +8,6 @@ import MeditatingManSolo from '../assets/images/Logos/MeditatingManSolo.svg';
 // Require Axios for HTTP requests
 const axios = require('axios');
 
-//var serverLocation = "10.0.0.100"
 var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
 // TODO:  The height of this can be dynamic but the width needs to be whatever the size of the container is.  Bootstrap will handle it from there with @media events.
@@ -114,8 +113,7 @@ export default class Promo extends Component {
 
   render() {
     var PromoSectionSizeStyle = {
-      height: this.state.height,
-      width: this.state.width
+      height: this.state.height
     }
 
     var CurrentBackgroundImage = {
@@ -131,12 +129,12 @@ export default class Promo extends Component {
     }
 
     return (
-      <section id="promo" className="promo-section" style={PromoSectionSizeStyle}>
+      <section id="promo" className="promo-section row" style={PromoSectionSizeStyle}>
         <div className="promo-previous-slide" style={PreviousBackgroundImage}></div>
         <div className={"promo-current-slide " + this.state.animated}  style={CurrentBackgroundImage} ref="visibleSlide"></div>
         <div className="promo-overlay" style={PromoSectionSizeStyle}></div>
         <div className="promo-progress-bar" />
-        <div className="promo-content-wrapper"  style={PromoSectionSizeStyle}>
+        <div className="promo-content-wrapper">
           <div className="container text-center promo-content">
             <div className="upper-wrapper">
               <div className="logo-holder">
