@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // Require Axios for HTTP requests
 const axios = require('axios');
@@ -18,7 +18,7 @@ var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
 // TODO: On initial load, the first song that is selected is not highlighted.
 
-export default class AudioFileShop extends Component {
+class AudioFileShop extends Component {
   constructor(props) {
     super(props);
 
@@ -36,6 +36,7 @@ export default class AudioFileShop extends Component {
     this.createPaymentOrder = this.createPaymentOrder.bind(this);
     this.onPaymentSuccess = this.onPaymentSuccess.bind(this);
     this.handleNextSong = this.handleNextSong.bind(this);
+    this.routeToCheckout = this.routeToCheckout.bind(this);
 
     this.state = {
       player_state: "paused",
@@ -205,7 +206,6 @@ export default class AudioFileShop extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
     var shoppingCart = [];
 
     for(let category in this.state.categorySongStruct.categories) {
@@ -241,11 +241,21 @@ export default class AudioFileShop extends Component {
 
     if(shoppingCart.length === 0) {
       alert("Please select a song to purchase!");
+      e.preventDefault();
     } else {
-      this.setState({shoppingCart: shoppingCart, showPayPal: true});
+      this.setState({shoppingCart: shoppingCart, showPayPal: true}, this.routeToCheckout);
       console.log("You've opted to purchase" + JSON.stringify(shoppingCart));
     }
 
+  }
+
+  routeToCheckout() {
+    this.props.history.push({
+      pathname: "/checkout",
+      state: {
+        shoppingCart: this.state.shoppingCart
+      }
+    })
   }
 
   createPaymentOrder(data, actions) {
@@ -369,11 +379,8 @@ export default class AudioFileShop extends Component {
             </div>
           </form>
         </div>
-        <Link to={{pathname: "/checkout", state: {shoppingCart: this.state.shoppingCart}}}>
-          Checkout!
-        </Link>
         <div className="music-action">
-          <input className="btn btn-ghost-primary" onClick={this.handleSubmit} type="submit" value="Purchase Selected Music!"/>
+          <button className="btn btn-ghost-primary" onClick={this.handleSubmit} >Purchase Selected Music!</button>
         </div>
         <div className={payPalStyle}>
           <PayPalButton
@@ -385,3 +392,5 @@ export default class AudioFileShop extends Component {
     )
   }
 }
+
+export default withRouter(AudioFileShop);
