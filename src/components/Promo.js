@@ -132,7 +132,7 @@ export default class Promo extends Component {
       <section id="promo" className="promo-section" style={PromoSectionSizeStyle}>
         <div className="promo-previous-slide" style={PreviousBackgroundImage}></div>
         <div className={"promo-current-slide " + this.state.animated}  style={CurrentBackgroundImage} ref="visibleSlide"></div>
-        <div className="promo-overlay" style={PromoSectionSizeStyle}></div>
+        <div className="promo-overlay" />
         <div className="promo-progress-bar" />
         <div className="promo-content-wrapper">
           <div className="container text-center promo-content">
