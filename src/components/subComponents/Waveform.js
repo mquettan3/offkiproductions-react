@@ -48,6 +48,7 @@ export default class Waveform extends Component {
       container: '#waveform',
       waveColor: 'rgba(68, 0, 153, 0.6)',
       progressColor: '#ad1aac',
+      backend: 'MediaElement',
       barWidth: 0,
       cursorWidth: 0,
       height: 100,
