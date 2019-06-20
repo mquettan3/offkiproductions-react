@@ -189,7 +189,7 @@ export default class Checkout extends Component {
     for(var item in this.props.location.state.shoppingCart) {
       purchaseItems.push(
       <tr key={this.props.location.state.shoppingCart[item].sku}>
-        <td className="product"><a href="shop-product.html">{this.props.location.state.shoppingCart[item].name}</a> <small>{this.props.location.state.shoppingCart[item].description}</small></td>
+        <td className="product">{this.props.location.state.shoppingCart[item].name}<small>{this.props.location.state.shoppingCart[item].description}</small></td>
         <td className="price">{"$" + this.props.location.state.shoppingCart[item].unit_amount.value}</td>
         <td className="quantity">
           <div className="form-group">
@@ -395,6 +395,7 @@ export default class Checkout extends Component {
                 />
               </div>
               <div className={"paypal-disabled " + (showPayPal ? "hidden" : "")}>
+                Please select your preferred payment method.
                 <PayPalButton
                   onInit={this.onInit}
                   id="1"
