@@ -33,42 +33,82 @@ export default class Checkout extends Component {
     window.ReactDOM = ReactDOM;
 
     this.state = {
-      firstName: "First Name",
-      lastName: "Last Name",
-      phoneNumber: "Telephone",
-      email: "Email",
-      basicLicenseChecked: false,
-      premiumLicenseChecked: false,
-      exclusiveLicenseChecked: false
+      firstName: {value: "", isValid: false},
+      lastName: {value: "", isValid: false},
+      phoneNumber: {value: "", isValid: true},
+      email: {value: "", isValid: false},
+      basicLicenseChecked: {value: false, isValid: false},
+      premiumLicenseChecked: {value: false, isValid: false},
+      exclusiveLicenseChecked: {value: false, isValid: false}
     };
   }
 
   basicLicenseChange(e) {
-    this.setState({basicLicenseChecked: e.target.checked});
+    var valid = false;
+
+    if(e.target.checked) {
+      valid = true;
+    }
+    
+    this.setState({basicLicenseChecked: {value: e.target.checked, isValid: valid}});
   }
 
   premiumLicenseChange(e) {
-    this.setState({premiumLicenseChecked: e.target.checked});
+    var valid = false;
+
+    if(e.target.checked) {
+      valid = true;
+    }
+
+    this.setState({premiumLicenseChecked:{value: e.target.checked, isValid: valid}});
   }
 
   exclusiveLicenseChange(e) {
-    this.setState({exclusiveLicenseChecked: e.target.checked});
+    var valid = false;
+
+    if(e.target.checked) {
+      valid = true;
+    }
+
+    this.setState({exclusiveLicenseChecked: {value: e.target.checked, isValid: valid}});
   }
 
   firstNameChange(e) {
-    this.setState({firstName: e.target.value});
+    var valid = false;
+
+    if(e.target.value) {
+      valid = true;
+    }
+
+    this.setState({firstName: {value: e.target.value, isValid: valid}});
   }
 
   lastNameChange(e) {
-    this.setState({lastName: e.target.value});
+    var valid = false;
+
+    if(e.target.value) {
+      valid = true;
+    }
+
+    this.setState({lastName: {value: e.target.value, isValid: valid}});
   }
 
   phoneNumberChange(e) {
-    this.setState({phoneNumber: e.target.value});
+    // Phone number is not required and this is always valid.
+    var valid = true;
+
+    this.setState({phoneNumber: {value: e.target.value, isValid: valid}});
   }
   
   emailChange(e) {
-    this.setState({email: e.target.value});
+    var valid = false;
+
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value))
+    {
+      valid = true;
+    }
+
+    this.setState({email: {value: e.target.value, isValid: valid}});
   }
 
   createPaymentOrder(data, actions) {
@@ -130,6 +170,10 @@ export default class Checkout extends Component {
     var payPalStyle = "paypal-buttons-wrapper-showing"
 
     var purchaseItems = [];
+    var licenseItems = [];
+    let basicFound = false;
+    let premiumFound = false;
+    let exclusiveFound = false;
     var totalCost = 0;
     var subTotal = 0;
     var taxPercentage = 0;
@@ -148,9 +192,53 @@ export default class Checkout extends Component {
       </tr>
       );
 
+      if(this.props.location.state.shoppingCart[item].description.search("License Tier: Basic") > 0){
+        basicFound = true;
+      }
+
+      if(this.props.location.state.shoppingCart[item].description.search("License Tier: Premium") > 0){
+        premiumFound = true;
+      }
+
+      if(this.props.location.state.shoppingCart[item].description.search("License Tier: Exclusive") > 0){
+        exclusiveFound = true;
+      }
+
       subTotal += parseInt(this.props.location.state.shoppingCart[item].unit_amount.value, 10) * parseInt(this.props.location.state.shoppingCart[item].quantity, 10);
     }
 
+    if(basicFound) {
+      licenseItems.push(
+      <div className="form-group row">
+        <div className="form-check form-check-inline">
+          <input className={"form-check-input " + (this.state.basicLicenseChecked.isValid ? "is-valid" : "is-invalid") } type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked.value} onChange={this.basicLicenseChange} />
+          <label className="form-check-label" htmlFor="basicLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Basic License Agreement.</b></a></label>
+        </div>
+      </div>
+      );
+    }
+
+    if(premiumFound) {
+      licenseItems.push(
+      <div className="form-group row">
+        <div className="form-check form-check-inline">
+          <input className={"form-check-input " + (this.state.premiumLicenseChecked.isValid ? "is-valid" : "is-invalid") } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
+          <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
+        </div>
+      </div>
+      );
+    }
+
+    if(exclusiveFound) {
+      licenseItems.push(
+      <div className="form-group row">
+        <div className="form-check form-check-inline">
+          <input className={"form-check-input " + (this.state.exclusiveLicenseChecked.isValid ? "is-valid" : "is-invalid") } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
+          <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
+        </div>
+      </div>
+      );
+    }
 
     totalCost = subTotal + (subTotal * (taxPercentage / 100));
     totalCost = totalCost.toFixed(2);
@@ -213,25 +301,34 @@ export default class Checkout extends Component {
                       <div className="form-group row">
                         <label htmlFor="billingFirstName" className="col-lg-2 control-label text-lg-right col-form-label">First Name<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="text" className="form-control" id="billingFirstName" value={this.state.firstName} onChange={this.firstNameChange} />
+                          <input type="text" placeholder="First Name" className={"form-control " + (this.state.firstName.isValid ? "is-valid" : "is-invalid") }  id="billingFirstName" value={this.state.firstName.value} onChange={this.firstNameChange} />
+                          <div class="invalid-feedback">
+                            Enter your first name!
+                          </div>
                         </div>
                       </div>
                       <div className="form-group row">
                         <label htmlFor="billingLastName" className="col-lg-2 control-label text-lg-right col-form-label">Last Name<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="text" className="form-control" id="billingLastName" value={this.state.lastName} onChange={this.lastNameChange}/>
+                          <input type="text" placeholder="Last Name" className={"form-control " + (this.state.lastName.isValid ? "is-valid" : "is-invalid") } id="billingLastName" value={this.state.lastName.value} onChange={this.lastNameChange}/>
+                          <div class="invalid-feedback">
+                            Enter your last name!
+                          </div>
                         </div>
                       </div>
                       <div className="form-group row">
                         <label htmlFor="billingTel" className="col-lg-2 control-label text-lg-right col-form-label">Telephone</label>
                         <div className="col-lg-10">
-                          <input type="text" className="form-control" id="billingTel" value={this.state.phoneNumber} onChange={this.phoneNumberChange}/>
+                          <input type="text" placeholder="(###) ###-####" className="form-control" id="billingTel" value={this.state.phoneNumber.value} onChange={this.phoneNumberChange}/>
                         </div>
                       </div>
                       <div className="form-group row">
                         <label htmlFor="billingemail" className="col-lg-2 control-label text-lg-right col-form-label">Email<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="email" className="form-control" id="billingemail" value={this.state.email} onChange={this.emailChange}/>
+                          <input type="email" placeholder="example@gmail.com" className={"form-control " + (this.state.email.isValid ? "is-valid" : "is-invalid") } id="billingemail" value={this.state.email.value} onChange={this.emailChange}/>
+                          <div class="invalid-feedback">
+                            Enter a valid email address! 
+                          </div>
                         </div>
                       </div>
                       <div className="form-group row">
@@ -254,23 +351,9 @@ export default class Checkout extends Component {
                       <h3 className="title">License Info</h3>
                     </div>
                     <div className="col-xl-8 ml-xl-auto">
+                      {licenseItems}
                       <div className="form-group row">
-                        <div className="form-check form-check-inline">
-                          <input className="form-check-input" type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked} onChange={this.basicLicenseChange} />
-                          <label className="form-check-label" htmlFor="basicLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Basic License Agreement.</b></a></label>
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <div className="form-check form-check-inline">
-                          <input className="form-check-input" type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked} onChange={this.premiumLicenseChange} />
-                          <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <div className="form-check form-check-inline">
-                          <input className="form-check-input" type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked} onChange={this.exclusiveLicenseChange} />
-                          <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
-                        </div>
+                        <label className="col-lg-12 control-label text-lg-right col-form-label"><small className="text-default">**</small>Required Fields - The order confirmatiton email will include a copy of your agreement(s).</label>
                       </div>
                     </div>
                   </div>
