@@ -46,31 +46,6 @@
   .audio-file-shop .song-row.playing-true {
     background-color: rgba(0, 0, 0, 0.1); }
 
-@media (max-width: 546.9px) {
-  .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
-    height: auto;
-    padding-top: 30px;
-    max-height: 259px;
-    -webkit-transition: all 1s;
-    transition: all 1s;
-    overflow: hidden; } }
-
-@media (min-width: 547px) {
-  .audio-file-shop-wrapper .paypal-buttons-wrapper-showing {
-    height: auto;
-    padding-top: 30px;
-    max-height: 289px;
-    -webkit-transition: all 1s;
-    transition: all 1s;
-    overflow: hidden; } }
-
-.audio-file-shop-wrapper .paypal-buttons-wrapper-hidden {
-  max-height: 0px;
-  padding-top: 0px;
-  -webkit-transition: all 1s;
-  transition: all 1s;
-  overflow: hidden; }
-
 .audio-player {
   position: relative;
   height: 180px;

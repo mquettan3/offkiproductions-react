@@ -316,10 +316,6 @@ class AudioFileShop extends Component {
   render() {
     let songTableList = [];
     let audioPlayer = "";
-    let payPalStyle = "paypal-buttons-wrapper-hidden"
-    if (this.state.showPayPal) {
-      payPalStyle = "paypal-buttons-wrapper-showing"
-    }
 
     if(this.state.categorySongStruct) {
       // Create the Audio table entires based off of what was received from the server, but only if it's been received.
@@ -381,12 +377,6 @@ class AudioFileShop extends Component {
         </div>
         <div className="music-action">
           <button className="btn btn-ghost-primary" onClick={this.handleSubmit} >Purchase Selected Music!</button>
-        </div>
-        <div className={payPalStyle}>
-          <PayPalButton
-            createOrder={this.createPaymentOrder}
-            onApprove={this.onPaymentSuccess}
-          />
         </div>
       </div>
     )

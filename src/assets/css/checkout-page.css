@@ -176,3 +176,28 @@ fieldset .form-control:focus {
 
 .space-bottom {
   padding-bottom: 20px; }
+
+@media (max-width: 546.9px) {
+  .paypal-buttons-wrapper-showing {
+    height: auto;
+    padding-top: 30px;
+    max-height: 259px;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    overflow: hidden; } }
+
+@media (min-width: 547px) {
+  .paypal-buttons-wrapper-showing {
+    height: auto;
+    padding-top: 30px;
+    max-height: 289px;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    overflow: hidden; } }
+
+.paypal-buttons-wrapper-hidden {
+  max-height: 0px;
+  padding-top: 0px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  overflow: hidden; }
