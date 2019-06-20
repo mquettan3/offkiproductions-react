@@ -21,12 +21,54 @@ export default class Checkout extends Component {
 
     this.createPaymentOrder = this.createPaymentOrder.bind(this);
     this.onPaymentSuccess = this.onPaymentSuccess.bind(this);
+    this.basicLicenseChange = this.basicLicenseChange.bind(this);
+    this.premiumLicenseChange = this.premiumLicenseChange.bind(this);
+    this.exclusiveLicenseChange = this.exclusiveLicenseChange.bind(this);
+    this.firstNameChange = this.firstNameChange.bind(this);
+    this.lastNameChange = this.lastNameChange.bind(this);
+    this.phoneNumberChange = this.phoneNumberChange.bind(this);
+    this.emailChange = this.emailChange.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
+
+    this.state = {
+      firstName: "First Name",
+      lastName: "Last Name",
+      phoneNumber: "Telephone",
+      email: "Email",
+      basicLicenseChecked: false,
+      premiumLicenseChecked: false,
+      exclusiveLicenseChecked: false
+    };
   }
 
-  componentDidMount() {
+  basicLicenseChange(e) {
+    this.setState({basicLicenseChecked: e.target.checked});
+  }
+
+  premiumLicenseChange(e) {
+    this.setState({premiumLicenseChecked: e.target.checked});
+  }
+
+  exclusiveLicenseChange(e) {
+    this.setState({exclusiveLicenseChecked: e.target.checked});
+  }
+
+  firstNameChange(e) {
+    this.setState({firstName: e.target.value});
+  }
+
+  lastNameChange(e) {
+    this.setState({lastName: e.target.value});
+  }
+
+  phoneNumberChange(e) {
+    this.setState({phoneNumber: e.target.value});
+  }
+  
+  emailChange(e) {
+    this.setState({email: e.target.value});
   }
 
   createPaymentOrder(data, actions) {
@@ -94,7 +136,7 @@ export default class Checkout extends Component {
 
     for(var item in this.props.location.state.shoppingCart) {
       purchaseItems.push(
-      <tr>
+      <tr key={this.props.location.state.shoppingCart[item].sku}>
         <td className="product"><a href="shop-product.html">{this.props.location.state.shoppingCart[item].name}</a> <small>{this.props.location.state.shoppingCart[item].description}</small></td>
         <td className="price">{"$" + this.props.location.state.shoppingCart[item].unit_amount.value}</td>
         <td className="quantity">
@@ -106,7 +148,7 @@ export default class Checkout extends Component {
       </tr>
       );
 
-      subTotal += parseInt(this.props.location.state.shoppingCart[item].unit_amount.value) * parseInt(this.props.location.state.shoppingCart[item].quantity);
+      subTotal += parseInt(this.props.location.state.shoppingCart[item].unit_amount.value, 10) * parseInt(this.props.location.state.shoppingCart[item].quantity, 10);
     }
 
 
@@ -171,25 +213,25 @@ export default class Checkout extends Component {
                       <div className="form-group row">
                         <label htmlFor="billingFirstName" className="col-lg-2 control-label text-lg-right col-form-label">First Name<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="text" className="form-control" id="billingFirstName" value="First Name" />
+                          <input type="text" className="form-control" id="billingFirstName" value={this.state.firstName} onChange={this.firstNameChange} />
                         </div>
                       </div>
                       <div className="form-group row">
                         <label htmlFor="billingLastName" className="col-lg-2 control-label text-lg-right col-form-label">Last Name<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="text" className="form-control" id="billingLastName" value="Last Name" />
+                          <input type="text" className="form-control" id="billingLastName" value={this.state.lastName} onChange={this.lastNameChange}/>
                         </div>
                       </div>
                       <div className="form-group row">
                         <label htmlFor="billingTel" className="col-lg-2 control-label text-lg-right col-form-label">Telephone</label>
                         <div className="col-lg-10">
-                          <input type="text" className="form-control" id="billingTel" value="Telephone" />
+                          <input type="text" className="form-control" id="billingTel" value={this.state.phoneNumber} onChange={this.phoneNumberChange}/>
                         </div>
                       </div>
                       <div className="form-group row">
                         <label htmlFor="billingemail" className="col-lg-2 control-label text-lg-right col-form-label">Email<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="email" className="form-control" id="billingemail" value="Email" />
+                          <input type="email" className="form-control" id="billingemail" value={this.state.email} onChange={this.emailChange}/>
                         </div>
                       </div>
                       <div className="form-group row">
@@ -213,21 +255,21 @@ export default class Checkout extends Component {
                     </div>
                     <div className="col-xl-8 ml-xl-auto">
                       <div className="form-group row">
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="basicLicenseAgreement" value="option1" />
-                          <label class="form-check-label" for="basicLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Basic License Agreement.</b></a></label>
+                        <div className="form-check form-check-inline">
+                          <input className="form-check-input" type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked} onChange={this.basicLicenseChange} />
+                          <label className="form-check-label" htmlFor="basicLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Basic License Agreement.</b></a></label>
                         </div>
                       </div>
                       <div className="form-group row">
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="premiumLicenseAgreement" value="option1" />
-                          <label class="form-check-label" for="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
+                        <div className="form-check form-check-inline">
+                          <input className="form-check-input" type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked} onChange={this.premiumLicenseChange} />
+                          <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
                         </div>
                       </div>
                       <div className="form-group row">
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="exclusiveLicenseAgreement" value="option1" />
-                          <label class="form-check-label" for="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
+                        <div className="form-check form-check-inline">
+                          <input className="form-check-input" type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked} onChange={this.exclusiveLicenseChange} />
+                          <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
                         </div>
                       </div>
                     </div>
