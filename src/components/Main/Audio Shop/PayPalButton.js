@@ -54,7 +54,9 @@ class PayPalButton extends Component {
 
       paypal.Buttons({
         createOrder: this.props.createOrder,
-        onApprove: this.props.onApprove
+        onApprove: this.props.onApprove,
+        onInit: this.props.onInit,
+        onClick: this.props.onClick
       }).render("#paypal-button-container");
 
       this.setState({buttonRendered: true});

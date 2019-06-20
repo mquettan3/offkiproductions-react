@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 // Require Axios for HTTP requests
 const axios = require('axios');
