@@ -185,6 +185,7 @@ export default class Checkout extends Component {
     var totalCost = 0;
     var subTotal = 0;
     var taxPercentage = 0;
+    var numItems = 0;
 
     for(var item in this.props.location.state.shoppingCart) {
       purchaseItems.push(
@@ -213,6 +214,8 @@ export default class Checkout extends Component {
       }
 
       subTotal += parseInt(this.props.location.state.shoppingCart[item].unit_amount.value, 10) * parseInt(this.props.location.state.shoppingCart[item].quantity, 10);
+    
+      numItems += 1;
     }
 
     if(basicFound) {
@@ -303,7 +306,7 @@ export default class Checkout extends Component {
                     <td className="amount">{"$" + (totalCost * (taxPercentage / 100)).toFixed(2)}</td>
                   </tr>
                   <tr>
-                    <td className="total-quantity" colSpan="3">Total 8 Items</td>
+                    <td className="total-quantity" colSpan="3">Total {numItems} Item(s)</td>
                     <td className="total-amount">{"$" + totalCost}</td>
                   </tr>
                 </tbody>

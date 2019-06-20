@@ -163,6 +163,7 @@ app.post('/purchaseValidation', async function (req, res) {
     return res.sendStatus(500);
   }
 
+  // If we haven't returned yet - Payment valid
   let songList_array = [];
 
   for (item in order.result.purchase_units[0].items) {
@@ -171,10 +172,10 @@ app.post('/purchaseValidation', async function (req, res) {
 
   // Send Email to Josh to notify him of the purchaser
   var mailOptions = {
-  from: process.env.EMAIL_NAME,
-  to: order.result.payer.email_address,
-  subject: 'Off Ki Productions - Your Purchase Confirmation',
-  text: 'Thank you for purchasing the following: \n' + songList_array.join("\n")
+    from: process.env.EMAIL_NAME,
+    to: order.result.payer.email_address,
+    subject: 'Off Ki Productions - Your Purchase Confirmation',
+    text: 'Thank you for purchasing the following: \n' + songList_array.join("\n")
   };
 
   console.log("Songs Purchased:\n" + songList_array.join("\n"));
