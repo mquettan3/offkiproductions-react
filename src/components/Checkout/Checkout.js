@@ -87,6 +87,33 @@ export default class Checkout extends Component {
   render() {
     var payPalStyle = "paypal-buttons-wrapper-showing"
 
+    var purchaseItems = [];
+    var totalCost = 0;
+    var subTotal = 0;
+    var taxPercentage = 0;
+
+    for(var item in this.props.location.state.shoppingCart) {
+      purchaseItems.push(
+      <tr>
+        <td className="product"><a href="shop-product.html">{this.props.location.state.shoppingCart[item].name}</a> <small>{this.props.location.state.shoppingCart[item].description}</small></td>
+        <td className="price">{"$" + this.props.location.state.shoppingCart[item].unit_amount.value}</td>
+        <td className="quantity">
+          <div className="form-group">
+            <input type="text" className="form-control" value={this.props.location.state.shoppingCart[item].quantity} disabled />
+          </div>                      
+        </td>
+        <td className="amount">{"$" + this.props.location.state.shoppingCart[item].unit_amount.value * this.props.location.state.shoppingCart[item].quantity} </td>
+      </tr>
+      );
+
+      subTotal += parseInt(this.props.location.state.shoppingCart[item].unit_amount.value) * parseInt(this.props.location.state.shoppingCart[item].quantity);
+    }
+
+
+    totalCost = subTotal + (subTotal * (taxPercentage / 100));
+    totalCost = totalCost.toFixed(2);
+    subTotal = subTotal.toFixed(2);
+
     return (
       <div className="checkout-page-wrapper">
         <div className="container">
@@ -113,48 +140,19 @@ export default class Checkout extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="product"><a href="shop-product.html">Product Title 1</a> <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas inventore modi.</small></td>
-                    <td className="price">$99.50 </td>
-                    <td className="quantity">
-                      <div className="form-group">
-                        <input type="text" className="form-control" value="2" disabled />
-                      </div>                      
-                    </td>
-                    <td className="amount">$199.00 </td>
-                  </tr>
-                  <tr>
-                    <td className="product"><a href="shop-product.html">Product Title 2</a> <small>Quas inventore modi</small></td>
-                    <td className="price"> $99.66 </td>
-                    <td className="quantity">
-                      <div className="form-group">
-                        <input type="text" className="form-control" value="3" disabled />
-                      </div>                      
-                    </td>
-                    <td className="amount">$299.00 </td>
-                  </tr>
-                  <tr>
-                    <td className="product"><a href="shop-product.html">Product Title 3</a> <small>Fugiat nemo enim officiis repellendus</small></td>
-                    <td className="price"> $499.66 </td>
-                    <td className="quantity">
-                      <div className="form-group">
-                        <input type="text" className="form-control" value="3" disabled />
-                      </div>                      
-                    </td>
-                    <td className="amount">$1499.00 </td>
-                  </tr>
+                  {purchaseItems}
                   <tr>
                     <td className="total-quantity" colSpan="3">Subtotal</td>
-                    <td className="amount">$1997.00</td>
+                    <td className="amount">{"$" + totalCost}</td>
                   </tr>
                   <tr>                    
                     <td className="total-quantity" colSpan="2">Taxes</td>
-                    <td className="price">0%</td>
-                    <td className="amount">$0</td>
+                    <td className="price">{taxPercentage + "%"}</td>
+                    <td className="amount">{"$" + (totalCost * (taxPercentage / 100)).toFixed(2)}</td>
                   </tr>
                   <tr>
                     <td className="total-quantity" colSpan="3">Total 8 Items</td>
-                    <td className="total-amount">$1597.00</td>
+                    <td className="total-amount">{"$" + totalCost}</td>
                   </tr>
                 </tbody>
               </table>
@@ -183,7 +181,7 @@ export default class Checkout extends Component {
                         </div>
                       </div>
                       <div className="form-group row">
-                        <label htmlFor="billingTel" className="col-lg-2 control-label text-lg-right col-form-label">Telephone<small className="text-default">*</small></label>
+                        <label htmlFor="billingTel" className="col-lg-2 control-label text-lg-right col-form-label">Telephone</label>
                         <div className="col-lg-10">
                           <input type="text" className="form-control" id="billingTel" value="Telephone" />
                         </div>
