@@ -57,7 +57,7 @@ class PayPalButton extends Component {
         onApprove: this.props.onApprove,
         onInit: this.props.onInit,
         onClick: this.props.onClick
-      }).render("#paypal-button-container");
+      }).render("#paypal-button-container" + this.props.id);
 
       this.setState({buttonRendered: true});
     }
@@ -68,7 +68,7 @@ class PayPalButton extends Component {
       return(<div></div>)
 
     return(
-      <div id="paypal-button-container"></div>
+      <div id={"paypal-button-container" + this.props.id}></div>
     )
   }
 }

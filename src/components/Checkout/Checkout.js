@@ -28,6 +28,7 @@ export default class Checkout extends Component {
     this.lastNameChange = this.lastNameChange.bind(this);
     this.phoneNumberChange = this.phoneNumberChange.bind(this);
     this.emailChange = this.emailChange.bind(this);
+    this.onInit = this.onInit.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
@@ -39,9 +40,15 @@ export default class Checkout extends Component {
       email: {value: "", isValid: false},
       basicLicenseChecked: {value: false, isValid: false},
       premiumLicenseChecked: {value: false, isValid: false},
-      exclusiveLicenseChecked: {value: false, isValid: false},
-      showPayPal: false
+      exclusiveLicenseChecked: {value: false, isValid: false}
     };
+  }
+
+  onInit(data, actions) {
+    // This onInit function is only done for the disabled paypal button.
+    // Note:  There are two PayPal buttons here.  One is always disabled.  One is always enabled.  Validation swaps between the two
+    actions.disable();
+    console.log("In Init;");
   }
 
   basicLicenseChange(e) {
@@ -168,12 +175,13 @@ export default class Checkout extends Component {
   }
 
   render() {
+    var payPalStyle = "paypal-buttons-wrapper-showing"
+
     var purchaseItems = [];
     var licenseItems = [];
     let basicFound = false;
     let premiumFound = false;
     let exclusiveFound = false;
-    let showPayPal = false;
     var totalCost = 0;
     var subTotal = 0;
     var taxPercentage = 0;
@@ -205,25 +213,6 @@ export default class Checkout extends Component {
       }
 
       subTotal += parseInt(this.props.location.state.shoppingCart[item].unit_amount.value, 10) * parseInt(this.props.location.state.shoppingCart[item].quantity, 10);
-    }
-
-    if(this.state.firstName.isValid &&
-      this.state.lastName.isValid &&
-      this.state.phoneNumber.isValid &&
-      this.state.email.isValid &&
-      (this.state.basicLicenseChecked.isValid === basicFound) &&
-      (this.state.premiumLicenseChecked.isValid === premiumFound) &&
-      (this.state.exclusiveLicenseChecked.isValid === exclusiveFound)
-     ) {
-       showPayPal= true;
-     } else {
-      showPayPal= false;
-     }
-
-    
-    let payPalStyle = "paypal-buttons-wrapper-hidden"
-    if (showPayPal) {
-      payPalStyle = "paypal-buttons-wrapper-showing"
     }
 
     if(basicFound) {
@@ -262,6 +251,20 @@ export default class Checkout extends Component {
     totalCost = subTotal + (subTotal * (taxPercentage / 100));
     totalCost = totalCost.toFixed(2);
     subTotal = subTotal.toFixed(2);
+
+    var showPayPal = false;
+    if(this.state.firstName.isValid &&
+      this.state.lastName.isValid &&
+      this.state.phoneNumber.isValid &&
+      this.state.email.isValid &&
+      (this.state.basicLicenseChecked.isValid === basicFound) &&
+      (this.state.premiumLicenseChecked.isValid === premiumFound) &&
+      (this.state.exclusiveLicenseChecked.isValid === exclusiveFound)
+     ) {
+      showPayPal= true;
+     } else {
+      showPayPal= false;
+     }
 
     return (
       <div className="checkout-page-wrapper">
@@ -384,10 +387,17 @@ export default class Checkout extends Component {
         <div className="container">
           <div className="row">
             <div className="col-12 text-center">
-              <div className={payPalStyle}>
+              <div className={"paypal-enabled " + (showPayPal ? "" : "hidden")}>
                 <PayPalButton
                   createOrder={this.createPaymentOrder}
                   onApprove={this.onPaymentSuccess}
+                  id="0"
+                />
+              </div>
+              <div className={"paypal-disabled " + (showPayPal ? "hidden" : "")}>
+                <PayPalButton
+                  onInit={this.onInit}
+                  id="1"
                 />
               </div>
             </div>
