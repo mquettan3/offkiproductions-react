@@ -29,6 +29,7 @@ export default class Checkout extends Component {
     this.phoneNumberChange = this.phoneNumberChange.bind(this);
     this.emailChange = this.emailChange.bind(this);
     this.onInit = this.onInit.bind(this);
+    this.onPayPalClick = this.onPayPalClick.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
@@ -40,15 +41,19 @@ export default class Checkout extends Component {
       email: {value: "", isValid: false},
       basicLicenseChecked: {value: false, isValid: false},
       premiumLicenseChecked: {value: false, isValid: false},
-      exclusiveLicenseChecked: {value: false, isValid: false}
+      exclusiveLicenseChecked: {value: false, isValid: false},
+      payPalClicked: false
     };
+  }
+
+  onPayPalClick(e) {
+    this.setState({payPalClicked: true});
   }
 
   onInit(data, actions) {
     // This onInit function is only done for the disabled paypal button.
     // Note:  There are two PayPal buttons here.  One is always disabled.  One is always enabled.  Validation swaps between the two
     actions.disable();
-    console.log("In Init;");
   }
 
   basicLicenseChange(e) {
@@ -175,8 +180,6 @@ export default class Checkout extends Component {
   }
 
   render() {
-    var payPalStyle = "paypal-buttons-wrapper-showing"
-
     var purchaseItems = [];
     var licenseItems = [];
     let basicFound = false;
@@ -186,6 +189,14 @@ export default class Checkout extends Component {
     var subTotal = 0;
     var taxPercentage = 0;
     var numItems = 0;
+
+    var valid = ""
+    var invalid = ""
+
+    if(this.state.payPalClicked) {
+      valid = "is-valid";
+      invalid = "is-invalid";
+    }
 
     for(var item in this.props.location.state.shoppingCart) {
       purchaseItems.push(
@@ -222,7 +233,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="basicLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={"form-check-input " + (this.state.basicLicenseChecked.isValid ? "is-valid" : "is-invalid") } type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked.value} onChange={this.basicLicenseChange} />
+          <input className={"form-check-input " + (this.state.basicLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked.value} onChange={this.basicLicenseChange} />
           <label className="form-check-label" htmlFor="basicLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Basic License Agreement.</b></a></label>
         </div>
       </div>
@@ -233,7 +244,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="premiumLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={"form-check-input " + (this.state.premiumLicenseChecked.isValid ? "is-valid" : "is-invalid") } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
+          <input className={"form-check-input " + (this.state.premiumLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
           <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
         </div>
       </div>
@@ -244,7 +255,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="exclusiveLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={"form-check-input " + (this.state.exclusiveLicenseChecked.isValid ? "is-valid" : "is-invalid") } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
+          <input className={"form-check-input " + (this.state.exclusiveLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
           <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
         </div>
       </div>
@@ -326,7 +337,7 @@ export default class Checkout extends Component {
                       <div className="form-group row">
                         <label htmlFor="billingFirstName" className="col-lg-2 control-label text-lg-right col-form-label">First Name<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="text" placeholder="First Name" className={"form-control " + (this.state.firstName.isValid ? "is-valid" : "is-invalid") }  id="billingFirstName" value={this.state.firstName.value} onChange={this.firstNameChange} />
+                          <input type="text" placeholder="First Name" className={"form-control " + (this.state.firstName.isValid ? valid : invalid) }  id="billingFirstName" value={this.state.firstName.value} onChange={this.firstNameChange} />
                           <div className="invalid-feedback">
                             Enter your first name!
                           </div>
@@ -335,7 +346,7 @@ export default class Checkout extends Component {
                       <div className="form-group row">
                         <label htmlFor="billingLastName" className="col-lg-2 control-label text-lg-right col-form-label">Last Name<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="text" placeholder="Last Name" className={"form-control " + (this.state.lastName.isValid ? "is-valid" : "is-invalid") } id="billingLastName" value={this.state.lastName.value} onChange={this.lastNameChange}/>
+                          <input type="text" placeholder="Last Name" className={"form-control " + (this.state.lastName.isValid ? valid : invalid) } id="billingLastName" value={this.state.lastName.value} onChange={this.lastNameChange}/>
                           <div className="invalid-feedback">
                             Enter your last name!
                           </div>
@@ -350,7 +361,7 @@ export default class Checkout extends Component {
                       <div className="form-group row">
                         <label htmlFor="billingemail" className="col-lg-2 control-label text-lg-right col-form-label">Email<small className="text-default">*</small></label>
                         <div className="col-lg-10">
-                          <input type="email" placeholder="example@gmail.com" className={"form-control " + (this.state.email.isValid ? "is-valid" : "is-invalid") } id="billingemail" value={this.state.email.value} onChange={this.emailChange}/>
+                          <input type="email" placeholder="example@gmail.com" className={"form-control " + (this.state.email.isValid ? valid : invalid) } id="billingemail" value={this.state.email.value} onChange={this.emailChange}/>
                           <div className="invalid-feedback">
                             Enter a valid email address! 
                           </div>
@@ -394,6 +405,7 @@ export default class Checkout extends Component {
                 <PayPalButton
                   createOrder={this.createPaymentOrder}
                   onApprove={this.onPaymentSuccess}
+                  onClick={this.onPayPalClick}
                   id="0"
                 />
               </div>
@@ -401,6 +413,7 @@ export default class Checkout extends Component {
                 Please select your preferred payment method.
                 <PayPalButton
                   onInit={this.onInit}
+                  onClick={this.onPayPalClick}
                   id="1"
                 />
               </div>

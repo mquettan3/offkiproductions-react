@@ -9,7 +9,6 @@ const axios = require('axios');
 
 import SongRow from "./SongRow.js"
 import AudioPlayer from "./AudioPlayer.js"
-import PayPalButton from "./PayPalButton.js"
 
 // Custom Styles
 import '../../../assets/css/audio-file-shop.css';
@@ -244,7 +243,6 @@ class AudioFileShop extends Component {
       e.preventDefault();
     } else {
       this.setState({shoppingCart: shoppingCart, showPayPal: true}, this.routeToCheckout);
-      console.log("You've opted to purchase" + JSON.stringify(shoppingCart));
     }
 
   }
