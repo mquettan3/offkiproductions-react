@@ -42,7 +42,8 @@ export default class Waveform extends PureComponent {
     this.debouncedMouseMove = debounce(this.mouseMove, 5);
     this.debouncedResizeWaveform = debounce(this.resizeWaveform, 200);
     this.debouncedHandleCurrentTimeChange = debounce(this.handleCurrentTimeChange, 10);
-
+    this.debouncedHandleNewLoad = debounce(this.handleNewLoad, 50);
+    this.debouncedHandleNextSong = debounce(this.props.handleNextSong, 50);
   }
 
   componentDidMount() {
@@ -164,15 +165,14 @@ export default class Waveform extends PureComponent {
     if (this.state.isLoaded) {
       var duration = this.state.waveform.getDuration();
     } else {
-      var debounceRecursive = debounce(this.handleNewLoad, 5);
-      debounceRecursive()
+      this.debouncedHandleNewLoad();
     }
     this.props.handleDurationChange(duration);
   }
 
   handleNextSong() {
     // Every time a song finishes, progress to the next song
-    this.props.handleNextSong();
+    setTimeout(this.debouncedHandleNextSong(), 30);
   }
 
   handleCurrentTimeChange() {

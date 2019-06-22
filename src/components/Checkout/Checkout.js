@@ -233,7 +233,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="basicLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={"form-check-input " + (this.state.basicLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked.value} onChange={this.basicLicenseChange} />
+          <input className={(this.state.basicLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked.value} onChange={this.basicLicenseChange} />
           <label className="form-check-label" htmlFor="basicLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Basic License Agreement.</b></a></label>
         </div>
       </div>
@@ -244,7 +244,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="premiumLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={"form-check-input " + (this.state.premiumLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
+          <input className={(this.state.premiumLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
           <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
         </div>
       </div>
@@ -255,7 +255,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="exclusiveLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={"form-check-input " + (this.state.exclusiveLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
+          <input className={(this.state.exclusiveLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
           <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
         </div>
       </div>
@@ -402,6 +402,7 @@ export default class Checkout extends Component {
           <div className="row">
             <div className="col-12 text-center">
               <div className={"paypal-enabled " + (showPayPal ? "" : "hidden")}>
+                Please select your preferred payment method.
                 <PayPalButton
                   createOrder={this.createPaymentOrder}
                   onApprove={this.onPaymentSuccess}
