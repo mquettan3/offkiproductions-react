@@ -17,6 +17,8 @@ const fs = require('fs');
 // Import the Paypal SDK package
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 const payPalClient = require('./payPalClient.js');
+const GoogleDriveAPI = require('./googleDrive.js');
+var googleDrive = new GoogleDriveAPI('credentials.json');
 
 // Import the emailer
 var nodemailer = require('nodemailer');
@@ -43,8 +45,7 @@ app.listen(PORT, function() {
   console.log('Server is running on Port: ', PORT);
 });
 
-// Respond with the names of all relevant files in /home/mquettan3/workspace/offkiproductions-react/src/assets/images
-// TODO - The paths in production will likely be different
+// Respond with the names of all relevant files in ../src/assets/images
 app.get('/herofiles', function (req, res) {
   // Send the list of files from the specified location
   glob(__dirname + '/../src/assets/images/hero*', function (er, files) {
@@ -61,8 +62,7 @@ app.get('/herofiles', function (req, res) {
   })
 });
 
-// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/images
-// TODO - The paths in production will likely be different
+// Respond with the specified file in ../src/assets/images
 app.get('/herofiles/:fileName', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName), function(err) {
@@ -75,8 +75,7 @@ app.get('/herofiles/:fileName', function (req, res) {
   console.log("Sent file: " + path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName));
 });
 
-// Respond with the names of all relevant files in /home/mquettan3/workspace/offkiproductions-react/src/assets/images
-// TODO - The paths in production will likely be different
+// Respond with the names of all relevant files in ../src/assets/images
 app.get('/musiclist', function (req, res) {
   var count = 0;
   var directorySongObject = {}
@@ -115,8 +114,7 @@ app.get('/musiclist', function (req, res) {
   });
 });
 
-// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/audio/samples
-// TODO - The paths in production will likely be different
+// Respond with the specified file in ../src/assets/audio/samples
 app.get('/samplemusic/:categoryName/:songName', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  req.params.songName, function(err) {
@@ -129,8 +127,20 @@ app.get('/samplemusic/:categoryName/:songName', function (req, res) {
   console.log("Sent Music file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + req.params.songName);
 });
 
-// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/audio/samples
-// TODO - The paths in production will likely be different
+// Respond with the specified file in ../src/assets/audio/samples
+app.get('/basicmusic/:categoryName/:songName/:orderID', function (req, res) {
+  // Send the file requested from the static location
+  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  req.params.songName, function(err) {
+    if(err) {
+      console.log(err);
+    }
+  });
+
+  // Server debug print
+  console.log("Sent Music file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + req.params.songName);
+});
+
+// Respond with the specified file in ../src/assets/audio/samples
 app.get('/albumart/:categoryName/:songName', function (req, res) {
   var albumArtName = req.params.songName.split(".").slice(0, -1).join('.') + ".jpg";
   // Send the file requested from the static location
@@ -144,8 +154,7 @@ app.get('/albumart/:categoryName/:songName', function (req, res) {
   console.log("Sent AlbumArt file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + albumArtName);
 });
 
-// Respond with the specified file in /home/mquettan3/workspace/offkiproductions-react/src/assets/audio/samples
-// TODO - The paths in production will likely be different
+// Handle a purchase - Validate it's authenticity - Create a directory which contains all of their purchased items - send a link to those items in an email.
 app.post('/purchaseValidation', async function (req, res) {
   // 2a. Get the order ID from the request body
   const orderID = req.body.orderID;
@@ -168,17 +177,18 @@ app.post('/purchaseValidation', async function (req, res) {
 
   for (item in order.result.purchase_units[0].items) {
     songList_array.push(order.result.purchase_units[0].items[item].description);
+    
+    // Determine which google drive directories to give the purchaser access to.
+    googleDrive.providePermissionsToSong(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].description)
   }
 
-  // Send Email to Josh to notify him of the purchaser
+  // Send order confirmation email to purchaser
   var mailOptions = {
     from: process.env.EMAIL_NAME,
     to: order.result.payer.email_address,
     subject: 'Off Ki Productions - Your Purchase Confirmation',
     text: 'Thank you for purchasing the following: \n' + songList_array.join("\n")
   };
-
-  console.log("Songs Purchased:\n" + songList_array.join("\n"));
 
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
@@ -187,6 +197,12 @@ app.post('/purchaseValidation', async function (req, res) {
       console.log('Email sent: ' + info.response);
     }
   });
+
+  
+
+  // TODO: Send Email to Josh to notify him of the purchase
+
+  console.log("Songs Purchased:\n" + songList_array.join("\n"));
 
   // Send Email to customer containing their purchase or their "Make an Offer" instructions
 
@@ -211,3 +227,12 @@ if(process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });
 }
+
+/////////////////////////////  Google Drive API Initialization
+
+// Load client secrets from a local file.
+fs.readFile('credentials.json', (err, content) => {
+  if (err) return console.log('Error loading client secret file:', err);
+  // Authorize a client with credentials, then call the Google Drive API.
+  googleDrive.authorize(JSON.parse(content), googleDrive.assignDrive);
+});
