@@ -185,7 +185,7 @@ app.post('/purchaseValidation', async function (req, res) {
   // Send order confirmation email to purchaser
   var mailOptions = {
     from: process.env.EMAIL_NAME,
-    to: order.result.payer.email_address,
+    to: req.body.inputEmail.value,
     subject: 'Off Ki Productions - Your Purchase Confirmation',
     text: 'Thank you for purchasing the following: \n' + songList_array.join("\n")
   };
