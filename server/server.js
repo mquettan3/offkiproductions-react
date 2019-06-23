@@ -179,7 +179,7 @@ app.post('/purchaseValidation', async function (req, res) {
     songList_array.push(order.result.purchase_units[0].items[item].description);
     
     // Determine which google drive directories to give the purchaser access to.
-    googleDrive.providePermissionsToSong(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].description)
+    googleDrive.providePermissionsToSong(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].description, req.body.inputEmail.value);
   }
 
   // Send order confirmation email to purchaser
@@ -204,7 +204,7 @@ app.post('/purchaseValidation', async function (req, res) {
 
   console.log("Songs Purchased:\n" + songList_array.join("\n"));
 
-  // Send Email to customer containing their purchase or their "Make an Offer" instructions
+  // Send Email to customer containing their purchase
 
   // 5. Validate the transaction details are as expected
   // if (order.result.purchase_units[0].amount.value !== '220.00') {

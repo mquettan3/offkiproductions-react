@@ -1,9 +1,10 @@
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+const async = require('async');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -34,13 +35,13 @@ module.exports = class GoogleDriveAPI {
      * @param {function} callback The callback to call with the authorized client.
      */
     authorize(credentials, callback) {
-        const {client_secret, client_id, redirect_uris} = credentials.installed;
+        const {client_secret, client_id, redirect_uris} = credentials.web;
         const oAuth2Client = new google.auth.OAuth2(
             client_id, client_secret, redirect_uris[0]);
 
         // Check if we have previously stored a token.
         fs.readFile(TOKEN_PATH, (err, token) => {
-            if (err) return getAccessToken(oAuth2Client, callback);
+            if (err) return this.getAccessToken(oAuth2Client, callback);
             oAuth2Client.setCredentials(JSON.parse(token));
             callback(oAuth2Client);
         });
@@ -90,7 +91,7 @@ module.exports = class GoogleDriveAPI {
      * Lists the names and IDs of up to 10 files.
      * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
      */
-    providePermissionsToSong(songName, description) {
+    providePermissionsToSong(songName, description, email) {
         // First, find the ID of the folder for the license tier
         var licenseTier = description.split("License Tier: ")[1]
         var mimeType = "mimeType = 'application/vnd.google-apps.folder' and name = '" + licenseTier + " Packages'";
@@ -113,18 +114,48 @@ module.exports = class GoogleDriveAPI {
                         pageSize: 1,
                         fields: 'nextPageToken, files(id, name)',
                         q: mimeType
-                    }, (nestedErr, nestedRes) => {
+                    }, function(nestedErr, nestedRes) {
                         const nestedFiles = nestedRes.data.files;
                         // Handle errors finding the song name directory
                         if (nestedErr) return console.log('The API returned an error: ' + err);
 
                         if (nestedFiles.length) {
-                            console.log('Add permissions here!');
+                            var permissions = [{
+                                'type' : 'user',
+                                'role' : 'reader',
+                                'emailAddress' : email
+                            }];
+
+                            nestedFiles.map((nestedFile) => {
+                                // Using the NPM module 'async'
+                                async.eachSeries(permissions, function (permission) {
+                                    this.drive.permissions.create({
+                                        resource: permission,
+                                        fileId: nestedFile.id,
+                                        fields: 'id',
+                                    }, function (err, res) {
+                                        if (err) {
+                                            // Handle error...
+                                            console.error(err);
+                                        } else {
+                                            console.log('Permission ID: ', res.id)
+                                        }
+                                    });
+                                }.bind(this), function (err) {
+                                    if (err) {
+                                        // Handle error
+                                        console.error(err);
+                                    } else {
+                                        // All permissions inserted
+                                        console.log("Successfully provided permissiosn to: " + email);
+                                    }
+                                });
+                            });
                         } else {
                             console.log('No Song directory found for: ' + songName + "/");
                         }
         
-                    });
+                    }.bind(this));
                 });
             } else {
                 console.log('No license directory found for: ' + licenseTier);

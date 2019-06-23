@@ -163,7 +163,11 @@ export default class Checkout extends Component {
     // On success, call the server and tell it to email the purchaser with a link for all of their music.
     axios.post('http://' + serverLocation + ':4000/purchaseValidation', {
       orderID: details.orderID,
-      payerID: details.payerID
+      payerID: details.payerID,
+      inputFirstName: this.state.firstName,
+      inputLastName: this.state.lastName,
+      inputPhoneNumber: this.state.phoneNumber,
+      inputEmail: this.state.email
     }).then(function (response) {
         // handle success
         console.log(response);
