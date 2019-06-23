@@ -183,6 +183,7 @@ app.post('/purchaseValidation', async function (req, res) {
   }
 
   // Send order confirmation email to purchaser
+  // TODO: DEFINITELY need to validate the req.body.inputEmail.value - Need to handle if it's an invalid email.
   var mailOptions = {
     from: process.env.EMAIL_NAME,
     to: req.body.inputEmail.value,
