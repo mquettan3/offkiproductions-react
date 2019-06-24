@@ -28,8 +28,8 @@ export default class Checkout extends Component {
     this.lastNameChange = this.lastNameChange.bind(this);
     this.phoneNumberChange = this.phoneNumberChange.bind(this);
     this.emailChange = this.emailChange.bind(this);
-    this.onInit = this.onInit.bind(this);
     this.onPayPalClick = this.onPayPalClick.bind(this);
+    this.routeToPaymentConfirmation = this.routeToPaymentConfirmation.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
@@ -48,12 +48,6 @@ export default class Checkout extends Component {
 
   onPayPalClick(e) {
     this.setState({payPalClicked: true});
-  }
-
-  onInit(data, actions) {
-    // This onInit function is only done for the disabled paypal button.
-    // Note:  There are two PayPal buttons here.  One is always disabled.  One is always enabled.  Validation swaps between the two
-    actions.disable();
   }
 
   basicLicenseChange(e) {
@@ -170,6 +164,7 @@ export default class Checkout extends Component {
       inputEmail: this.state.email
     }).then(function (response) {
         // handle success
+        this.routeToPaymentConfirmation()
         console.log(response);
       })
       .catch(function (error) {
@@ -246,7 +241,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="basicLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={(this.state.basicLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked.value} onChange={this.basicLicenseChange} />
+          <input className={"form-check-input " + (this.state.basicLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="basicLicenseAgreement" checked={this.state.basicLicenseChecked.value} onChange={this.basicLicenseChange} />
           <label className="form-check-label" htmlFor="basicLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Basic License Agreement.</b></a></label>
         </div>
       </div>
@@ -257,7 +252,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="premiumLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={(this.state.premiumLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
+          <input className={"form-check-input " + (this.state.premiumLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
           <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
         </div>
       </div>
@@ -268,7 +263,7 @@ export default class Checkout extends Component {
       licenseItems.push(
       <div key="exclusiveLicense" className="form-group row">
         <div className="form-check form-check-inline">
-          <input className={(this.state.exclusiveLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
+          <input className={"form-check-input " + (this.state.exclusiveLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
           <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
         </div>
       </div>
@@ -423,13 +418,8 @@ export default class Checkout extends Component {
                   id="0"
                 />
               </div>
-              <div className={"paypal-disabled " + (showPayPal ? "hidden" : "")}>
-                Please select your preferred payment method.
-                <PayPalButton
-                  onInit={this.onInit}
-                  onClick={this.onPayPalClick}
-                  id="1"
-                />
+              <div className={(showPayPal ? "hidden" : "")}>
+                <button className="btn btn-ghost-primary" onClick={this.onPayPalClick}>Continue</button>
               </div>
             </div>
           </div>
