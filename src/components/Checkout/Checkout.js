@@ -164,9 +164,9 @@ export default class Checkout extends Component {
       inputEmail: this.state.email
     }).then(function (response) {
         // handle success
-        this.routeToPaymentConfirmation()
+        this.routeToPaymentConfirmation(details.orderID)
         console.log(response);
-      })
+      }.bind(this))
       .catch(function (error) {
         // handle error
         console.log(error);
@@ -178,11 +178,15 @@ export default class Checkout extends Component {
       });
   }
 
-  routeToPaymentConfirmation() {
+  routeToPaymentConfirmation(orderID) {
     this.props.history.push({
       pathname: "/paymentconfirmation",
       state: {
-        shoppingCart: this.state.shoppingCart
+        shoppingCart: this.props.location.state.shoppingCart,
+        firstName: this.state.firstName,
+        email: this.state.email,
+        taxPercentage: 0,
+        orderID: orderID
       }
     })
   }
@@ -293,7 +297,7 @@ export default class Checkout extends Component {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <Link to="/"><h2><span className="fa fa-angle-double-left"></span> HOME</h2></Link>
+              <Link to="/"><h2><span className="fa fa-angle-double-left"></span> RETURN HOME</h2></Link>
               <div className="space-bottom"></div>
             </div>
           </div>
