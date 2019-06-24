@@ -9,9 +9,6 @@ import WaveformBackground from '../../../assets/images/WaveformBackground.png'
 // Custom Styles
 import '../../../assets/css/audio-file-shop.css';
 
-// TODO:  Need to figure out why I get a currentTime not valid error when swapping songs.  Happens more often on production.  Race conditions?
-
-
 export default class Waveform extends PureComponent {
   constructor(props) {
     super(props);
