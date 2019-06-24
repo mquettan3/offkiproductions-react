@@ -17,7 +17,6 @@ export default class Waveform extends PureComponent {
     super(props);
 
     this.handleSeek = this.handleSeek.bind(this);
-    this.handleNewLoad = this.handleNewLoad.bind(this);
     this.handleNextSong = this.handleNextSong.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.resizeWaveform = this.resizeWaveform.bind(this);
@@ -43,8 +42,6 @@ export default class Waveform extends PureComponent {
     this.debouncedMouseMove = debounce(this.mouseMove, 5);
     this.debouncedResizeWaveform = debounce(this.resizeWaveform, 200);
     this.debouncedHandleCurrentTimeChange = debounce(this.handleCurrentTimeChange, 10);
-    this.debouncedHandleNewLoad = debounce(this.handleNewLoad, 50);
-    this.debouncedHandleNextSong = debounce(this.props.handleNextSong, 50);
   }
 
   componentDidMount() {
@@ -63,7 +60,6 @@ export default class Waveform extends PureComponent {
     this.setState({waveform: wavesurf, loaded: true});
 
     wavesurfer.on('seek', this.handleSeek);
-    wavesurfer.on('ready', this.handleNewLoad);
     wavesurfer.on('audioprocess', this.debouncedHandleCurrentTimeChange);
     wavesurfer.on('finish', this.handleNextSong);
     wavesurfer.on('loading', this.handleLoadingProgress);
@@ -75,11 +71,20 @@ export default class Waveform extends PureComponent {
   componentWillUnmount() {
     wavesurfer.unAll();
     window.removeEventListener('resize', this.debouncedResizeWaveform);
+    this.debouncedMouseMove.clear();
+    this.debouncedResizeWaveform.clear();
+    this.debouncedHandleCurrentTimeChange.clear();
+    document.removeEventListener('mousemove', this.debouncedMouseMove);
+    document.removeEventListener('mouseup', this.mouseUp);
   }
 
   componentDidUpdate() {
     // Each time the song location has updated
     if(this.props.songLocation !== this.state.previousSongLocation) {
+      this.debouncedMouseMove.clear();
+      this.debouncedResizeWaveform.clear();
+      this.debouncedHandleCurrentTimeChange.clear();
+      this.state.waveform.pause();
       this.state.waveform.load(this.props.songLocation);
       this.setState({previousSongLocation: this.props.songLocation, previousState: "paused"});
     }
@@ -95,7 +100,6 @@ export default class Waveform extends PureComponent {
   handleLoadingProgress(progress, e) {
     this.setState({isLoaded: false});
     if (progress === 100) {
-      this.forceUpdate();
       this.setState({isLoaded: true});
     }
   }
@@ -112,6 +116,11 @@ export default class Waveform extends PureComponent {
     let percentage = (e.clientX - totalOffsetLeft) / e.currentTarget.offsetWidth;
     
     if (this.state.isLoaded) {
+      // Clear any yet-to-execute debounce events.
+      this.debouncedMouseMove.clear();
+      this.debouncedResizeWaveform.clear();
+      this.debouncedHandleCurrentTimeChange.clear();
+      
       this.state.waveform.seekTo(percentage);
       this.setState({totalOffsetLeft: totalOffsetLeft, waveformOffsetWidth: e.currentTarget.offsetWidth});
     }
@@ -129,6 +138,10 @@ export default class Waveform extends PureComponent {
       percentage = 0;
 
     if (this.state.isLoaded) {
+      // Clear any yet-to-execute debounce events.
+      this.debouncedResizeWaveform.clear();
+      this.debouncedHandleCurrentTimeChange.clear();
+
       this.state.waveform.seekTo(percentage);
     }
   }
@@ -140,6 +153,11 @@ export default class Waveform extends PureComponent {
 
   resizeWaveform() {
     if (this.state.isLoaded) {
+      // Clear any yet-to-execute debounce events.
+      this.debouncedMouseMove.clear();
+      this.debouncedResizeWaveform.clear();
+      this.debouncedHandleCurrentTimeChange.clear();
+
       // Store previous progress
       this.setState({preResizeProgress: this.state.waveform.getCurrentTime() / this.state.waveform.getDuration()})
 
@@ -154,32 +172,31 @@ export default class Waveform extends PureComponent {
   }
 
   handleSeek(progress) {
+    // Clear any yet-to-execute debounce events.
+    this.debouncedMouseMove.clear();
+    this.debouncedResizeWaveform.clear();
+    this.debouncedHandleCurrentTimeChange.clear();
+
     // On Seek - Pass up progress - Float from 0 to 1
     if (this.state.isLoaded) {
-      this.state.waveform.play();
       this.props.handleSeek(progress);
     }
   }
 
-  handleNewLoad() {
-    // Every time the duration of the song changes, pass up the value
-    if (this.state.isLoaded) {
-      var duration = this.state.waveform.getDuration();
-    } else {
-      this.debouncedHandleNewLoad();
-    }
-    this.props.handleDurationChange(duration);
-  }
-
   handleNextSong() {
     // Every time a song finishes, progress to the next song
-    setTimeout(this.debouncedHandleNextSong(), 30);
+    this.props.handleNextSong();
   }
 
   handleCurrentTimeChange() {
+    // Clear any yet-to-execute debounce events. - Except for the handleCurrentTimeChange one, because that's already reset by entering this function.
+    this.debouncedMouseMove.clear();
+    this.debouncedResizeWaveform.clear();
+
     // If we just got resized:
     if(this.state.preResizeProgress && this.state.isLoaded) {
       this.state.waveform.seekTo(this.state.preResizeProgress);
+
       if(this.props.playerState === "playing") {
         this.state.waveform.play();
       }
@@ -188,13 +205,20 @@ export default class Waveform extends PureComponent {
 
     // Every time the current time of the song changes, pass up the value
     if(this.state.isLoaded) {
+      var duration = this.state.waveform.getDuration();
       var time = this.state.waveform.getCurrentTime();
       this.props.handleCurrentTimeChange(time);
+      this.props.handleDurationChange(duration);
     }
   }
 
   playPauseStopLogic() {
     if (this.state.previousState !== this.props.playerState) {
+      // Clear any yet-to-execute debounce events.
+      this.debouncedMouseMove.clear();
+      this.debouncedResizeWaveform.clear();
+      this.debouncedHandleCurrentTimeChange.clear();
+
       switch(this.props.playerState) {
         case "playing":
           if(this.state.isLoaded) {

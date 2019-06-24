@@ -32,8 +32,6 @@ class AudioFileShop extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
-    this.createPaymentOrder = this.createPaymentOrder.bind(this);
-    this.onPaymentSuccess = this.onPaymentSuccess.bind(this);
     this.handleNextSong = this.handleNextSong.bind(this);
     this.routeToCheckout = this.routeToCheckout.bind(this);
 
