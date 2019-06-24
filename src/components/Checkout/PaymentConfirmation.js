@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import BasicLicense from "../../assets/license_agreements/Basic Lease Template.pdf"
+import BasicLicense from "../../assets/license_agreements/Basic Lease.pdf"
+import PremiumLicense from "../../assets/license_agreements/Premium Lease.pdf"
+import ExclusiveLicense from "../../assets/license_agreements/Exclusive Lease.pdf"
 
 export default class PaymentConfirmation extends Component {
     constructor(props) {
@@ -53,12 +55,12 @@ export default class PaymentConfirmation extends Component {
       
             if((this.props.location.state.shoppingCart[item].description.search("License Tier: Premium") > 0)  && !premiumFound) {
                 premiumFound = true;
-                licenseItems.push(<a key="Premium License" href={BasicLicense}><b>Off Ki Productions Premium License Agreement</b><br /></a>);
+                licenseItems.push(<a key="Premium License" href={PremiumLicense}><b>Off Ki Productions Premium License Agreement</b><br /></a>);
             }
       
             if((this.props.location.state.shoppingCart[item].description.search("License Tier: Exclusive") > 0) && !exclusiveFound) {
                 exclusiveFound = true;
-                licenseItems.push(<a key="Exclusive License" href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement</b><br /></a>);
+                licenseItems.push(<a key="Exclusive License" href={ExclusiveLicense}><b>Off Ki Productions Exclusive License Agreement</b><br /></a>);
             }
       
             subTotal += parseInt(this.props.location.state.shoppingCart[item].unit_amount.value, 10) * parseInt(this.props.location.state.shoppingCart[item].quantity, 10);

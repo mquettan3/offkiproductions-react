@@ -8,7 +8,9 @@ import { Link } from "react-router-dom";
 const axios = require('axios');
 
 import PayPalButton from "../Main/Audio Shop/PayPalButton.js";
-import BasicLicense from "../../assets/license_agreements/Basic Lease Template.pdf"
+import BasicLicense from "../../assets/license_agreements/Basic Lease.pdf"
+import PremiumLicense from "../../assets/license_agreements/Premium Lease.pdf"
+import ExclusiveLicense from "../../assets/license_agreements/Exclusive Lease.pdf"
 
 // Custom Styles
 import '../../assets/css/checkout-page.css';
@@ -257,7 +259,7 @@ export default class Checkout extends Component {
       <div key="premiumLicense" className="form-group row">
         <div className="form-check form-check-inline">
           <input className={"form-check-input " + (this.state.premiumLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="premiumLicenseAgreement" checked={this.state.premiumLicenseChecked.value} onChange={this.premiumLicenseChange} />
-          <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
+          <label className="form-check-label" htmlFor="premiumLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={PremiumLicense}><b>Off Ki Productions Premium License Agreement.</b></a></label>
         </div>
       </div>
       );
@@ -268,7 +270,7 @@ export default class Checkout extends Component {
       <div key="exclusiveLicense" className="form-group row">
         <div className="form-check form-check-inline">
           <input className={"form-check-input " + (this.state.exclusiveLicenseChecked.isValid ? valid : invalid) } type="checkbox" id="exclusiveLicenseAgreement" checked={this.state.exclusiveLicenseChecked.value} onChange={this.exclusiveLicenseChange} />
-          <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
+          <label className="form-check-label" htmlFor="exclusiveLicenseAgreement"><small className="text-default">**</small>By checking this box, I acknowledge that I have reveiwed and agree to all the license terms described in the <a href={ExclusiveLicense}><b>Off Ki Productions Exclusive License Agreement.</b></a></label>
         </div>
       </div>
       );
