@@ -254,61 +254,6 @@ class AudioFileShop extends Component {
     })
   }
 
-  createPaymentOrder(data, actions) {
-    var totalCost = 0;
-    for (let item in this.state.shoppingCart) {
-      totalCost += parseFloat(this.state.shoppingCart[item].unit_amount.value);
-    }
-
-    let orderObject = {
-      intent: "CAPTURE",
-      purchase_units: [{
-        amount: {
-          currency_code: "USD",
-          value: totalCost,
-          breakdown: {
-            item_total: {
-              currency_code: "USD",
-              value: totalCost
-            }
-          }
-        },
-        description: "You are purchasing from the one and only Off Ki Productions.",
-        items: this.state.shoppingCart,
-      }],
-      application_context: {
-        brand_name: "Off Ki Productions",
-        landing_page: "LOGIN",
-        shipping_preference: "NO_SHIPPING",
-        user_action: "CONTINUE",
-        return_url: "http://192.168.56.102:3000",
-        cancel_url: "http://192.168.56.102:3000"
-      }
-    }
-
-    return actions.order.create(orderObject);
-  }
-
-  onPaymentSuccess(details) {
-    // On success, call the server and tell it to email the purchaser with a link for all of their music.
-    axios.post('http://' + serverLocation + ':4000/purchaseValidation', {
-      orderID: details.orderID,
-      payerID: details.payerID
-    }).then(function (response) {
-        // handle success
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-
-        // Do nothing
-      });
-  }
-
   render() {
     let songTableList = [];
     let audioPlayer = "";

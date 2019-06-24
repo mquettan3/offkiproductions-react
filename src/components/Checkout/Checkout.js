@@ -183,6 +183,15 @@ export default class Checkout extends Component {
       });
   }
 
+  routeToPaymentConfirmation() {
+    this.props.history.push({
+      pathname: "/paymentconfirmation",
+      state: {
+        shoppingCart: this.state.shoppingCart
+      }
+    })
+  }
+
   render() {
     var purchaseItems = [];
     var licenseItems = [];
