@@ -84,7 +84,7 @@ export default class CustomMusic extends Component {
           </div>
           <br />
           <div className="music-action">
-            <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeFgjfPJxc0U---jvlEybGNE_1Q4MmDbcj5-YDXnCkiEYBurg/viewform?vc=0&c=0&w=1">Buy Custom Music</a>
+            <a className="btn btn-ghost-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeFgjfPJxc0U---jvlEybGNE_1Q4MmDbcj5-YDXnCkiEYBurg/viewform?vc=0&c=0&w=1" target="_blank">Buy Custom Music</a>
           </div>
         </div>
       </section>

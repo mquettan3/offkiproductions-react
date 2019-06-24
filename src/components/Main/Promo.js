@@ -153,7 +153,7 @@ export default class Promo extends Component {
                         Subscribe to our newsletter and get 50% off your first beat store purchase! This applies to the total amount you buy from the beat store. So you could essentially get a max of 10 beats and get 10 beats FREE! You will also be the first to learn about future deals we are running, new beat early access and more!
                     </p>
                 </div> {/* desc */}
-                <a className="btn btn-primary btn-cta" href="https://forms.gle/jf6nVfiVQxuFVTR56">Subscribe</a>
+                <a className="btn btn-primary btn-cta" href="https://forms.gle/jf6nVfiVQxuFVTR56" target="_blank">Subscribe</a>
               </div> {/* updates-block-inner promo-cta-content */}
             </div> {/* container */}
           </div> {/* updates-block */}
