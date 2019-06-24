@@ -28,6 +28,9 @@ export default class PaymentConfirmation extends Component {
         var subTotal = 0;
         var taxPercentage = this.props.location.state.taxPercentage;
         var numItems = 0;
+        let basicFound = false;
+        let premiumFound = false;
+        let exclusiveFound = false;
 
         for(var item in this.props.location.state.shoppingCart) {
             purchaseItems.push(
@@ -43,15 +46,18 @@ export default class PaymentConfirmation extends Component {
             </tr>
             );
 
-            if(this.props.location.state.shoppingCart[item].description.search("License Tier: Basic") > 0) {
+            if((this.props.location.state.shoppingCart[item].description.search("License Tier: Basic") > 0) && !basicFound) {
+                basicFound = true;
                 licenseItems.push(<a key="Basic License" href={BasicLicense}><b>Off Ki Productions Basic License Agreement</b><br /></a>);
             }
       
-            if(this.props.location.state.shoppingCart[item].description.search("License Tier: Premium") > 0) {
+            if((this.props.location.state.shoppingCart[item].description.search("License Tier: Premium") > 0)  && !premiumFound) {
+                premiumFound = true;
                 licenseItems.push(<a key="Premium License" href={BasicLicense}><b>Off Ki Productions Premium License Agreement</b><br /></a>);
             }
       
-            if(this.props.location.state.shoppingCart[item].description.search("License Tier: Exclusive") > 0) {
+            if((this.props.location.state.shoppingCart[item].description.search("License Tier: Exclusive") > 0) && !exclusiveFound) {
+                exclusiveFound = true;
                 licenseItems.push(<a key="Exclusive License" href={BasicLicense}><b>Off Ki Productions Exclusive License Agreement</b><br /></a>);
             }
       
