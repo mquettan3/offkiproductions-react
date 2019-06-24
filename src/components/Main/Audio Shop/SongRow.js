@@ -38,7 +38,6 @@ export default class SongRow extends Component {
               <option value="None">None</option>
               <option value="Basic">Basic - $30</option>
               <option value="Premium">Premium - $100</option>
-              <option value="Exclusive">Exclusive - $3000</option>
             </select>
         </label>
         </td>

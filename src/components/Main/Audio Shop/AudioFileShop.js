@@ -219,8 +219,6 @@ class AudioFileShop extends Component {
             cost = "30"
           } else if (licenseTier === "Premium") {
             cost = "100"
-          } else if (licenseTier === "Exclusive") {
-            cost = "3000"
           }
 
           shoppingCart.push({
