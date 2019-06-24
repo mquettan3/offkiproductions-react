@@ -343,7 +343,7 @@ export default class Checkout extends Component {
                 <form className="form-horizontal">
                   <div className="row">
                     <div className="col-xl-3">
-                      <h3 className="title">Personal Info</h3>
+                      <h3 className="title">Buyer Info</h3>
                     </div>
                     <div className="col-xl-8 ml-xl-auto">
                       <div className="form-group row">
