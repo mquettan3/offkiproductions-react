@@ -27,7 +27,7 @@ export default class Promo extends Component {
     var images = [Hero1]
 
     // Request from server the full list of files to scroll through
-    axios.get('http://' + serverLocation + ':4000/herofiles')
+    axios.get(serverLocation + '/herofiles')
       .then(function (response) {
         // handle success
 
@@ -35,7 +35,7 @@ export default class Promo extends Component {
         response.data.forEach(function(value, index) {
           // Skip the first image because the first one is sent along with the React App.  All subsequent images are queried for so this hides the loading.
           if (index !== 0) {
-            images.push('http://' + serverLocation + ':4000/herofiles/' + value)
+            images.push(serverLocation + '/herofiles/' + value)
           }
         });
       })
