@@ -25,6 +25,7 @@ module.exports = class OffKiEmailGenerator {
         this.lastName = "";
         this.email = "";
         this.orderID = "";
+        this.licenseTier = "";
         this.purchaseItemReplaceString = "<!-- ItemList Placeholder -->"
         this.dateReplaceString = "{{Date}}";
         this.timeReplaceString = "{{Time}}";
@@ -40,11 +41,21 @@ module.exports = class OffKiEmailGenerator {
         this.htmlString = fs.readFileSync(templateLocation, 'utf8');
     }
 
-    addPurchaseItem(songName, quantity, unit_price) {
+    addPurchaseItem(songName, quantity, unit_price, description) {
         let unitPriceReplaceString = "{{Price}}";
         let totalPriceReplaceString = "{{ItemPrice}}";
         let quantityReplaceString = "{{Quantity}}";
         let itemNameReplaceString = "{{Item Name}}";
+
+        this.licenseTier = ""
+
+        if (description.search("Basic") > 0) {
+            this.licenseTier = " - Basic License";
+        } else if (description.search("Premium") > 0) {
+            this.licenseTier = " - Premium License";
+        } else if (description.search("Exclusive") > 0) {
+            this.licenseTier = " - Exclusive License";
+        }
 
         let templateItem = `
         <tr class="item-list" style="background-color: #f3f3f3;">
@@ -69,7 +80,7 @@ module.exports = class OffKiEmailGenerator {
         templateItem = templateItem.replace(unitPriceReplaceString, "$" + unit_price);
         templateItem = templateItem.replace(totalPriceReplaceString, "$" + totalPrice.toString());
         templateItem = templateItem.replace(quantityReplaceString, quantity);
-        templateItem = templateItem.replace(itemNameReplaceString, songName);
+        templateItem = templateItem.replace(itemNameReplaceString, songName + this.licenseTier);
 
         this.purchaseItems.push(templateItem);
 
