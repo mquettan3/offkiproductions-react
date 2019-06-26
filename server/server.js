@@ -215,14 +215,6 @@ app.post('/purchaseValidation', async function (req, res) {
     }
   });
 
-  
-
-  // TODO: Send Email to Josh to notify him of the purchase
-
-  console.log("Songs Purchased:\n" + songList_array.join("\n"));
-
-  // Send Email to customer containing their purchase
-
   // 5. Validate the transaction details are as expected
   // if (order.result.purchase_units[0].amount.value !== '220.00') {
   //   return res.send(400);
