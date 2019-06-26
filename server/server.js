@@ -18,6 +18,7 @@ const fs = require('fs');
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 const payPalClient = require('./payPalClient.js');
 const GoogleDriveAPI = require('./googleDrive.js');
+const OffKiEmailGenerator = require('./emailGenerator.js');
 var googleDrive = new GoogleDriveAPI('credentials.json');
 
 // Import the emailer
@@ -73,6 +74,19 @@ app.get('/herofiles/:fileName', function (req, res) {
 
   // Server debug print
   console.log("Sent file: " + path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName));
+});
+
+// Respond with the specified file in ../src/assets/images/Logos
+app.get('/emailfiles/:fileName', function (req, res) {
+  // Send the file requested from the static location
+  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/Logos/' + path.basename(req.params.fileName), function(err) {
+    if(err) {
+      console.log(err);
+    }
+  });
+
+  // Server debug print
+  console.log("Sent file: " + path.resolve(__dirname + '/../') + '/src/assets/images/Logos/' + path.basename(req.params.fileName));
 });
 
 // Respond with the names of all relevant files in ../src/assets/images
@@ -172,11 +186,14 @@ app.post('/purchaseValidation', async function (req, res) {
     return res.sendStatus(500);
   }
 
-  // If we haven't returned yet - Payment valid
+  // If we haven't returned yet - Payment valid - Generate response email
+  var emailGenerator = new OffKiEmailGenerator('email.html');
+  emailGenerator.updateOrderInformation(req.body.inputFirstName, req.body.inputLastName, req.body.inputEmail, req.body.orderID);
   let songList_array = [];
 
   for (item in order.result.purchase_units[0].items) {
     songList_array.push(order.result.purchase_units[0].items[item].description);
+    emailGenerator.addPurchaseItem(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].quantity, order.result.purchase_units[0].items[item].unit_amount.value);
     
     // Determine which google drive directories to give the purchaser access to.
     googleDrive.providePermissionsToSong(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].description, req.body.inputEmail.value);
@@ -184,11 +201,12 @@ app.post('/purchaseValidation', async function (req, res) {
 
   // Send order confirmation email to purchaser
   // TODO: DEFINITELY need to validate the req.body.inputEmail.value - Need to handle if it's an invalid email.
+  var temp = emailGenerator.render();
   var mailOptions = {
     from: process.env.EMAIL_NAME,
     to: req.body.inputEmail.value,
     subject: 'Off Ki Productions - Your Purchase Confirmation',
-    text: 'Thank you for purchasing the following: \n' + songList_array.join("\n")
+    html: temp
   };
 
   transporter.sendMail(mailOptions, function(error, info){

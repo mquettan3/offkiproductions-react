@@ -157,7 +157,7 @@ export default class Checkout extends Component {
 
   onPaymentSuccess(details) {
     // On success, call the server and tell it to email the purchaser with a link for all of their music.
-    axios.post('http://' + serverLocation + ':4000/purchaseValidation', {
+    axios.post(serverLocation + '/purchaseValidation', {
       orderID: details.orderID,
       payerID: details.payerID,
       inputFirstName: this.state.firstName,

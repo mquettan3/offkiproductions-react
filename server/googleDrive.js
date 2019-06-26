@@ -139,7 +139,7 @@ module.exports = class GoogleDriveAPI {
                                             // Handle error...
                                             console.error(err);
                                         } else {
-                                            console.log('Permission ID: ', res.body.id);
+                                            console.log('Permission ID: ', res.data.id);
                                         }
                                     });
                                 }.bind(this), function (err) {
