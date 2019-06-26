@@ -189,11 +189,9 @@ app.post('/purchaseValidation', async function (req, res) {
   // If we haven't returned yet - Payment valid - Generate response email
   var emailGenerator = new OffKiEmailGenerator('email.html');
   emailGenerator.updateOrderInformation(req.body.inputFirstName, req.body.inputLastName, req.body.inputEmail, req.body.orderID);
-  let songList_array = [];
 
   for (item in order.result.purchase_units[0].items) {
-    songList_array.push(order.result.purchase_units[0].items[item].description);
-    emailGenerator.addPurchaseItem(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].quantity, order.result.purchase_units[0].items[item].unit_amount.value);
+    emailGenerator.addPurchaseItem(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].quantity, order.result.purchase_units[0].items[item].unit_amount.value, order.result.purchase_units[0].items[item].description);
     
     // Determine which google drive directories to give the purchaser access to.
     googleDrive.providePermissionsToSong(order.result.purchase_units[0].items[item].name, order.result.purchase_units[0].items[item].description, req.body.inputEmail.value);
