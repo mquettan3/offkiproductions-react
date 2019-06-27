@@ -35,6 +35,8 @@ export default class Checkout extends Component {
 
     window.React = React;
     window.ReactDOM = ReactDOM;
+    window.dataLayer = window.dataLayer || [];
+    gtag('js', new Date());
 
     this.state = {
       firstName: {value: "", isValid: false},
@@ -46,6 +48,10 @@ export default class Checkout extends Component {
       exclusiveLicenseChecked: {value: false, isValid: false},
       payPalClicked: false
     };
+  }
+
+  gtag() {
+    window.dataLayer.push(arguments);
   }
 
   onPayPalClick(e) {
@@ -166,6 +172,37 @@ export default class Checkout extends Component {
       inputEmail: this.state.email
     }).then(function (response) {
         // handle success
+        var totalCost = 0;
+        for (let item in this.props.location.state.shoppingCart) {
+          totalCost += parseFloat(this.props.location.state.shoppingCart[item].unit_amount.value);
+        }
+
+        let itemsList = [];
+        this.props.location.state.shoppingCart.map(function (item, index) {
+          itemsList.push({
+            id: item.sku,
+            name: item.name,
+            list_name: item.name,
+            brand: "Off Ki Productions",,
+            category: item.description,
+            variant: "None",
+            list_positon: index + 1,
+            quantity: item.quantity,
+            price: item.unit_amount.value
+          })
+        });
+
+        // Inform Google Analytics of our sale!
+        gtag('event', 'purchase', {
+          "transaction_id": details.orderID,
+          "affiliation": "Off Ki Productions Beat Store",
+          "value": totalCost,
+          "currency": "USD",
+          "tax": 0,
+          "shipping": 0,
+          "items": itemsList
+        });
+
         this.routeToPaymentConfirmation(details.orderID)
         console.log(response);
       }.bind(this))
