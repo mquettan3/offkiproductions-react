@@ -32,11 +32,11 @@ export default class Checkout extends Component {
     this.emailChange = this.emailChange.bind(this);
     this.onPayPalClick = this.onPayPalClick.bind(this);
     this.routeToPaymentConfirmation = this.routeToPaymentConfirmation.bind(this);
+    this.gtag = this.gtag.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
     window.dataLayer = window.dataLayer || [];
-    gtag('js', new Date());
 
     this.state = {
       firstName: {value: "", isValid: false},
@@ -177,30 +177,32 @@ export default class Checkout extends Component {
           totalCost += parseFloat(this.props.location.state.shoppingCart[item].unit_amount.value);
         }
 
-        let itemsList = [];
-        this.props.location.state.shoppingCart.map(function (item, index) {
-          itemsList.push({
-            id: item.sku,
-            name: item.name,
-            list_name: item.name,
+        let itemsList = this.props.location.state.shoppingCart.map(function (item, index) {
+          return {
             brand: "Off Ki Productions",
             category: item.description,
+            category_slot: "None",
+            creative_slot: "None",
+            id: item.sku,
+            location_id: "None",
+            name: item.name,
+            price: parseFloat(item.unit_amount.value),
+            quantity: parseInt(item.quantity, 10),
             variant: "None",
-            list_positon: index + 1,
-            quantity: item.quantity,
-            price: item.unit_amount.value
-          })
+            list_positon: index + 1
+          };
         });
 
         // Inform Google Analytics of our sale!
-        gtag('event', 'purchase', {
+        this.gtag('event', 'purchase', {
           "transaction_id": details.orderID,
-          "affiliation": "Off Ki Productions Beat Store",
-          "value": totalCost,
+          "affiliation": "Off Ki Productions",
+          "value": parseFloat(totalCost),
           "currency": "USD",
-          "tax": 0,
-          "shipping": 0,
-          "items": itemsList
+          "tax": 0.0,
+          "shipping": 0.0,
+          "items": itemsList,
+          "coupon": "None"
         });
 
         this.routeToPaymentConfirmation(details.orderID)
