@@ -183,7 +183,7 @@ export default class Checkout extends Component {
             id: item.sku,
             name: item.name,
             list_name: item.name,
-            brand: "Off Ki Productions",,
+            brand: "Off Ki Productions",
             category: item.description,
             variant: "None",
             list_positon: index + 1,
