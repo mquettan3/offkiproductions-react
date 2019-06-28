@@ -183,7 +183,7 @@ app.post('/purchaseValidation', async function (req, res) {
 
     // 4. Handle any errors from the call
     console.error(err);
-    return res.sendStatus(500);
+    return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order.');
   }
 
   // If we haven't returned yet - Payment valid - Generate response email
@@ -207,9 +207,16 @@ app.post('/purchaseValidation', async function (req, res) {
     html: temp
   };
 
+  if (!(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(req.body.inputEmail.value)))
+  {
+     // Invalid Email, return error
+    return res.status(400).send('Bad Request: Invalid Email format.  Please provide a valid email.');
+  }
+
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       console.log(error);
+      return res.status(400).send('Bad Request: Invalid Email address - Email failed to send - Contact Server Admin to verify server validity.');
     } else {
       console.log('Email sent: ' + info.response);
     }

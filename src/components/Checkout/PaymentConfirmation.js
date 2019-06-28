@@ -6,6 +6,9 @@ import BasicLicense from "../../assets/license_agreements/Basic Lease.pdf"
 import PremiumLicense from "../../assets/license_agreements/Premium Lease.pdf"
 import ExclusiveLicense from "../../assets/license_agreements/Exclusive Lease.pdf"
 
+// Custom Styles
+import '../../assets/css/checkout-page.css';
+
 export default class PaymentConfirmation extends Component {
     constructor(props) {
       super(props);

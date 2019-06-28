@@ -33,6 +33,8 @@ export default class Checkout extends Component {
     this.onPayPalClick = this.onPayPalClick.bind(this);
     this.routeToPaymentConfirmation = this.routeToPaymentConfirmation.bind(this);
     this.gtag = this.gtag.bind(this);
+    this.onPayPalError = this.onPayPalError.bind(this);
+    this.onError = this.onError.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
@@ -211,12 +213,32 @@ export default class Checkout extends Component {
       .catch(function (error) {
         // handle error
         console.log(error);
+
+        // Navigate to the error page with the error message
+        this.onError(error);
       })
       .finally(function () {
         // always executed
     
         // Do nothing
       });
+  }
+
+  onPayPalError(err) {
+    this.onError(err, true);
+  }
+
+  onError(errMessage, isPayPal=false) {
+    this.props.history.push({
+      pathname: "/errorpage",
+      state: {
+        shoppingCart: this.props.location.state.shoppingCart,
+        firstName: this.state.firstName,
+        email: this.state.email,
+        error: errMessage,
+        isPayPal: isPayPal
+      }
+    })
   }
 
   routeToPaymentConfirmation(orderID) {
@@ -460,6 +482,7 @@ export default class Checkout extends Component {
                   createOrder={this.createPaymentOrder}
                   onApprove={this.onPaymentSuccess}
                   onClick={this.onPayPalClick}
+                  onError={this.onPayPalError}
                   id="0"
                 />
               </div>
