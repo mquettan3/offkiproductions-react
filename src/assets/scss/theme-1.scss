@@ -4,7 +4,13 @@
 
 $section_background_color: rgb(245, 245, 245);
 $site_accent_color: #6eceb2;
+$site_accent_color_dim: #6eceb12c;
 $site_dark_accent_color: #3d884d;
+$dark_border_color:  rgb(185, 185, 185);
+$offki_pink: #ad1aac;
+$offki_purple_dim: rgba(68, 0, 153, 0.4);
+$offki_purple: rgb(68, 0, 153);
+$text_color: rgb(16, 17, 19);
 
 .logo-holder embed {
   display: block;
@@ -503,7 +509,8 @@ label {
     font-size: 18px;
     font-weight: 600;
     margin-top: 0;
-    margin-bottom: 5px
+    margin-bottom: 5px;
+    font-family: "Source Sans Pro";
 }
 
 .updates-block .promo-cta-content .btn-cta {
@@ -898,4 +905,32 @@ section:nth-child(even) {
   animation-iteration-count: infinite;
   background-color: rgb(110, 206, 178);
   bottom: 0px;
+}
+
+.table {
+    border: 1px solid;
+    border-color: $dark_border_color;
+    // border-radius: 5px;
+    overflow: hidden;
+    // -webkit-box-shadow: 2px 2px 3px 0px rgba(158,158,158,1);
+    // -moz-box-shadow: 2px 2px 3px 0px rgba(158,158,158,1);
+    // box-shadow: 2px 2px 3px 0px rgba(158,158,158,1);
+}
+
+section .table thead th h4 {
+    margin: 0px 0px;
+}
+
+section .table thead th {
+    border-collapse: separate;
+    border-top-color: $dark_border_color !important;
+    background-color: $offki_purple_dim !important;
+}
+
+section .table th, td {
+    color: $text_color !important;
+}
+
+section .table-striped tbody tr:nth-of-type(odd) {
+    background-color: whitesmoke !important;
 }

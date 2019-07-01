@@ -10,8 +10,14 @@ export default class LicenseTerms extends Component {
           <h2 className="section-title">License Terms</h2>
           <div className="row justify-content-center">
             <div className="col-md-4 col-sm-12 mb-4 mb-sm-0">
-              <h4>Basic</h4>
               <table className="table table-vertical-align table-striped">
+                <thead className="thead-light">
+                  <tr>
+                    <th colSpan="2">
+                      <h4>Basic</h4>
+                    </th>
+                  </tr>
+                </thead>
                 <tbody>
                 <tr>
                   <th>Cost</th>
@@ -95,8 +101,14 @@ export default class LicenseTerms extends Component {
               </table>
             </div>
             <div className="col-md-4 col-sm-12 mb-4 mb-sm-0">
-              <h4>Premium</h4>
               <table className="table table-vertical-align table-striped">
+                <thead className="thead-light">
+                  <tr>
+                    <th colSpan="2">
+                      <h4>Premium</h4>
+                    </th>
+                  </tr>
+                </thead>
                 <tbody>
                 <tr>
                   <th>Cost</th>
@@ -180,8 +192,14 @@ export default class LicenseTerms extends Component {
               </table>
             </div>
             <div className="col-md-4 col-sm-12">
-              <h4>Exclusive</h4>
               <table className="table table-vertical-align table-striped">
+                <thead className="thead-light">
+                  <tr>
+                    <th colSpan="2">
+                      <h4>Exclusive</h4>
+                    </th>
+                  </tr>
+                </thead>
                 <tbody>
                 <tr>
                   <th>Cost</th>

@@ -433,7 +433,8 @@ label {
   font-size: 18px;
   font-weight: 600;
   margin-top: 0;
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+  font-family: "Source Sans Pro"; }
 
 .updates-block .promo-cta-content .btn-cta {
   position: absolute;
@@ -737,3 +738,22 @@ section:nth-child(even) {
   animation-iteration-count: infinite;
   background-color: #6eceb2;
   bottom: 0px; }
+
+.table {
+  border: 1px solid;
+  border-color: #b9b9b9;
+  overflow: hidden; }
+
+section .table thead th h4 {
+  margin: 0px 0px; }
+
+section .table thead th {
+  border-collapse: separate;
+  border-top-color: #b9b9b9 !important;
+  background-color: rgba(68, 0, 153, 0.4) !important; }
+
+section .table th, td {
+  color: #101113 !important; }
+
+section .table-striped tbody tr:nth-of-type(odd) {
+  background-color: whitesmoke !important; }

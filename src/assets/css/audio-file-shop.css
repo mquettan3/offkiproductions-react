@@ -1,11 +1,14 @@
 /*
   SASS Files - This is automatically compiled into css using the scss npm script in package.json each time this file is changed.
 */
+p {
+  font-size: 16px; }
+
 .audio-file-shop {
   background-color: whitesmoke;
   border: 1px solid;
   border-radius: 5px;
-  border-color: #d9d9d9;
+  border-color: #b9b9b9;
   -webkit-box-shadow: 2px 2px 3px 0px #9e9e9e;
   -moz-box-shadow: 2px 2px 3px 0px #9e9e9e;
   box-shadow: 2px 2px 3px 0px #9e9e9e; }
@@ -54,7 +57,7 @@
   .audio-file-shop .song-row.playing-true {
     background-color: rgba(0, 0, 0, 0.1); }
   .audio-file-shop .purchase-music-form {
-    margin: 0px 0px 0px 0px; }
+    margin: 0px 0px 10px 0px; }
 
 .audio-player {
   position: relative;
@@ -164,7 +167,6 @@
     width: 168px;
     overflow: hidden;
     display: inline-block;
-    float: left;
     margin: 6px; }
     .audio-player .album-art img {
       width: auto;

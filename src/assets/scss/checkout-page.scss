@@ -1,4 +1,15 @@
 /* Separator */
+$text_color: rgb(16, 17, 19);
+$section_background_color: rgb(245, 245, 245);
+$dark_border_color:  rgb(185, 185, 185);
+
+fieldset {
+  background-color: $section_background_color !important;
+}
+
+.cart th {
+  border-top-color: $dark_border_color !important;
+}
 
 .separator-2 {
   width: 100%;
@@ -33,7 +44,7 @@ h1 {
     font-size: 33px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #333333;
+    color: $text_color;
     line-height: 1.2;
     font-family: "Raleway", sans-serif;
 }
