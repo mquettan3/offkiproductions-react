@@ -262,7 +262,7 @@ class AudioFileShop extends Component {
       for(let category in this.state.categorySongStruct.categories) {
         songTableList.push(
           <tr key={category} className="category-row">
-            <th colSpan="3"><div className="category-row-content">{this.state.categorySongStruct.categories[category].name}<span>Select License Tier to Purchase</span></div></th>
+            <th colSpan="3"><div className="category-row-content"><div className="category-name">{this.state.categorySongStruct.categories[category].name}</div><span>Select License Tier to Purchase</span></div></th>
           </tr>
         )
 

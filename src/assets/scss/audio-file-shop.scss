@@ -33,6 +33,7 @@ p {
 
   .category-row-content {
     position: relative;
+    text-align: center;
   }
 
   .category-row {
@@ -40,12 +41,30 @@ p {
     border-color: $dark_border_color;
     background-color: rgb(220,220,220);
   }
+  .category-row .category-name {
+    position: relative;
+    display: inline-block;
+  }
+
+  @media (min-width: 767px) {
+    .category-row .category-name {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+  }
 
   .category-row span {
-    position: absolute;
-    right: 20px;
     color: $site_dark_accent_color;
     font-weight: normal;
+    display: block;
+  }
+
+  @media (min-width: 450px) {
+    .category-row span {
+      float: right;
+      padding-right: 20px;
+    }
   }
 
   .song-row {
@@ -238,7 +257,17 @@ p {
      width: auto;
      height: 100%;
    }
- }
+  }
+
+  @media (max-width: 330px) {
+    .album-art {
+      display: none;
+    }
+
+    .audio-player-controls {
+      width: 100%;
+    }
+  }
 }
 
 .waveform-wrapper {

@@ -16,6 +16,10 @@ export default class PaymentConfirmation extends Component {
       this.createDate = this.createDate.bind(this);
     }
 
+    componentDidMount() {
+      window.scrollTo(0,0);
+    }
+
     createDate() {
         let newDate = new Date();
         let date = newDate.getDate();

@@ -35,6 +35,7 @@ export default class Checkout extends Component {
     this.gtag = this.gtag.bind(this);
     this.onPayPalError = this.onPayPalError.bind(this);
     this.onError = this.onError.bind(this);
+    this.onInit = this.onInit.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
@@ -52,12 +53,23 @@ export default class Checkout extends Component {
     };
   }
 
+  componentDidMount() {
+    window.scrollTo(0,0);
+  }
+
   gtag() {
     window.dataLayer.push(arguments);
   }
 
   onPayPalClick(e) {
     this.setState({payPalClicked: true});
+  }
+
+  onInit(data, actions) {
+    // This onInit function is only done for the disabled paypal button.
+    // Note:  There are two PayPal buttons here.  One is always disabled.  One is always enabled.  Validation swaps between the two
+    actions.disable();
+    console.log("In Init;");
   }
 
   basicLicenseChange(e) {
@@ -370,8 +382,7 @@ export default class Checkout extends Component {
             <div className="col-12">
               <h1 className="page-title">Checkout</h1>
               <div className="separator-2"></div>
-            </div>
-            <table className="table cart">
+              <table className="table cart">
                 <thead>
                   <tr>
                     <th>Product </th>
@@ -397,6 +408,7 @@ export default class Checkout extends Component {
                   </tr>
                 </tbody>
               </table>
+            </div>
           </div>
           <div className="row">
             <div className="col-12">
@@ -486,8 +498,12 @@ export default class Checkout extends Component {
                   id="0"
                 />
               </div>
-              <div className={(showPayPal ? "hidden" : "")}>
-                <button className="btn btn-ghost-primary" onClick={this.onPayPalClick}>Continue</button>
+              <div className={"paypal-disabled " + (showPayPal ? "hidden" : "")}>
+                <PayPalButton
+                  onInit={this.onInit}
+                  onClick={this.onPayPalClick}
+                  id="1"
+                />
               </div>
             </div>
           </div>

@@ -227,47 +227,8 @@ fieldset {
     padding-bottom: 20px;
   }
 
-  
-@media (max-width: 546.9px) {
-    $paypal_buttons_height: 200px;
-    @supports (-webkit-overflow-scrolling: touch) {
-    $paypal_buttons_height: 259px;
-    }
-    .paypal-buttons-wrapper-showing {
-    height: auto;
-    padding-top: 30px;
-    max-height: $paypal_buttons_height;
-    -webkit-transition: all 1s;
-    transition: all 1s;
-    overflow: hidden;
-    }
-}
-
-@media (min-width: 547px) {
-    $paypal_buttons_height: 230px;
-    @supports (-webkit-overflow-scrolling: touch) {
-    $paypal_buttons_height: 289px;
-    }
-    .paypal-buttons-wrapper-showing {
-    height: auto;
-    padding-top: 30px;
-    max-height: $paypal_buttons_height;
-    -webkit-transition: all 1s;
-    transition: all 1s;
-    overflow: hidden;
-    }
-}
-
-.paypal-buttons-wrapper-hidden {
-    max-height: 0px;
-    padding-top: 0px;
-    -webkit-transition: all 1s;
-    transition: all 1s;
-    overflow: hidden;
-}
-
-.paypal-disabled {
-    opacity: 0.5;
-    height: 200px;
-}
-  
+  .paypal-disabled {
+      opacity: 0.5;
+      height: 200px;
+  }
+    
