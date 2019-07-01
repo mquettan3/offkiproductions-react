@@ -33,7 +33,6 @@ export default class SongRow extends Component {
         </th>
         <td className="shopping-selection">
           <label>
-            Select License Tier to Purchase
             <select name="license-tier" onChange={this.handleLicenseChange} value={license_tier}>
               <option value="None">None</option>
               <option value="Basic">Basic - $30</option>
