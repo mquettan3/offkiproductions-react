@@ -750,7 +750,7 @@ section .table thead th h4 {
 section .table thead th {
   border-collapse: separate;
   border-top-color: #b9b9b9 !important;
-  background-color: rgba(68, 0, 153, 0.4) !important; }
+  background-color: rgba(60, 0, 134, 0.15) !important; }
 
 section .table th, td {
   color: #101113 !important; }
