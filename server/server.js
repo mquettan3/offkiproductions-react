@@ -68,7 +68,7 @@ app.get('/herofiles/:fileName', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName), function(err) {
     if(err) {
-      console.log(err);
+      console.error(err);
     }
   });
 
@@ -81,7 +81,7 @@ app.get('/emailfiles/:fileName', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/Logos/' + path.basename(req.params.fileName), function(err) {
     if(err) {
-      console.log(err);
+      console.error(err);
     }
   });
 
@@ -133,7 +133,7 @@ app.get('/samplemusic/:categoryName/:songName', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  req.params.songName, function(err) {
     if(err) {
-      console.log(err);
+      console.error(err);
     }
   });
 
@@ -146,7 +146,7 @@ app.get('/basicmusic/:categoryName/:songName/:orderID', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  req.params.songName, function(err) {
     if(err) {
-      console.log(err);
+      console.error(err);
     }
   });
 
@@ -160,7 +160,7 @@ app.get('/albumart/:categoryName/:songName', function (req, res) {
   // Send the file requested from the static location
   res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  albumArtName, function(err) {
     if(err) {
-      console.log(err);
+      console.error(err);
     }
   });
 
@@ -198,11 +198,11 @@ app.post('/purchaseValidation', async function (req, res) {
   }
 
   // Send order confirmation email to purchaser
-  // TODO: DEFINITELY need to validate the req.body.inputEmail.value - Need to handle if it's an invalid email.
   var temp = emailGenerator.render();
   var mailOptions = {
     from: process.env.EMAIL_NAME,
     to: req.body.inputEmail.value,
+    bcc: "offki@offkiproductions.com",
     subject: 'Off Ki Productions - Your Purchase Confirmation',
     html: temp
   };
@@ -215,7 +215,7 @@ app.post('/purchaseValidation', async function (req, res) {
 
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
-      console.log(error);
+      console.error(error);
       return res.status(400).send('Bad Request: Invalid Email address - Email failed to send - Contact Server Admin to verify server validity.');
     } else {
       console.log('Email sent: ' + info.response);

@@ -3,6 +3,9 @@ const readline = require('readline');
 const {google} = require('googleapis');
 const async = require('async');
 
+// Import the emailer
+const nodemailer = require('nodemailer');
+
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 // The file token.json stores the user's access and refresh tokens, and is
@@ -10,20 +13,50 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 // time.
 const TOKEN_PATH = 'token.json';
 
+const offkiemail = "offki@offkiproductions.com"
+
 module.exports = class GoogleDriveAPI {
     constructor(credentialsJsonLocation){
         this.authorize = this.authorize.bind(this);
         this.assignDrive = this.assignDrive.bind(this);
         this.getAccessToken = this.getAccessToken.bind(this);
         this.authorize = this.authorize.bind(this);
+        this.sendOffKiErrorNotice = this.sendOffKiErrorNotice.bind(this);
 
         this.drive = {};
 
         // Load client secrets from a local file.
         fs.readFile(credentialsJsonLocation, (err, content) => {
-          if (err) return console.log('Error loading client secret file:', err);
+          if (err) return console.error('Error loading client secret file:', err);
           // Authorize a client with credentials, then call the Google Drive API.
           this.authorize(JSON.parse(content), this.assignDrive);
+        });
+
+        // Nodemailer used to notify Off Ki Productions of errors happening with their GMail automated account.
+        this.transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_NAME,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        });
+
+    }
+
+    sendOffKiErrorNotice(err) {  // Send order confirmation email to purchaser
+        let mailOptions = {
+          from: process.env.EMAIL_NAME,
+          to: offkiemail,
+          subject: 'IMPORTANT: Website Error Notification!!',
+          text: err
+        };
+      
+        this.transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.error(error);
+          } else {
+            console.error('Error message sent to ' + offkiemail);
+          }
         });
 
     }
@@ -102,15 +135,17 @@ module.exports = class GoogleDriveAPI {
             fields: 'nextPageToken, files(id, name)',
             q: mimeType
         }, (err, res) => {
-
             // Handle errors finding the license tier directory
-            if (err) return console.log('The API returned an error: ' + err);
+            if (err) {
+                console.error('The API returned an error: ' + err);
+                this.sendOffKiErrorNotice("Google Drive Error - Failed to find " + licenseTier + " Package/ directory on Google Drive.  Google Error Message = " + err);
+            }
 
             const files = res.data.files;
             if (files.length) {
                 console.log('License Directory Found: ' + licenseTier + " Packages/");
                 files.map((file) => {
-                    mimeType = "mimeType = 'application/vnd.google-apps.folder' and name = '" + songName + "' and '" + file.id + "' in parents"
+                    mimeType = "mimeType = 'application/vnd.google-apps.folder' and name = '" + songName + "' and '" + file.id + "' in parents";
                     this.drive.files.list({
                         pageSize: 1,
                         fields: 'nextPageToken, files(id, name)',
@@ -118,7 +153,10 @@ module.exports = class GoogleDriveAPI {
                     }, function(nestedErr, nestedRes) {
                         const nestedFiles = nestedRes.data.files;
                         // Handle errors finding the song name directory
-                        if (nestedErr) return console.log('The API returned an error: ' + err);
+                        if (nestedErr) {
+                            console.error('The API returned an error: ' + nestedErr);
+                            this.sendOffKiErrorNotice("Google Drive Error - Failed to execute search for " + songName + "Within the " + licenseTier + " Package/ directory on Google Drive.  Google Error Message = " + JSON.stringify(nestedErr));
+                        }
 
                         if (nestedFiles.length) {
                             var permissions = [{
@@ -138,6 +176,7 @@ module.exports = class GoogleDriveAPI {
                                         if (err) {
                                             // Handle error...
                                             console.error(err);
+                                            this.sendOffKiErrorNotice(JSON.stringify(err));
                                         } else {
                                             console.log('Permission ID: ', res.data.id);
                                         }
@@ -146,6 +185,7 @@ module.exports = class GoogleDriveAPI {
                                     if (err) {
                                         // Handle error
                                         console.error(err);
+                                        this.sendOffKiErrorNotice("Failed to provide permissions to " + email + " for the song " + songName + " " + licenseTier);
                                     } else {
                                         // All permissions inserted
                                         console.log("Successfully provided permissiosn to: " + email);
@@ -153,13 +193,15 @@ module.exports = class GoogleDriveAPI {
                                 });
                             });
                         } else {
-                            console.log('No Song directory found for: ' + songName + "/");
+                            console.error('No Song directory found for: ' + songName + "/");
+                            this.sendOffKiErrorNotice("Google Drive Error - Failed to find " + songName + "/ directory within the " + licenseTier + " Package/ directory on Google Drive.  Please check that the website matches the Google Drive directory name!  -  Also provide the customer at " + email + " with their music since they failed to receive " + songName + " " + licenseTier);
                         }
         
                     }.bind(this));
                 });
             } else {
-                console.log('No license directory found for: ' + licenseTier);
+                console.error('No license directory found for: ' + licenseTier);
+                this.sendOffKiErrorNotice('No license directory found for: ' + licenseTier);
             }
         });
     }
