@@ -227,7 +227,7 @@ export default class Checkout extends Component {
 
         // Navigate to the error page with the error message
         this.onError(error);
-      })
+      }.bind(this))
       .finally(function () {
         // always executed
     
