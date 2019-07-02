@@ -243,10 +243,9 @@ export default class Checkout extends Component {
     this.props.history.push({
       pathname: "/errorpage",
       state: {
-        shoppingCart: this.props.location.state.shoppingCart,
         firstName: this.state.firstName,
         email: this.state.email,
-        error: errMessage,
+        errorMessage: JSON.stringify(errMessage),
         isPayPal: isPayPal
       }
     })
