@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import JoshPortrait from '../../assets/images/JoshPortraitCircle.png';
+import DeshonPortrait from '../../assets/images/DeshonPortraitCircle.png';
 
 export default class AboutUs extends Component {
   render() {
@@ -26,7 +27,7 @@ export default class AboutUs extends Component {
               <div className="item col-md-6 col-sm-12">
                 <div className="item-inner">
                   <div className="member-profile">
-                    <img className="img-fluid" src={JoshPortrait} alt="" />
+                    <img className="img-fluid" src={DeshonPortrait} alt="" />
                   </div>
                   <div className="member-label">Producer</div>
                   <h3 className="member-name">
