@@ -313,6 +313,7 @@ class AudioFileShop extends Component {
               </table>
             </div>
           </form>
+          <p>All "Off Ki Productions" audio tags will be automatically removed after purchase.</p>
         </div>
         <div className="music-action">
           <button className="btn btn-ghost-primary" onClick={this.handleSubmit} >Purchase Selected Music!</button>
