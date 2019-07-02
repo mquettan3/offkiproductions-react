@@ -69,7 +69,6 @@ export default class Checkout extends Component {
     // This onInit function is only done for the disabled paypal button.
     // Note:  There are two PayPal buttons here.  One is always disabled.  One is always enabled.  Validation swaps between the two
     actions.disable();
-    console.log("In Init;");
   }
 
   basicLicenseChange(e) {
