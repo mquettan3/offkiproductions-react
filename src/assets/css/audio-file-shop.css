@@ -35,7 +35,8 @@ p {
   .audio-file-shop .category-row span {
     color: #3d884d;
     font-weight: normal;
-    display: block; }
+    display: block;
+    font-weight: bold; }
   @media (min-width: 450px) {
     .audio-file-shop .category-row span {
       float: right;
