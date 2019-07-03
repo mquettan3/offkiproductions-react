@@ -174,7 +174,7 @@ export default class Checkout extends Component {
     return actions.order.create(orderObject);
   }
 
-  onPaymentSuccess(details) {
+  onPaymentSuccess(details, actions) {
     // On success, call the server and tell it to email the purchaser with a link for all of their music.
     axios.post(serverLocation + '/purchaseValidation', {
       orderID: details.orderID,
@@ -218,7 +218,10 @@ export default class Checkout extends Component {
           "coupon": "None"
         });
 
-        this.routeToPaymentConfirmation(details.orderID)
+        actions.order.capture().then(function(details) {
+          this.routeToPaymentConfirmation(details.orderID)
+        }.bind(this));
+
         console.log(response);
       }.bind(this))
       .catch(function (error) {
