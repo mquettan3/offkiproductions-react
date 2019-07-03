@@ -187,10 +187,9 @@ app.post('/purchaseValidation', async function (req, res) {
   let order;
   try {
     order = await payPalClient.client().execute(request);
-    const totalCost = order.result.purchase_units[0].amount.value;
-    if (totalCost !== req.body.totalCost) {
+    const totalCost = parseFloat(order.result.purchase_units[0].amount.value);
+    if (totalCost !== parseFloat(req.body.totalCost)) {
       // 4. Handle invalid purchase
-      console.error(err);
       return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order due to invalid cart contents.  You were NOT charged any money.  Please contact offki@offkiproductions.com for further assistance and provide us with your OrderID which is: ' + orderID);
     }
   } catch (err) {
