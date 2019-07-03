@@ -173,7 +173,7 @@ app.post('/purchaseValidation', async function (req, res) {
   // 2a. Get the order ID from the request body
   const orderID = req.body.orderID;
 
-  console.log("Received Order: ID = " + JSON.stringify(orderID) + " Total Cost = " + totalCost);
+  console.log("Received Order: ID = " + JSON.stringify(orderID));
 
   if (!(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(req.body.inputEmail.value)))
   {
