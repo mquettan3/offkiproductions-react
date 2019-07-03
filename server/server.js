@@ -172,7 +172,6 @@ app.get('/albumart/:categoryName/:songName', function (req, res) {
 app.post('/purchaseValidation', async function (req, res) {
   // 2a. Get the order ID from the request body
   const orderID = req.body.orderID;
-  const totalCost = order.result.purchase_units[0].amount.value;
 
   console.log("Received Order: ID = " + JSON.stringify(orderID) + " Total Cost = " + totalCost);
 
@@ -188,6 +187,7 @@ app.post('/purchaseValidation', async function (req, res) {
   let order;
   try {
     order = await payPalClient.client().execute(request);
+    const totalCost = order.result.purchase_units[0].amount.value;
     if (totalCost !== req.body.totalCost) {
       // 4. Handle invalid purchase
       console.error(err);
