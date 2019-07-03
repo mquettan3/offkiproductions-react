@@ -176,6 +176,12 @@ app.post('/purchaseValidation', async function (req, res) {
 
   console.log("Received Order: ID = " + JSON.stringify(orderID) + " Total Cost = " + totalCost);
 
+  if (!(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(req.body.inputEmail.value)))
+  {
+     // Invalid Email, return error.  Do nothing else.
+    return res.status(400).send('Bad Request: Invalid Email format.  Please provide a valid email.');
+  }
+
   // 3. Call PayPal to get the transaction details - Validate that the Order is accurate
   let request = new checkoutNodeJssdk.orders.OrdersGetRequest(orderID);
 
@@ -185,12 +191,12 @@ app.post('/purchaseValidation', async function (req, res) {
     if (totalCost !== req.body.totalCost) {
       // 4. Handle invalid purchase
       console.error(err);
-      return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order due to invalid cart contents.  You were NOT charged any money.  Please contact offki@offkiproductions.com for further assistance.');
+      return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order due to invalid cart contents.  You were NOT charged any money.  Please contact offki@offkiproductions.com for further assistance and provide us with your OrderID which is: ' + orderID);
     }
   } catch (err) {
     // 4. Handle any errors from the call
     console.error(err);
-    return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order.  You were NOT charged any money.  Please try again later.  PayPal may be temporarily inoperable.');
+    return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order.  You were NOT charged any money.  Please try again later.  PayPal may be temporarily inoperable.  If the issue persists, contact offki@offkiproductions.com and provide us with your OrderID which is: ' + orderID);
   }
 
   // Capture funds
@@ -201,7 +207,7 @@ app.post('/purchaseValidation', async function (req, res) {
   } catch (err) {
     // 4. Handle any errors from the call
     console.error(err);
-    return res.status(500).send('Internal Server Error: Off Ki Server was unable to capture the funds from PayPal.  You were NOT charged any money.  Please try again later.  PayPal may be temporarily inoperable.');
+    return res.status(500).send('Internal Server Error: Off Ki Server was unable to capture the funds from PayPal.  You were NOT charged any money.  Please try again later.  PayPal may be temporarily inoperable.  If the issue persists, contact offki@offkiproductions.com and provide us with your OrderID which is: ' + orderID);
   }
 
   // If we haven't returned yet - Payment valid - Generate response email
@@ -225,16 +231,10 @@ app.post('/purchaseValidation', async function (req, res) {
     html: temp
   };
 
-  if (!(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(req.body.inputEmail.value)))
-  {
-     // Invalid Email, return error
-    return res.status(400).send('Bad Request: Invalid Email format.  Please provide a valid email.');
-  }
-
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       console.error(error);
-      return res.status(400).send('Bad Request: Invalid Email address - Email failed to send - Contact Server Admin to verify server validity.');
+      return res.status(400).send('Bad Request: Invalid Email address - Email failed to send - Contact offki@offkiproductions.com to request that the server admin verifies that the server is properly sending emails.');
     } else {
       console.log('Email sent: ' + info.response);
     }

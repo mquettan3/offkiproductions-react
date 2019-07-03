@@ -58,7 +58,6 @@ module.exports = class GoogleDriveAPI {
             console.error('Error message sent to ' + offkiemail);
           }
         });
-
     }
 
     /**
