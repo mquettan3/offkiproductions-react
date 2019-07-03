@@ -199,7 +199,7 @@ app.post('/purchaseValidation', async function (req, res) {
   }
 
   // Capture funds
-  request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderId);
+  request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderID);
   let response;
   try {
     response = await payPalClient.client().execute(request);
