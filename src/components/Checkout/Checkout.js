@@ -220,7 +220,7 @@ export default class Checkout extends Component {
         });
 
         console.log(response);
-        
+        this.routeToPaymentConfirmation(details.orderID)
       }.bind(this))
       .catch(function (error) {
         // handle error
