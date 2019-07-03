@@ -220,7 +220,14 @@ export default class Checkout extends Component {
 
         actions.order.capture().then(function(details) {
           this.routeToPaymentConfirmation(details.orderID)
-        }.bind(this));
+        }.bind(this))
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+  
+          // Navigate to the error page with the error message
+          this.onError(error.response.data);
+        });
 
         console.log(response);
       }.bind(this))
