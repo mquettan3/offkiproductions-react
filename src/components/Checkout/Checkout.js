@@ -175,6 +175,11 @@ export default class Checkout extends Component {
   }
 
   onPaymentSuccess(details, actions) {
+    var totalCost = 0;
+    for (let item in this.props.location.state.shoppingCart) {
+      totalCost += parseFloat(this.props.location.state.shoppingCart[item].unit_amount.value);
+    }
+
     // On success, call the server and tell it to email the purchaser with a link for all of their music.
     axios.post(serverLocation + '/purchaseValidation', {
       orderID: details.orderID,
@@ -182,14 +187,10 @@ export default class Checkout extends Component {
       inputFirstName: this.state.firstName,
       inputLastName: this.state.lastName,
       inputPhoneNumber: this.state.phoneNumber,
-      inputEmail: this.state.email
+      inputEmail: this.state.email,
+      totalCost: totalCost
     }).then(function (response) {
         // handle success
-        var totalCost = 0;
-        for (let item in this.props.location.state.shoppingCart) {
-          totalCost += parseFloat(this.props.location.state.shoppingCart[item].unit_amount.value);
-        }
-
         let itemsList = this.props.location.state.shoppingCart.map(function (item, index) {
           return {
             brand: "Off Ki Productions",
@@ -218,18 +219,8 @@ export default class Checkout extends Component {
           "coupon": "None"
         });
 
-        actions.order.capture().then(function(details) {
-          this.routeToPaymentConfirmation(details.orderID)
-        }.bind(this))
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-  
-          // Navigate to the error page with the error message
-          this.onError(error.response.data);
-        });
-
         console.log(response);
+        
       }.bind(this))
       .catch(function (error) {
         // handle error

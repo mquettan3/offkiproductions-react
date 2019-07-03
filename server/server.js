@@ -172,18 +172,36 @@ app.get('/albumart/:categoryName/:songName', function (req, res) {
 app.post('/purchaseValidation', async function (req, res) {
   // 2a. Get the order ID from the request body
   const orderID = req.body.orderID;
-  console.log(JSON.stringify(orderID));
-  // 3. Call PayPal to get the transaction details
+  const totalCost = order.result.purchase_units[0].amount.value;
+
+  console.log("Received Order: ID = " + JSON.stringify(orderID) + " Total Cost = " + totalCost);
+
+  // 3. Call PayPal to get the transaction details - Validate that the Order is accurate
   let request = new checkoutNodeJssdk.orders.OrdersGetRequest(orderID);
 
   let order;
   try {
     order = await payPalClient.client().execute(request);
+    if (totalCost !== req.body.totalCost) {
+      // 4. Handle invalid purchase
+      console.error(err);
+      return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order due to invalid cart contents.  You were NOT charged any money.  Please contact offki@offkiproductions.com for further assistance.');
+    }
   } catch (err) {
-
     // 4. Handle any errors from the call
     console.error(err);
-    return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order.');
+    return res.status(500).send('Internal Server Error: Off Ki Server was unable to validate the PayPal order.  You were NOT charged any money.  Please try again later.  PayPal may be temporarily inoperable.');
+  }
+
+  // Capture funds
+  request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderId);
+  let response;
+  try {
+    response = await payPalClient.client().execute(request);
+  } catch (err) {
+    // 4. Handle any errors from the call
+    console.error(err);
+    return res.status(500).send('Internal Server Error: Off Ki Server was unable to capture the funds from PayPal.  You were NOT charged any money.  Please try again later.  PayPal may be temporarily inoperable.');
   }
 
   // If we haven't returned yet - Payment valid - Generate response email
