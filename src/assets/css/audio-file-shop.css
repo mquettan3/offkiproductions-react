@@ -183,7 +183,8 @@ p {
     margin: 6px; }
     .audio-player .album-art img {
       width: auto;
-      height: 100%; }
+      height: 100%;
+      vertical-align: super; }
   @media (max-width: 330px) {
     .audio-player .album-art {
       display: none; }

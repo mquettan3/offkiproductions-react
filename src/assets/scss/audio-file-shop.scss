@@ -257,6 +257,7 @@ p {
    img {
      width: auto;
      height: 100%;
+     vertical-align: super; // This is entirely only necessary for Safari to look proper.  I HAVE NO IDEA WHY THIS MATTERS!
    }
   }
 
