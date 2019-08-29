@@ -34,6 +34,7 @@ class AudioFileShop extends Component {
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
     this.handleNextSong = this.handleNextSong.bind(this);
     this.routeToCheckout = this.routeToCheckout.bind(this);
+    this.gtag = this.gtag.bind(this);
 
     this.state = {
       player_state: "paused",
@@ -51,6 +52,10 @@ class AudioFileShop extends Component {
 
     window.React = React;
     window.ReactDOM = ReactDOM;
+  }
+
+  gtag() {
+    window.dataLayer.push(arguments);
   }
 
   componentDidMount() {
