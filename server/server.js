@@ -9,6 +9,9 @@ const bodyParser = require('body-parser');
 // Used to allow for Cross-origin resource sharing (CORS) allows AJAX requests to skip the Same-origin policy and access resources from remote hosts.
 const cors = require('cors');
 
+// Compression for express servers
+const compression = require('compression');
+
 // Glob and path Used for file manipulation
 const glob = require('glob');
 const path = require('path');
@@ -38,6 +41,7 @@ const app = express();
 
 // Apply all middlewares to our server
 app.use(cors());
+app.use(compression());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
