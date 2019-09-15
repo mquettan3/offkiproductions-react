@@ -43,11 +43,6 @@ export default class Promo extends Component {
         // handle error
         console.log(error);
       })
-      .finally(function () {
-        // always executed
-
-        // Do nothing
-      });
 
       // Assign the initial state
       this.state = { animationRunning: true, width: 0, height: 0, images: images, currentImageIndex: 0, previousImageIndex: 0};

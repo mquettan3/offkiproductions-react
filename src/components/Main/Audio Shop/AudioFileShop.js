@@ -67,11 +67,6 @@ class AudioFileShop extends Component {
         // handle error
         console.log(error);
       })
-      .finally(function () {
-        // always executed
-
-        // Set the initial audio source to the first song in the first category
-      });
   }
 
   handleMusicListResponse(response) {
@@ -151,7 +146,7 @@ class AudioFileShop extends Component {
     }
 
     let item = tempCategorySongStruct.categories[categoryId].songs[songId];
-    
+
     this.gtag('event', 'view_item', {
       "items": [
         {
