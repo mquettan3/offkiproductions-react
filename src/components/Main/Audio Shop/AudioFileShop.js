@@ -141,6 +141,34 @@ class AudioFileShop extends Component {
         player_state: "playing"
       });
     }
+
+    // Send google an notification that the song was clicked.
+    let totalCost = 0;
+    if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Basic") {
+      totalCost = 30;
+    } else if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Premium") {
+      totalCost = 100;
+    }
+
+    let item = tempCategorySongStruct.categories[categoryId].songs[songId];
+    
+    this.gtag('event', 'view_item', {
+      "items": [
+        {
+          brand: "Off Ki Productions",
+          category: item.category,
+          category_slot: "None",
+          creative_slot: "None",
+          id: item.sku,
+          location_id: "None",
+          name: "OK" + item.category + "-" + item.song + "-" + item.licenseTier,
+          price: totalCost,
+          quantity: 1,
+          variant: "None",
+          list_positon: 1
+        }
+      ]
+    });
   }
 
   handleCategoryClick(e) {
