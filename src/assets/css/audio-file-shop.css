@@ -23,10 +23,12 @@ p {
   .audio-file-shop .category-row {
     border-bottom: 2px solid;
     border-color: #b9b9b9;
-    background-color: gainsboro; }
+    background-color: gainsboro;
+    height: 30px; }
   .audio-file-shop .category-row .category-name {
     position: relative;
-    display: inline-block; }
+    display: inline-block;
+    font-weight: bold; }
   @media (min-width: 767px) {
     .audio-file-shop .category-row .category-name {
       position: absolute;
@@ -37,11 +39,16 @@ p {
     font-weight: normal;
     display: block;
     font-weight: bold; }
+  .audio-file-shop .category-row .collapse-icon {
+    position: absolute;
+    left: 10px;
+    top: 6px; }
   @media (min-width: 450px) {
     .audio-file-shop .category-row span {
       float: right;
       padding-right: 20px; } }
   .audio-file-shop .song-row {
+    display: flex;
     background-color: white;
     border-top: 1px solid;
     border-bottom: 1px solid;
@@ -53,20 +60,20 @@ p {
       margin: 5px; }
     .audio-file-shop .song-row .song-title {
       text-align: left;
-      width: 100%;
-      font-weight: 100; }
+      font-weight: 100;
+      flex: 1 1; }
     @media (min-width: 992px) {
       .audio-file-shop .song-row .shopping-selection {
         white-space: nowrap; }
         .audio-file-shop .song-row .shopping-selection select {
           margin-left: 20px; }
-        .audio-file-shop .song-row .shopping-selection label {
+        .audio-file-shop .song-row .shopping-selection select {
           margin-right: 20px; } }
-    .audio-file-shop .song-row .shopping-selection label {
-      margin-right: 20px;
-      margin-top: auto;
-      margin-bottom: auto;
-      color: #3d884d; }
+    .audio-file-shop .song-row .shopping-selection {
+      flex: 0 0; }
+      .audio-file-shop .song-row .shopping-selection select {
+        color: black;
+        margin-top: 3px; }
   .audio-file-shop .song-row.playing-true {
     background-color: rgba(0, 0, 0, 0.1); }
   .audio-file-shop .purchase-music-form {

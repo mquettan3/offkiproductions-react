@@ -40,10 +40,12 @@ p {
     border-bottom: 2px solid;
     border-color: $dark_border_color;
     background-color: rgb(220,220,220);
+    height: 30px;
   }
   .category-row .category-name {
     position: relative;
     display: inline-block;
+    font-weight: bold;
   }
 
   @media (min-width: 767px) {
@@ -61,6 +63,12 @@ p {
     font-weight: bold;
   }
 
+  .category-row .collapse-icon {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+  }
+
   @media (min-width: 450px) {
     .category-row span {
       float: right;
@@ -69,6 +77,7 @@ p {
   }
 
   .song-row {
+    display: flex;
     background-color: white;
     border-top: 1px solid;
     border-bottom: 1px solid;
@@ -83,8 +92,8 @@ p {
     
     .song-title {
       text-align: left;
-      width: 100%;
       font-weight: 100;
+      flex: 1 1;
     }
 
     @media (min-width: 992px) {
@@ -93,18 +102,17 @@ p {
         select {
           margin-left: 20px;
         }
-        label {
+        select {
           margin-right: 20px;
         }
       }
     }
 
     .shopping-selection {
-      label {
-        margin-right: 20px;
-        margin-top: auto;
-        margin-bottom: auto;
-        color: $site_dark_accent_color;
+      flex: 0 0;
+      select {
+        color: black;
+        margin-top: 3px;
       }
     }
   }

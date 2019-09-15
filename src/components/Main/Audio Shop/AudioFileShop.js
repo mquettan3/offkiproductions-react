@@ -23,6 +23,7 @@ class AudioFileShop extends Component {
 
     this.deepCopyCategorySongStruct = this.deepCopyCategorySongStruct.bind(this);
     this.handleSongClick = this.handleSongClick.bind(this);
+    this.handleCategoryClick = this.handleCategoryClick.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
@@ -135,6 +136,20 @@ class AudioFileShop extends Component {
         player_state: "playing"
       });
     }
+  }
+
+  handleCategoryClick(e) {
+    e.preventDefault();
+    if(e.currentTarget.classList.value.includes("collapsed")) {
+        e.currentTarget.querySelector(".collapse-icon").setAttribute('data-icon', 'angle-down')
+        e.currentTarget.classList.toggle("collapsed")
+    } else {
+        e.currentTarget.querySelector(".collapse-icon").setAttribute('data-icon', 'angle-up')
+        e.currentTarget.classList.toggle("collapsed")
+    }
+
+    let x = document.getElementsByClassName("song-list-" + e.currentTarget.id.toString());
+    x[0].classList.toggle("d-none");
   }
 
   handlePause() {
@@ -260,14 +275,10 @@ class AudioFileShop extends Component {
       // Create the Audio table entires based off of what was received from the server, but only if it's been received.
 
       for(let category in this.state.categorySongStruct.categories) {
-        songTableList.push(
-          <tr key={category} className="category-row">
-            <th colSpan="3"><div className="category-row-content"><div className="category-name">{this.state.categorySongStruct.categories[category].name}</div><span>Select License Tier to Purchase</span></div></th>
-          </tr>
-        )
+        let songList = []        
 
         for (let song in this.state.categorySongStruct.categories[category].songs) {
-          songTableList.push(
+          songList.push(
             <SongRow
               key={song.toString() + category.toString()}
               songName={this.state.categorySongStruct.categories[category].songs[song].name}
@@ -281,6 +292,21 @@ class AudioFileShop extends Component {
             />
           )
         }
+
+        songTableList.push(
+          <div key={category} className="category-wrapper">
+            <div id={category} className="category-row collapsed" onClick={this.handleCategoryClick}>
+              <div className="category-row-content">
+                <div className="category-name">{this.state.categorySongStruct.categories[category].name}</div>
+                <i className="collapse-icon fas fa-angle-up"></i>
+                <span>Select License Tier to Purchase</span>
+              </div>
+            </div>
+            <div className={"song-list-" + category.toString() + " d-none"}>
+              {songList}
+            </div>
+          </div>
+        )
       }
 
       audioPlayer =
@@ -306,11 +332,7 @@ class AudioFileShop extends Component {
           {audioPlayer}
           <form className="purchase-music-form">
             <div className="song-category-table">
-              <table>
-                <tbody>
-                    {songTableList}
-                </tbody>
-              </table>
+              {songTableList}
             </div>
           </form>
           <p>All "Off Ki Productions" audio tags will be automatically removed after purchase.</p>
