@@ -40,20 +40,11 @@ p {
     border-bottom: 2px solid;
     border-color: $dark_border_color;
     background-color: rgb(220,220,220);
-    height: 30px;
   }
   .category-row .category-name {
     position: relative;
     display: inline-block;
     font-weight: bold;
-  }
-
-  @media (min-width: 767px) {
-    .category-row .category-name {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 0);
-    }
   }
 
   .category-row span {
