@@ -61,7 +61,7 @@ class AudioFileShop extends Component {
 
   componentDidMount() {
     // Request for names of all categories/songs.  Structure it somehow that makes sense.
-    axios.get(serverLocation + '/musiclist')
+    axios.get(serverLocation + '/files/musiclist')
       .then(this.handleMusicListResponse)
       .catch(function (error) {
         // handle error
@@ -82,8 +82,8 @@ class AudioFileShop extends Component {
           tempCategorySongStruct.categories[categoryIndex].songs.push({
             name: response.data[property][index],
             category: property,
-            songLocation: serverLocation + '/samplemusic/' + property + "/" + response.data[property][index],
-            albumArtLocation: serverLocation + '/albumart/' + property + "/" + albumArtName,
+            songLocation: serverLocation + '/files/samplemusic/' + property + "/" + response.data[property][index],
+            albumArtLocation: serverLocation + '/files/albumart/' + property + "/" + albumArtName,
             isActive: false,
             licenseTier: "None",
             selectedForPurchase: false

@@ -13,7 +13,6 @@ const cors = require('cors');
 const compression = require('compression');
 
 // Glob and path Used for file manipulation
-const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
 
@@ -35,6 +34,10 @@ var transporter = nodemailer.createTransport({
   }
 });
 
+// Importt all User Defined Routes
+const fileRoutes = require('./routes/file.route.js');
+const analyticRoutes = require('./routes/analytic.route.js');
+
 // Define configuration variables
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -45,131 +48,13 @@ app.use(compression());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// Routes for File Retrievals
+app.use('/files', fileRoutes);
+app.use('/analytics', analyticRoutes);
+
 // Begin listening on our chosen PORT for our server.
 app.listen(PORT, function() {
   console.log('Server is running on Port: ', PORT);
-});
-
-// Respond with the names of all relevant files in ../src/assets/images
-app.get('/herofiles', function (req, res) {
-  // Send the list of files from the specified location
-  glob(__dirname + '/../src/assets/images/hero*', function (er, files) {
-    var fileList = []
-    var count = 0;
-
-    for(count in files) {
-      fileList.push(path.basename(files[count]));
-    }
-    res.json(fileList);
-
-    // Server debug print
-    console.log("Sent file list " + fileList);
-  })
-});
-
-// Respond with the specified file in ../src/assets/images
-app.get('/herofiles/:fileName', function (req, res) {
-  // Send the file requested from the static location
-  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName), function(err) {
-    if(err) {
-      console.error(err);
-    }
-  });
-
-  // Server debug print
-  console.log("Sent file: " + path.resolve(__dirname + '/../') + '/src/assets/images/' + path.basename(req.params.fileName));
-});
-
-// Respond with the specified file in ../src/assets/images/Logos
-app.get('/emailfiles/:fileName', function (req, res) {
-  // Send the file requested from the static location
-  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/images/Logos/' + path.basename(req.params.fileName), function(err) {
-    if(err) {
-      console.error(err);
-    }
-  });
-
-  // Server debug print
-  console.log("Sent file: " + path.resolve(__dirname + '/../') + '/src/assets/images/Logos/' + path.basename(req.params.fileName));
-});
-
-// Respond with the names of all relevant files in ../src/assets/images
-app.get('/musiclist', function (req, res) {
-  var count = 0;
-  var directorySongObject = {}
-  // Send the list of files from the specified location
-  glob(__dirname + '/../src/assets/audio/samples/**', function (er, items) {
-    var currentCategory = "None";
-
-    for(count in items) {
-      var stats = fs.statSync(items[count]);
-
-      if(stats.isDirectory()) {
-        // items[count] gives a full absolute path.  The following logic forces the last directory name to be the category name.
-        var arr = items[count].split('/');
-
-        // This allows for /path/to/last///// to still work.
-        currentCategory = (function findLast(i) {
-          return arr[i] || findLast(i-1);
-        })(arr.length-1);
-
-      } else if (stats.isFile()) {
-        // Ignore all files that aren't mp3s
-        if (!path.basename(items[count]).includes(".mp3"))
-          continue;
-
-        if(directorySongObject[currentCategory]) {
-          directorySongObject[currentCategory].push(path.basename(items[count]));
-        } else {
-          directorySongObject[currentCategory] = [path.basename(items[count])]
-        }
-      }
-    }
-    res.json(directorySongObject);
-
-    // Server debug print
-    console.log("Sent directory list " + JSON.stringify(directorySongObject));
-  });
-});
-
-// Respond with the specified file in ../src/assets/audio/samples
-app.get('/samplemusic/:categoryName/:songName', function (req, res) {
-  // Send the file requested from the static location
-  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  req.params.songName, function(err) {
-    if(err) {
-      console.error(err);
-    }
-  });
-
-  // Server debug print
-  console.log("Sent Music file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + req.params.songName);
-});
-
-// Respond with the specified file in ../src/assets/audio/samples
-app.get('/basicmusic/:categoryName/:songName/:orderID', function (req, res) {
-  // Send the file requested from the static location
-  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  req.params.songName, function(err) {
-    if(err) {
-      console.error(err);
-    }
-  });
-
-  // Server debug print
-  console.log("Sent Music file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + req.params.songName);
-});
-
-// Respond with the specified file in ../src/assets/audio/samples
-app.get('/albumart/:categoryName/:songName', function (req, res) {
-  var albumArtName = req.params.songName.split(".").slice(0, -1).join('.') + ".jpg";
-  // Send the file requested from the static location
-  res.sendFile(path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + "/" +  albumArtName, function(err) {
-    if(err) {
-      console.error(err);
-    }
-  });
-
-  // Server debug print
-  console.log("Sent AlbumArt file: " + path.resolve(__dirname + '/../') + '/src/assets/audio/samples/' + req.params.categoryName + '/' + albumArtName);
 });
 
 // Handle a purchase - Validate it's authenticity - Create a directory which contains all of their purchased items - send a link to those items in an email.
@@ -255,7 +140,7 @@ app.post('/purchaseValidation', async function (req, res) {
   return res.sendStatus(200);
 });
 
-// Serve static assets if in productions
+// Serve static assets if in production
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('../build'));
 
