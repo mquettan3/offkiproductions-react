@@ -164,6 +164,17 @@ class AudioFileShop extends Component {
         }
       ]
     });
+
+    // Inform Server of song play
+    axios.post(serverLocation + '/analytics/played/', 
+    {
+      name: item.name,
+      category: item.category
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
   }
 
   handleCategoryClick(e) {

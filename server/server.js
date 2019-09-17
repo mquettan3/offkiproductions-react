@@ -34,9 +34,17 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-// Importt all User Defined Routes
+// Connect to MongoDB database
+var mongoose = require('mongoose');
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true}).then(
+  () => {console.log('Database is connected') },
+  err => { console.log('Can not connect to the database'+ err)}
+);
+
+// Import all User Defined Routes
 const fileRoutes = require('./routes/file.route.js');
-const analyticRoutes = require('./routes/analytic.route.js');
+const analyticRoutes = require('./routes/analytics.route.js');
 
 // Define configuration variables
 const PORT = process.env.PORT || 4000;
