@@ -17,7 +17,7 @@ fileRoutes.get('/herofiles', function (req, res) {
         var count = 0;
 
         for(count in files) {
-        fileList.push(path.basename(files[count]));
+            fileList.push(path.basename(files[count]));
         }
         res.json(fileList);
 

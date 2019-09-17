@@ -9,6 +9,20 @@ let Song = require('../schemas/song.model.js');
 
 const projectRoot = path.resolve(__dirname + '/../../')
 
+// Produce the information for all the songs
+analyticRoutes.get('/all_pretty', function (req, res) {
+    Song.find({play_count: {$gt: 0}}, function (err, songs) {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(songs, null, 3));
+    });
+});
+
+analyticRoutes.get('/all', function (req, res) {
+    Song.find({play_count: {$gt: 0}}, function (err, songs) {
+        res.json(songs);
+    });
+});
+
 // Produce the information about a song
 analyticRoutes.post('/played/', function (req, res) {
     Song.findOne({name: req.body.name, category: req.body.category}, function(err, song) {
