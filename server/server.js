@@ -37,8 +37,8 @@ var transporter = nodemailer.createTransport({
 // Connect to MongoDB database
 var mongoose = require('mongoose');
 mongoose.set('useUnifiedTopology', true);
-if(process.env.BITNAMI_PASSWORD) {
-  mongoose.connect('mongodb://bitnami:' + process.env.BITNAMI_PASSWORD + '@localhost/offki', {useNewUrlParser: true}).then(
+if(process.env.MONGODB_PASSWORD) {
+  mongoose.connect('mongodb://' + process.env.MONGODB_USERNAME + ':' + process.env.MONGODB_PASSWORD + '@localhost/offki', {useNewUrlParser: true}).then(
     () => {console.log('Database is connected') },
     err => { console.log('Can not connect to the database'+ err)}
   );
