@@ -32,7 +32,6 @@ export default class Checkout extends Component {
     this.emailChange = this.emailChange.bind(this);
     this.onPayPalClick = this.onPayPalClick.bind(this);
     this.routeToPaymentConfirmation = this.routeToPaymentConfirmation.bind(this);
-    this.gtag = this.gtag.bind(this);
     this.onPayPalError = this.onPayPalError.bind(this);
     this.onError = this.onError.bind(this);
     this.onInit = this.onInit.bind(this);
@@ -55,10 +54,6 @@ export default class Checkout extends Component {
 
   componentDidMount() {
     window.scrollTo(0,0);
-  }
-
-  gtag() {
-    window.dataLayer.push(arguments);
   }
 
   onPayPalClick(e) {
@@ -191,32 +186,17 @@ export default class Checkout extends Component {
       totalCost: totalCost
     }).then(function (response) {
         // handle success
-        let itemsList = this.props.location.state.shoppingCart.map(function (item, index) {
-          return {
-            brand: "Off Ki Productions",
-            category: item.description,
-            category_slot: "None",
-            creative_slot: "None",
-            id: item.sku,
-            location_id: "None",
+        this.props.location.state.shoppingCart.forEach(function (item) {
+          // For each song - Inform Server of our sale!
+          axios.post(serverLocation + '/analytics/purchased/', 
+          {
             name: item.name,
-            price: parseFloat(item.unit_amount.value),
-            quantity: parseInt(item.quantity, 10),
-            variant: "None",
-            list_positon: index + 1
-          };
-        });
-
-        // Inform Google Analytics of our sale!
-        this.gtag('event', 'purchase', {
-          "transaction_id": details.orderID,
-          "affiliation": "Off Ki Productions",
-          "value": parseFloat(totalCost),
-          "currency": "USD",
-          "tax": 0.0,
-          "shipping": 0.0,
-          "items": itemsList,
-          "coupon": "None"
+            category: item.category
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
         });
 
         console.log(response);

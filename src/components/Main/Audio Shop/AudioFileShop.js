@@ -35,7 +35,6 @@ class AudioFileShop extends Component {
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
     this.handleNextSong = this.handleNextSong.bind(this);
     this.routeToCheckout = this.routeToCheckout.bind(this);
-    this.gtag = this.gtag.bind(this);
 
     this.state = {
       player_state: "paused",
@@ -53,10 +52,6 @@ class AudioFileShop extends Component {
 
     window.React = React;
     window.ReactDOM = ReactDOM;
-  }
-
-  gtag() {
-    window.dataLayer.push(arguments);
   }
 
   componentDidMount() {
@@ -137,33 +132,7 @@ class AudioFileShop extends Component {
       });
     }
 
-    // Send google an notification that the song was clicked.
-    let totalCost = 0;
-    if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Basic") {
-      totalCost = 30;
-    } else if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Premium") {
-      totalCost = 100;
-    }
-
     let item = tempCategorySongStruct.categories[categoryId].songs[songId];
-
-    this.gtag('event', 'view_item', {
-      "items": [
-        {
-          brand: "Off Ki Productions",
-          category: item.category,
-          category_slot: "None",
-          creative_slot: "None",
-          id: item.sku,
-          location_id: "None",
-          name: "OK" + item.category + "-" + item.song + "-" + item.licenseTier,
-          price: totalCost,
-          quantity: 1,
-          variant: "None",
-          list_positon: 1
-        }
-      ]
-    });
 
     // Inform Server of song play
     axios.post(serverLocation + '/analytics/played/', 
@@ -248,40 +217,19 @@ class AudioFileShop extends Component {
     // Update State - Deep copy to do this because if not, only references to all objects will be copied and thus the state will change without calling setState.
     var tempCategorySongStruct = this.deepCopyCategorySongStruct();
     tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier = event.target.value;
-    
-    // Inform Google Analytics of the shopping cart activity!
-    let totalCost = 0;
-    if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Basic") {
-      totalCost = 30;
-    } else if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Premium") {
-      totalCost = 100;
-    }
 
     let item = tempCategorySongStruct.categories[categoryId].songs[songId];
 
-    let itemsList = [{
-        brand: "Off Ki Productions",
-        category: item.category,
-        category_slot: "None",
-        creative_slot: "None",
-        id: item.sku,
-        location_id: "None",
-        name: "OK" + item.category + "-" + item.song + "-" + item.licenseTier,
-        price: totalCost,
-        quantity: 1,
-        variant: "None",
-        list_positon: 1
-      }];
-
-    this.gtag('event', 'add_to_cart', {
-      "affiliation": "Off Ki Productions",
-      "value": totalCost,
-      "currency": "USD",
-      "tax": 0.0,
-      "shipping": 0.0,
-      "items": itemsList,
-      "coupon": "None"
-    });
+    // Inform Server of song add_to_cart
+    axios.post(serverLocation + '/analytics/added_to_cart/', 
+    {
+      name: item.name,
+      category: item.category
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
 
     // Update State
     this.setState({
@@ -326,42 +274,22 @@ class AudioFileShop extends Component {
       alert("Please select a song to purchase!");
       e.preventDefault();
     } else {
-        // Inform Google Analytics of the navigation to checkout activity!
-        let totalCost = 0;
-        for (let item in shoppingCart) {
-          totalCost += parseFloat(shoppingCart[item].unit_amount.value);
-        }
-
-        let itemsList = shoppingCart.map(function (item, index) {
-          return {
-            brand: "Off Ki Productions",
-            category: item.description,
-            category_slot: "None",
-            creative_slot: "None",
-            id: item.sku,
-            location_id: "None",
-            name: item.name,
-            price: parseFloat(item.unit_amount.value),
-            quantity: parseInt(item.quantity, 10),
-            variant: "None",
-            list_positon: index + 1
-          };
-        });
-
-        this.gtag('event', 'begin_checkout', {
-          "affiliation": "Off Ki Productions",
-          "value": parseFloat(totalCost),
-          "currency": "USD",
-          "tax": 0.0,
-          "shipping": 0.0,
-          "items": itemsList,
-          "coupon": "None"
-        });
-
+      shoppingCart.forEach(function (item) {
+        // For each song - Inform Server of song add_to_checkout
+        axios.post(serverLocation + '/analytics/added_to_checkout/', 
+        {
+          name: item.name,
+          category: item.category
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      });
+    
       //Route to checkout after updating state
       this.setState({shoppingCart: shoppingCart, showPayPal: true}, this.routeToCheckout);
     }
-
   }
 
   routeToCheckout() {
