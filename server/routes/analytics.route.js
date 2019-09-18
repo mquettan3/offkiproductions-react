@@ -64,7 +64,7 @@ analyticRoutes.post('/played', function (req, res) {
 analyticRoutes.post('/added_to_cart', function (req, res) {
     Song.findOne({name: req.body.name, category: req.body.category}, function(err, song) {
         if(song) {
-            // If the song is found, increment the play_count by 1
+            // If the song is found, increment the add_to_cart_count by 1
             song.increment_add_to_cart_count();
 
             // Save the song
@@ -78,7 +78,7 @@ analyticRoutes.post('/added_to_cart', function (req, res) {
         } else {
             // Validate that the unique song is acceptable by attempting to find the associated sample *.mp3
             if(fs.existsSync(projectRoot + '/src/assets/audio/samples/' + req.body.category + "/" +  req.body.name)) {
-                // If valid, create a new song with the associated sku and set play_count to 1 and all other counts to 0
+                // If valid, create a new song with the associated sku and set add_to_cart_count to 1 and all other counts to 0
                 let new_song = new Song({name: req.body.name, category: req.body.category, play_count: 0, add_to_cart_count: 1, checkout_count: 0, purchase_count: 0});
 
                 // Save the new song to the database
@@ -100,8 +100,8 @@ analyticRoutes.post('/added_to_cart', function (req, res) {
 analyticRoutes.post('/added_to_checkout', function (req, res) {
     Song.findOne({name: req.body.name, category: req.body.category}, function(err, song) {
         if(song) {
-            // If the song is found, increment the play_count by 1
-            song.increment_add_to_checkout_count();
+            // If the song is found, increment the checkout_count by 1
+            song.increment_checkout_count();
 
             // Save the song
             song.save()
@@ -114,7 +114,7 @@ analyticRoutes.post('/added_to_checkout', function (req, res) {
         } else {
             // Validate that the unique song is acceptable by attempting to find the associated sample *.mp3
             if(fs.existsSync(projectRoot + '/src/assets/audio/samples/' + req.body.category + "/" +  req.body.name)) {
-                // If valid, create a new song with the associated sku and set play_count to 1 and all other counts to 0
+                // If valid, create a new song with the associated sku and set checkout_count to 1 and all other counts to 0
                 let new_song = new Song({name: req.body.name, category: req.body.category, play_count: 0, add_to_cart_count: 0, checkout_count: 1, purchase_count: 0});
 
                 // Save the new song to the database
@@ -136,7 +136,7 @@ analyticRoutes.post('/added_to_checkout', function (req, res) {
 analyticRoutes.post('/purchased', function (req, res) {
     Song.findOne({name: req.body.name, category: req.body.category}, function(err, song) {
         if(song) {
-            // If the song is found, increment the play_count by 1
+            // If the song is found, increment the purchase_count by 1
             song.increment_purchase_count();
 
             // Save the song
@@ -150,7 +150,7 @@ analyticRoutes.post('/purchased', function (req, res) {
         } else {
             // Validate that the unique song is acceptable by attempting to find the associated sample *.mp3
             if(fs.existsSync(projectRoot + '/src/assets/audio/samples/' + req.body.category + "/" +  req.body.name)) {
-                // If valid, create a new song with the associated sku and set play_count to 1 and all other counts to 0
+                // If valid, create a new song with the associated sku and set purchase_count to 1 and all other counts to 0
                 let new_song = new Song({name: req.body.name, category: req.body.category, play_count: 0, add_to_cart_count: 0, checkout_count: 0, purchase_count: 1});
 
                 // Save the new song to the database
