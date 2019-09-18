@@ -48,13 +48,13 @@ analyticRoutes.post('/played', function (req, res) {
                 // Save the new song to the database
                 new_song.save()
                 .then(song => {
-                    res.status(400).send("Unable to save song played event to database.");
+                    res.status(200).send("Category:" + song.category + " Song Name: " + song.name + " song played event saved successfully.");
                 })
                 .catch(err => {
                     res.status(400).send("Unable to save song played event to database.");
                 });
             } else {
-                res.status(400).send("Song Played Event: Invalid song request.");
+                res.status(404).send("Song Played Event: Invalid song request.");
             }
         }
     })
@@ -90,7 +90,7 @@ analyticRoutes.post('/added_to_cart', function (req, res) {
                     res.status(400).send("Unable to save add to cart event to database.");
                 });
             } else {
-                res.status(400).send("Add to Cart Event: Invalid song request.");
+                res.status(404).send("Add to Cart Event: Invalid song request.");
             }
         }
     })
@@ -162,7 +162,7 @@ analyticRoutes.post('/purchased', function (req, res) {
                     res.status(400).send("Unable to save purchase event to database.");
                 });
             } else {
-                res.status(400).send("Purchase Event: Invalid song request.");
+                res.status(404).send("Purchase Event: Invalid song request.");
             }
         }
     })
