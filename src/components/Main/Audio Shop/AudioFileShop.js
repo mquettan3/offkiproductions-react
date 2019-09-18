@@ -201,6 +201,18 @@ class AudioFileShop extends Component {
     var tempCategorySongStruct = this.deepCopyCategorySongStruct();
     tempCategorySongStruct.categories[this.state.currentCategoryId].songs[this.state.currentSongId].isActive = false;
     tempCategorySongStruct.categories[newCategoryId].songs[newSongId].isActive = true;
+    
+    // Inform Server of song play
+    let item = tempCategorySongStruct.categories[categoryId].songs[songId];
+    axios.post(serverLocation + '/analytics/played/', 
+    {
+      name: item.name,
+      category: item.category
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
 
     this.setState({currentSongId: newSongId, currentCategoryId: newCategoryId, categorySongStruct: tempCategorySongStruct});
   }
