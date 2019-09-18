@@ -140,7 +140,7 @@ module.exports = class GoogleDriveAPI {
                 this.sendOffKiErrorNotice("Google Drive Error - Failed to find " + licenseTier + " Package/ directory on Google Drive.  Google Error Message = " + err);
             }
 
-            const files = res.data.files;
+            const files = res.files;
             if (files.length) {
                 console.log('License Directory Found: ' + licenseTier + " Packages/");
                 files.map((file) => {
