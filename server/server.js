@@ -37,10 +37,17 @@ var transporter = nodemailer.createTransport({
 // Connect to MongoDB database
 var mongoose = require('mongoose');
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true}).then(
-  () => {console.log('Database is connected') },
-  err => { console.log('Can not connect to the database'+ err)}
-);
+if(process.env.BITNAMI_PASSWORD) {
+  mongoose.connect('mongodb://bitnami:' + process.env.BITNAMI_PASSWORD + '@localhost/offki', {useNewUrlParser: true}).then(
+    () => {console.log('Database is connected') },
+    err => { console.log('Can not connect to the database'+ err)}
+  );
+} else {
+  mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true}).then(
+    () => {console.log('Database is connected') },
+    err => { console.log('Can not connect to the database'+ err)}
+  );
+}
 
 // Import all User Defined Routes
 const fileRoutes = require('./routes/file.route.js');
