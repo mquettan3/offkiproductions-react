@@ -203,7 +203,7 @@ class AudioFileShop extends Component {
     tempCategorySongStruct.categories[newCategoryId].songs[newSongId].isActive = true;
     
     // Inform Server of song play
-    let item = tempCategorySongStruct.categories[categoryId].songs[songId];
+    let item = tempCategorySongStruct.categories[newCategoryId].songs[newSongId];
     axios.post(serverLocation + '/analytics/played/', 
     {
       name: item.name,
