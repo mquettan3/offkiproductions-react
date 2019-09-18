@@ -220,16 +220,18 @@ class AudioFileShop extends Component {
 
     let item = tempCategorySongStruct.categories[categoryId].songs[songId];
 
-    // Inform Server of song add_to_cart
-    axios.post(serverLocation + '/analytics/added_to_cart/', 
-    {
-      name: item.name,
-      category: item.category
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
+    if(event.target.value !== "None") {
+      // Inform Server of song add_to_cart
+      axios.post(serverLocation + '/analytics/added_to_cart/', 
+      {
+        name: item.name,
+        category: item.category
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+    }
 
     // Update State
     this.setState({
