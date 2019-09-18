@@ -126,7 +126,7 @@ analyticRoutes.post('/added_to_checkout', function (req, res) {
                     res.status(400).send("Unable to save add to checkout event to database.");
                 });
             } else {
-                res.status(400).send("Add to Checkout Event: Invalid song request.");
+                res.status(404).send("Add to Checkout Event: Invalid song request.");
             }
         }
     })

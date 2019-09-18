@@ -188,10 +188,14 @@ export default class Checkout extends Component {
         // handle success
         this.props.location.state.shoppingCart.forEach(function (item) {
           // For each song - Inform Server of our sale!
+          
+          // Rebuild the songname with *.mp3 extension.  Rebuild category because item.category is DIGITAL_GOODS
+          let tempSongName = item.description.split(" - ")[0].replace("Song Name: ", "") + ".mp3";
+          let tempCategoryName = item.description.split(" - ")[1].replace("Category Name: ", "");
           axios.post(serverLocation + '/analytics/purchased/', 
           {
-            name: item.name,
-            category: item.category
+            name: tempSongName,
+            category: tempCategoryName
           })
           .catch(function (error) {
             // handle error
