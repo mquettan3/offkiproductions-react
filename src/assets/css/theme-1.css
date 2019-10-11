@@ -429,10 +429,15 @@ label {
       height: 30px;
       position: absolute;
       left: 95px;
-      top: 35px; }
+      top: 35px;
+      opacity: 0.6;
+      transition: opacity 0.2 ease-in-out; }
       .updates-block .desc .play-button .fa-play {
         margin-top: 8px;
         margin-left: 10px; }
+    .updates-block .desc .play-button:hover {
+      opacity: 1;
+      transition: opacity 0.2 ease-in-out; }
 
 .updates-block .updates-block-inner {
   padding-left: 60px;
@@ -795,7 +800,7 @@ section .table-striped tbody tr:nth-of-type(odd) {
     .call-to-action .wrapper h3 {
       font-size: 24px;
       font-weight: normal;
-      font-family: "Raleway", sans-serif;
+      font-family: "Source Sans Pro", sans-serif;
       color: white;
       flex-grow: 1;
       margin-top: 8px; }

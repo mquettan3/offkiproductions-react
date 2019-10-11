@@ -508,11 +508,18 @@ label {
             position: absolute;
             left: 95px;
             top: 35px;
+            opacity: 0.6;
+            transition: opacity 0.2 ease-in-out;
 
             .fa-play {
                 margin-top: 8px;
                 margin-left: 10px;
             }
+        }
+
+        .play-button:hover {
+            opacity: 1;
+            transition: opacity 0.2 ease-in-out;
         }
     }
 }
@@ -986,7 +993,7 @@ section .table-striped tbody tr:nth-of-type(odd) {
         h3 {
             font-size: 24px;
             font-weight: normal;
-            font-family: "Raleway", sans-serif;
+            font-family: "Source Sans Pro", sans-serif;
             color: white;
             flex-grow: 1;
             margin-top: 8px;
