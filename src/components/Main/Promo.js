@@ -144,7 +144,7 @@ export default class Promo extends Component {
             <div className="container">
               <div className="updates-block-inner promo-cta-content">
                 <div className="desc">
-                    <img className="album-cover" src={BedOfRosesAlbum}></img>
+                    <img className="album-cover" src={BedOfRosesAlbum} alt="Bed of Roses Album Cover"></img>
                     <div className="intro">
                       <h3 className="title">Listen to our Latest Project!</h3>
                       <p>Listen to our first full-length studio album, <i>Bed of Roses</i>, available everywhere you listen to music!</p>
