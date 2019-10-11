@@ -485,7 +485,36 @@ label {
     padding-top: 30px;
     padding-bottom: 30px;
     background: rgba(0, 0, 0, 0.8);
-    color: #fff
+    color: #fff;
+
+    .desc {
+        display: flex;
+
+        img {
+            height: 100px;
+            width: 100px;
+            margin-right: 20px;
+        }
+
+        .intro {
+            flex-grow: 1;
+        }
+
+        .play-button {
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.6);
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            left: 95px;
+            top: 35px;
+
+            .fa-play {
+                margin-top: 8px;
+                margin-left: 10px;
+            }
+        }
+    }
 }
 
 .updates-block .updates-block-inner {
@@ -511,6 +540,7 @@ label {
     margin-top: 0;
     margin-bottom: 5px;
     font-family: "Source Sans Pro";
+    color: white;
 }
 
 .updates-block .promo-cta-content .btn-cta {
@@ -933,4 +963,40 @@ section .table th, td {
 
 section .table-striped tbody tr:nth-of-type(odd) {
     background-color: whitesmoke !important;
+}
+
+.dark-bg {
+    background-color: #373737;
+    color: #eeeeee;
+}
+
+.call-to-action {
+    padding: 20px 0;
+    background-color: #373737;
+
+    .wrapper {
+        max-width: 1140px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        
+
+        h3 {
+            font-size: 24px;
+            font-weight: normal;
+            font-family: "Raleway", sans-serif;
+            color: white;
+            flex-grow: 1;
+            margin-top: 8px;
+        }
+
+        .btn {
+            height: 48px;
+            margin-left: 20px;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+    }
 }

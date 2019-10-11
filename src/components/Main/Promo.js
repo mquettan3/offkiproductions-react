@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 
 import Hero1 from "../../assets/images/hero-1.jpg"
+import BedOfRosesAlbum from "../../assets/images/BedOfRosesAlbum.jpg"
 import MeditatingManSolo from '../../assets/images/Logos/MeditatingManSolo.svg';
 
 // Require Axios for HTTP requests
@@ -142,13 +143,15 @@ export default class Promo extends Component {
           <div className="updates-block">
             <div className="container">
               <div className="updates-block-inner promo-cta-content">
-                <h3 className="title">Subscribe to our Newsletter!</h3>
                 <div className="desc">
-                    <p className="intro">
-                        Subscribe to our newsletter to be the first to learn about future deals we are running, new beat early access, and more!
-                    </p>
+                    <img className="album-cover" src={BedOfRosesAlbum}></img>
+                    <div className="intro">
+                      <h3 className="title">Listen to our Latest Project!</h3>
+                      <p>Listen to our first full-length studio album, <i>Bed of Roses</i>, available everywhere you listen to music!</p>
+                    </div>
+                    <a href="https://unitedmasters.com/off-ki-productions5885/r/bed-of-roses/Aw2UANNhg369" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
                 </div> {/* desc */}
-                <a className="btn btn-primary btn-cta" href="https://forms.gle/jf6nVfiVQxuFVTR56" target="_blank">Subscribe</a>
+                <a className="btn btn-primary btn-cta" href="https://unitedmasters.com/off-ki-productions5885/r/bed-of-roses/Aw2UANNhg369" target="_blank">Listen Now!</a>
               </div> {/* updates-block-inner promo-cta-content */}
             </div> {/* container */}
           </div> {/* updates-block */}

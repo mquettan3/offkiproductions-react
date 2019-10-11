@@ -414,6 +414,25 @@ label {
   padding-bottom: 30px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff; }
+  .updates-block .desc {
+    display: flex; }
+    .updates-block .desc img {
+      height: 100px;
+      width: 100px;
+      margin-right: 20px; }
+    .updates-block .desc .intro {
+      flex-grow: 1; }
+    .updates-block .desc .play-button {
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      left: 95px;
+      top: 35px; }
+      .updates-block .desc .play-button .fa-play {
+        margin-top: 8px;
+        margin-left: 10px; }
 
 .updates-block .updates-block-inner {
   padding-left: 60px;
@@ -434,7 +453,8 @@ label {
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 5px;
-  font-family: "Source Sans Pro"; }
+  font-family: "Source Sans Pro";
+  color: white; }
 
 .updates-block .promo-cta-content .btn-cta {
   position: absolute;
@@ -757,3 +777,30 @@ section .table th, td {
 
 section .table-striped tbody tr:nth-of-type(odd) {
   background-color: whitesmoke !important; }
+
+.dark-bg {
+  background-color: #373737;
+  color: #eeeeee; }
+
+.call-to-action {
+  padding: 20px 0;
+  background-color: #373737; }
+  .call-to-action .wrapper {
+    max-width: 1140px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex; }
+    .call-to-action .wrapper h3 {
+      font-size: 24px;
+      font-weight: normal;
+      font-family: "Raleway", sans-serif;
+      color: white;
+      flex-grow: 1;
+      margin-top: 8px; }
+    .call-to-action .wrapper .btn {
+      height: 48px;
+      margin-left: 20px;
+      margin-top: auto;
+      margin-bottom: auto; }

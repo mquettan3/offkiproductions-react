@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Navbar from './Navbar.js';
 import Promo from './Promo.js';
 import BeatStore from './BeatStore.js';
+import Projects from './Projects.js';
 import Exclusive from './Exclusive.js';
 import CustomMusic from './CustomMusic.js';
 import LicenseTerms from './LicenseTerms.js';
 import AboutUs from './AboutUs.js';
+import CallToAction from './CallToAction.js';
 import Contact from './Contact.js';
 import Footer from './Footer.js';
 
@@ -16,10 +18,16 @@ class Main extends Component {
         <Navbar />
         <Promo />
         <BeatStore />
+        <Projects />
         <Exclusive />
         <CustomMusic />
         <LicenseTerms />
         <AboutUs />
+        <CallToAction 
+          action_description="Subscribe to our newsletter to be the first to learn about future deals we are running, new beat early access, and more!"
+          link="https://forms.gle/jf6nVfiVQxuFVTR56"
+          action_name="Subscribe"
+        />
         <Contact />
         <Footer />
       </div>
