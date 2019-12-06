@@ -147,9 +147,9 @@ export default class Promo extends Component {
                     <img className="album-cover" src={BedOfRosesAlbum} alt="Bed of Roses Album Cover"></img>
                     <div className="intro">
                       <h3 className="title">Listen to our Latest Project!</h3>
-                      <p>Listen to our first full-length studio album, <i>Bed of Roses</i>, available everywhere you listen to music!</p>
+                      <p>Listen to our latest projects, available everywhere you listen to music!</p>
                     </div>
-                    <a href="https://unitedmasters.com/off-ki-productions5885/r/bed-of-roses/Aw2UANNhg369" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
+                    <a href="https://unitedmasters.com/off-ki-productions5885" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
                 </div> {/* desc */}
                 <a className="btn btn-primary btn-cta" href="https://unitedmasters.com/off-ki-productions5885/r/bed-of-roses/Aw2UANNhg369" target="_blank">Listen Now!</a>
               </div> {/* updates-block-inner promo-cta-content */}

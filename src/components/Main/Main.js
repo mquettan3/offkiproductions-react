@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Navbar from './Navbar.js';
 import Promo from './Promo.js';
 import BeatStore from './BeatStore.js';
-import Projects from './Projects.js';
 import Exclusive from './Exclusive.js';
 import CustomMusic from './CustomMusic.js';
 import LicenseTerms from './LicenseTerms.js';
@@ -18,7 +17,6 @@ class Main extends Component {
         <Navbar />
         <Promo />
         <BeatStore />
-        <Projects />
         <Exclusive />
         <CustomMusic />
         <LicenseTerms />
