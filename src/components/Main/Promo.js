@@ -151,7 +151,7 @@ export default class Promo extends Component {
                     </div>
                     <a href="https://unitedmasters.com/off-ki-productions5885" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
                 </div> {/* desc */}
-                <a className="btn btn-primary btn-cta" href="https://unitedmasters.com/off-ki-productions5885/r/bed-of-roses/Aw2UANNhg369" target="_blank">Listen Now!</a>
+                <a className="btn btn-primary btn-cta" href="https://unitedmasters.com/off-ki-productions5885" target="_blank">Listen Now!</a>
               </div> {/* updates-block-inner promo-cta-content */}
             </div> {/* container */}
           </div> {/* updates-block */}
