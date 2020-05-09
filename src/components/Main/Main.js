@@ -4,6 +4,7 @@ import Promo from './Promo.js';
 import BeatStore from './BeatStore.js';
 import Exclusive from './Exclusive.js';
 import CustomMusic from './CustomMusic.js';
+import YouTubeCarousel from './YouTubeCarousel.js';
 import LicenseTerms from './LicenseTerms.js';
 import AboutUs from './AboutUs.js';
 import CallToAction from './CallToAction.js';
@@ -16,9 +17,10 @@ class Main extends Component {
       <div className="Main">
         <Navbar />
         <Promo />
+        <YouTubeCarousel />
         <BeatStore />
         <Exclusive />
-        <CustomMusic />
+        {/* <CustomMusic /> */}
         <LicenseTerms />
         <AboutUs />
         <CallToAction 
