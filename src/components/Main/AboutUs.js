@@ -43,7 +43,7 @@ export default class AboutUs extends Component {
                   </div>
                   <div className="member-label">Producer</div>
                   <h3 className="member-name">
-                    Byron ???
+                    Byron McGriff
                   </h3>
                 </div>
               </div>
