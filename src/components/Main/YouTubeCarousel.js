@@ -14,6 +14,8 @@ import $ from 'jquery';
 
 var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
+import '../../assets/css/carousel.css';
+
 export default class YouTubeCarousel extends Component {
     constructor(props){
         super(props);
@@ -81,7 +83,7 @@ export default class YouTubeCarousel extends Component {
                 <h2 className="section-title">YouTube Videos</h2>
                 {this.state.renderCarousel &&
                 <OwlCarousel
-                    className="content-carousel content-slider"
+                    className="content-carousel content-slider owl-theme"
                     {...youTubeCarouselOptions}
                 >
                     {itemList}
