@@ -11,3 +11,45 @@
   -webkit-transition: opacity .2s ease;
   transition: opacity .2s ease;
   border-radius: 30px; }
+
+@media (max-width: 767px) {
+  .owl-theme .owl-nav {
+    display: none; } }
+
+.owl-theme .owl-nav [class*='owl-'] {
+  position: absolute;
+  top: 50%;
+  outline: none; }
+  .owl-theme .owl-nav [class*='owl-']:hover {
+    background: none; }
+
+.owl-theme .owl-nav .owl-next {
+  right: 0px; }
+
+.owl-theme .owl-nav .owl-prev {
+  left: 0px; }
+
+.owl-theme .owl-nav .arrow {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border-top: 1vmin solid black;
+  border-right: 1vmin solid black;
+  box-shadow: 0 0 0 lightgray;
+  transition: all 200ms ease;
+  outline: none; }
+  .owl-theme .owl-nav .arrow.left {
+    transform: translate3d(0, -50%, 0) rotate(-135deg); }
+  .owl-theme .owl-nav .arrow.right {
+    transform: translate3d(0, -50%, 0) rotate(45deg); }
+  .owl-theme .owl-nav .arrow:hover {
+    border-color: #6eceb2;
+    box-shadow: 0.5vmin -0.5vmin 0 black; }
+  .owl-theme .owl-nav .arrow:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -60%) rotate(45deg);
+    width: 200%;
+    height: 200%; }

@@ -21,7 +21,7 @@ export default class YouTubeCarousel extends Component {
         super(props);
         this.handleVideoListResponse = this.handleVideoListResponse.bind(this);
         // this.state = {videoList: []}
-        this.state = {videoList: ['https://www.youtube.com/embed/B3pCKwgeMoM', 'https://www.youtube.com/embed/B3pCKwgeMoM'], renderCarousel: false}
+        this.state = {videoList: ['https://www.youtube.com/embed/B3pCKwgeMoM', 'https://www.youtube.com/embed/B3pCKwgeMoM'], renderCarousel: true}
     }
 
     componentDidMount() {
@@ -53,12 +53,13 @@ export default class YouTubeCarousel extends Component {
         rewind: true,
         center: true,
         autoplayHoverPause: true,
-        autoplayTimeout: 5000,
         items: 1,
         dots: true,  // Show pagination buttons
         nav: true,   // Show next and prev buttons
-        navText: ["<i fill=\"currentColor\" style=\"display: inline-block;\"><svg fill=\"currentColor\" height=\"25\" width=\"10\" viewBox=\"0 0 640 1792\" style=\"display: inline-block; vertical-align: middle;\"><path d=\"M627 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"></path></svg></i>", "<i fill=\"currentColor\" style=\"display: inline-block;\"><svg fill=\"currentColor\" height=\"25\" width=\"10\" viewBox=\"0 0 640 1792\" style=\"display: inline-block; vertical-align: middle;\"><path d=\"M595 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"></path></svg></i>"]
+        navText: ["<div class=\"arrow left\"></div>", "<div class=\"arrow right\"></div>"]
     };
+
+    
 
     const itemList = [];
 
