@@ -35,6 +35,7 @@ export default class Checkout extends Component {
     this.onPayPalError = this.onPayPalError.bind(this);
     this.onError = this.onError.bind(this);
     this.onInit = this.onInit.bind(this);
+    this.gtag = this.gtag.bind(this);
 
     window.React = React;
     window.ReactDOM = ReactDOM;
@@ -50,6 +51,10 @@ export default class Checkout extends Component {
       exclusiveLicenseChecked: {value: false, isValid: false},
       payPalClicked: false
     };
+  }
+
+  gtag() {
+    window.dataLayer.push(arguments);
   }
 
   componentDidMount() {
@@ -186,6 +191,23 @@ export default class Checkout extends Component {
       totalCost: totalCost
     }).then(function (response) {
         // handle success
+
+        // Acquire full list of item details for Google Analytics
+        let itemsList = this.props.location.state.shopingCart.map(function (item, index) {
+          return {
+            brand: "Off Ki Productions",
+            category: item.description,
+            category_slot: "None",
+            creative_slot: "None",
+            id: item.sku,
+            location_id: "None",
+            price: parseFloat(item.unit_amount.value),
+            quantity: parseInt(item.quantity, 10),
+            variant: "None",
+            list_positon: index + 1
+          };
+        });
+
         this.props.location.state.shoppingCart.forEach(function (item) {
           // For each song - Inform Server of our sale!
           
@@ -201,6 +223,18 @@ export default class Checkout extends Component {
             // handle error
             console.log(error);
           })
+          
+          // Inform Google Analytics of our sale!
+          this.gtag('event', 'purchase', {
+            "transaction_id": details.orderID,
+            "affiliation": "Off Ki Productions",
+            "value": parseFloat(totalCost),
+            "currency": "USD",
+            "tax": 0.0,
+            "shipping": 0.0,
+            "items": itemsList,
+            "coupon": "None"
+          });
         });
 
         console.log(response);
