@@ -38,7 +38,7 @@ export default class YouTubeCarousel extends Component {
     handleVideoListResponse(response) {
         let tempList = [];
         for(let video in response.data) {
-            if (video) {
+            if (response.data[video]) {
                 tempList.push(response.data[video]);
             }
         }
