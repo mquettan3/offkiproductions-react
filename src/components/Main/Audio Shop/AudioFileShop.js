@@ -139,6 +139,13 @@ class AudioFileShop extends Component {
 
     let item = tempCategorySongStruct.categories[categoryId].songs[songId];
 
+    let totalCost = 0;
+    if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Basic") {
+      totalCost = 30;
+    } else if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Premium") {
+      totalCost = 100;
+    }
+
     // Notify google of the item view
     this.gtag('event', 'view_item', {
       "items": [
@@ -283,6 +290,13 @@ class AudioFileShop extends Component {
         list_positon: 1
       }];
 
+      let totalCost = 0;
+      if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Basic") {
+        totalCost = 30;
+      } else if (tempCategorySongStruct.categories[categoryId].songs[songId].licenseTier === "Premium") {
+        totalCost = 100;
+      }
+
       this.gtag('event', 'add_to_cart', {
         "affiliation": "Off Ki Productions",
         "value": totalCost,
@@ -352,6 +366,11 @@ class AudioFileShop extends Component {
           list_positon: index + 1
         };
       });
+
+      let totalCost = 0;
+      for (let item in shoppingCart) {
+        totalCost += parseFloat(shoppingCart[item].unit_amount.value);
+      }
 
       shoppingCart.forEach(function (item) {
         // For each song - Inform Server of song add_to_checkout
