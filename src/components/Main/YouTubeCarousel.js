@@ -21,7 +21,7 @@ export default class YouTubeCarousel extends Component {
         super(props);
         this.handleVideoListResponse = this.handleVideoListResponse.bind(this);
         // this.state = {videoList: []}
-        this.state = {videoList: ['https://www.youtube.com/embed/B3pCKwgeMoM', 'https://www.youtube.com/embed/B3pCKwgeMoM'], renderCarousel: false}
+        this.state = {videoList: [], renderCarousel: false}
     }
 
     componentDidMount() {
