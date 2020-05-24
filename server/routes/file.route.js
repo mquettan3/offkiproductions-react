@@ -126,17 +126,16 @@ fileRoutes.get('/videolist', function (req, res) {
     // Read the videolist.txt file - Parse each line as a new video in the list
     try {
       const data = fs.readFileSync(projectRoot + '/src/assets/videolist.txt', 'utf8')
-      console.log(data)
-
+      
       // Assemble the file into a list of strings
-      videoListObject.push(data.split(/\r?\n/));
+      videoListObject = videoListObject.concat(data.split(/\r?\n/));
     } catch (err) {
       console.error(err)
       res.status(404).send("Video List Request Error: Server-side miss-configuration. videolist.txt file not found!");
       return
     }
 
-    res.json(videoListObject);
+    res.status(200).json(videoListObject);
   
     // Server debug print
     console.log("Sent video list " + JSON.stringify(videoListObject));

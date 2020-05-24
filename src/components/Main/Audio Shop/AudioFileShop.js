@@ -35,6 +35,7 @@ class AudioFileShop extends Component {
     this.handleMusicListResponse = this.handleMusicListResponse.bind(this);
     this.handleNextSong = this.handleNextSong.bind(this);
     this.routeToCheckout = this.routeToCheckout.bind(this);
+    this.gtag = this.gtag.bind(this);
 
     this.state = {
       player_state: "paused",
@@ -52,6 +53,10 @@ class AudioFileShop extends Component {
 
     window.React = React;
     window.ReactDOM = ReactDOM;
+  }
+
+  gtag() {
+    window.dataLayer.push(arguments);
   }
 
   componentDidMount() {
@@ -133,6 +138,25 @@ class AudioFileShop extends Component {
     }
 
     let item = tempCategorySongStruct.categories[categoryId].songs[songId];
+
+    // Notify google of the item view
+    this.gtag('event', 'view_item', {
+      "items": [
+        {
+          brand: "Off Ki Productions",
+          category: item.category,
+          category_slot: "None",
+          creative_slot: "None",
+          id: item.sku,
+          location_id: "None",
+          name: "OK" + item.category + "-" + item.song + "-" + item.licenseTier,
+          price: totalCost,
+          quantity: 1,
+          variant: "None",
+          list_positon: 1
+        }
+      ]
+    });
 
     // Inform Server of song play
     axios.post(serverLocation + '/analytics/played/', 
@@ -243,6 +267,31 @@ class AudioFileShop extends Component {
         // handle error
         console.log(error);
       })
+
+      // Inform Google of song add_to_cart
+      let itemsList = [{
+        brand: "Off Ki Productions",
+        category: item.category,
+        category_slot: "None",
+        creative_slot: "None",
+        id: item.sku,
+        location_id: "None",
+        name: "OK" + item.category + "-" + item.song + "-" + item.licenseTier,
+        price: totalCost,
+        quantity: 1,
+        variant: "None",
+        list_positon: 1
+      }];
+
+      this.gtag('event', 'add_to_cart', {
+        "affiliation": "Off Ki Productions",
+        "value": totalCost,
+        "currency": "USD",
+        "tax": 0.0,
+        "shipping": 0.0,
+        "items": itemsList,
+        "coupon": "None"
+      });
     }
 
     // Update State
@@ -288,6 +337,22 @@ class AudioFileShop extends Component {
       alert("Please select a song to purchase!");
       e.preventDefault();
     } else {
+      let itemsList = shoppingCart.map(function (item, index) {
+        return {
+          brand: "Off Ki Productions",
+          category: item.description,
+          category_slot: "None",
+          creative_slot: "None",
+          id: item.sku,
+          location_id: "None",
+          name: item.name,
+          price: parseFloat(item.unit_amount.value),
+          quantity: parseInt(item.quantity, 10),
+          variant: "None",
+          list_positon: index + 1
+        };
+      });
+
       shoppingCart.forEach(function (item) {
         // For each song - Inform Server of song add_to_checkout
 
@@ -303,6 +368,17 @@ class AudioFileShop extends Component {
           // handle error
           console.log(error);
         })
+      });
+
+      // Inform Google of Checkout Request
+      this.gtag('event', 'begin_checkout', {
+        "affiliation": "Off Ki Productions",
+        "value": parseFloat(totalCost),
+        "currency": "USD",
+        "tax": 0.0,
+        "shipping": 0.0,
+        "items": itemsList,
+        "coupon": "None"
       });
     
       //Route to checkout after updating state

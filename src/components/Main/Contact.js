@@ -26,6 +26,8 @@ export default class Contact extends Component {
               <li className="list-inline-item mr-3"><a href="https://www.youtube.com/channel/UCTpG4-OqB0WIYcHOp7N8IsA/videos"><i className="fab fa-youtube"></i></a></li>
               <li className="d-block d-sm-none"></li>
               <li className="list-inline-item mr-3"><a href="https://www.instagram.com/offkiprod/"><i className="fab fa-instagram"></i></a></li>
+              <li className="list-inline-item mr-3"><a href="https://www.twitter.com/offkiproductio1/"><i className="fab fa-twitter"></i></a></li>
+              <li className="list-inline-item mr-3"><a href="https://www.twitch.com/OffKiZo/"><i className="fab fa-twitch"></i></a></li>
             </ul>
           </div>
         </div>
