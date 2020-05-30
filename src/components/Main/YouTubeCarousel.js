@@ -71,7 +71,7 @@ export default class YouTubeCarousel extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12 mb-sm-30">
-                            <iframe key={item} width="560" height="315" src={this.state.videoList[item]} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                            <iframe key={item} src={this.state.videoList[item]} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -84,14 +84,19 @@ export default class YouTubeCarousel extends Component {
         <section id="youtube" className="youtube-section section text-center">
             <div className="container">
                 <h2 className="section-title">YouTube Videos</h2>
-                {this.state.renderCarousel &&
-                <OwlCarousel
-                    className="content-carousel content-slider owl-theme"
-                    {...youTubeCarouselOptions}
-                >
+                <div className="hidden-on-mobile">
+                    {this.state.renderCarousel &&
+                    <OwlCarousel
+                        className="content-carousel content-slider owl-theme"
+                        {...youTubeCarouselOptions}
+                    >
+                        {itemList}
+                    </OwlCarousel>
+                    }
+                </div>
+                <div className="show-on-mobile">
                     {itemList}
-                </OwlCarousel>
-                }
+                </div>
             </div>
         </section>
     )

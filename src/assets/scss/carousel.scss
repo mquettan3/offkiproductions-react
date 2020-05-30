@@ -79,3 +79,34 @@ $site_accent_color: #6eceb2;
         }
     }
 }
+
+.hidden-on-mobile {
+    display: block;
+}
+
+.show-on-mobile {
+    display: none;
+}
+
+.youtube-section {
+    iframe {
+        width: 560px;
+        height: 315px;
+    }
+}
+
+@media(max-width: 767px) {
+    .hidden-on-mobile {
+        display: none;
+    }
+
+    .show-on-mobile {
+        display: block;
+    }
+
+    .youtube-section {
+        iframe {
+            width: 100%;
+        }
+    }
+}
