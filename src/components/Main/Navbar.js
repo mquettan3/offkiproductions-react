@@ -50,8 +50,8 @@ export default class Navbar extends Component {
             <ul className="nav navbar-nav">
               <li className="nav-item"><a className="active nav-link scrollto" href="#promo">Home</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#rapbeats">Beat Store</a></li>
+              <li className="nav-item"><a className="nav-link" href="https://merch.streamelements.com/offkizo">Merch Store</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#exclusive">Exclusive Rights</a></li>
-              <li className="nav-item"><a className="nav-link scrollto" href="#custommusic">You Type Beats!</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#license">License Terms</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#about">Vision</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#contact">Contact</a></li>

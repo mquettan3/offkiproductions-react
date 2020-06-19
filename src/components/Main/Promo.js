@@ -3,7 +3,8 @@
 import React, { Component } from 'react';
 
 import Hero1 from "../../assets/images/hero-1.jpg"
-import BedOfRosesAlbum from "../../assets/images/BedOfRosesAlbum.jpg"
+//import BedOfRosesAlbum from "../../assets/images/BedOfRosesAlbum.jpg"
+import VibeChasing2 from "../../assets/images/VibeChasing2.jpg"
 import MeditatingManSolo from '../../assets/images/Logos/MeditatingManSolo.svg';
 
 // Require Axios for HTTP requests
@@ -138,20 +139,22 @@ export default class Promo extends Component {
               </div>
               <h2 className="headline">Off Ki Productions</h2>
               <div className="tagline">We are Dedicated to Enhancing Your Craft!</div>
+              {/* <a className="btn btn-primary btn-cta" href="https://merch.streamelements.com/offkizo" target="_blank">Merch Store</a> */}
             </div>
           </div>
           <div className="updates-block">
             <div className="container">
               <div className="updates-block-inner promo-cta-content">
                 <div className="desc">
-                    <img className="album-cover" src={BedOfRosesAlbum} alt="Bed of Roses Album Cover"></img>
+                    <img className="album-cover" src={VibeChasing2} alt="Bed of Roses Album Cover"></img>
                     <div className="intro">
                       <h3 className="title">Listen to our Latest Project!</h3>
-                      <p>Listen to our latest projects, available everywhere you listen to music!</p>
+                      <p>Listen to our latest project, available everywhere you listen to music!</p>
+                      <p>Also, visit our <a href="https://merch.streamelements.com/offkizo" target="_blank">Merch Store</a>!</p>
                     </div>
-                    <a href="https://unitedmasters.com/off-ki-productions5885" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
+                    <a href="https://distrokid.com/hyperfollow/offkiproductions/vibe-chasing-vol-2-lofi-n-chill" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
                 </div> {/* desc */}
-                <a className="btn btn-primary btn-cta" href="https://unitedmasters.com/off-ki-productions5885" target="_blank">Listen Now!</a>
+                <a className="btn btn-primary btn-cta" href="https://distrokid.com/hyperfollow/offkiproductions/vibe-chasing-vol-2-lofi-n-chill" target="_blank">Listen Now!</a>
               </div> {/* updates-block-inner promo-cta-content */}
             </div> {/* container */}
           </div> {/* updates-block */}
