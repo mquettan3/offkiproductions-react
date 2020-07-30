@@ -139,7 +139,7 @@ export default class Promo extends Component {
               </div>
               <h2 className="headline">Off Ki Productions</h2>
               <div className="tagline">We are Dedicated to Enhancing Your Craft!</div>
-              {/* <a className="btn btn-primary btn-cta" href="https://merch.streamelements.com/offkizo" target="_blank">Merch Store</a> */}
+              {/* <a className="btn btn-primary btn-cta" href="https://off-ki-merch.myshopify.com" target="_blank">Merch Store</a> */}
             </div>
           </div>
           <div className="updates-block">
@@ -150,7 +150,7 @@ export default class Promo extends Component {
                     <div className="intro">
                       <h3 className="title">Listen to our Latest Project!</h3>
                       <p>Listen to our latest project, available everywhere you listen to music!</p>
-                      <p>Also, visit our <a href="https://merch.streamelements.com/offkizo" target="_blank">Merch Store</a>!</p>
+                      <p>Also, visit our <a href="https://off-ki-merch.myshopify.com" target="_blank">Merch Store</a>!</p>
                     </div>
                     <a href="https://distrokid.com/hyperfollow/offkiproductions/vibe-chasing-vol-2-lofi-n-chill" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
                 </div> {/* desc */}
