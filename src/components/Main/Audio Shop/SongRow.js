@@ -33,7 +33,7 @@ export default class SongRow extends Component {
         </div>
         <div className="shopping-selection">
           <select name="license-tier" onChange={this.handleLicenseChange} value={license_tier}>
-            <option value="None">License Tier</option>
+            <option value="None">Buy Now</option>
             <option value="Basic">Basic - $30</option>
             <option value="Premium">Premium - $100</option>
           </select>
