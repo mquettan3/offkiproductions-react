@@ -10,7 +10,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import OwlCarousel from 'react-owl-carousel';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
@@ -32,7 +32,7 @@ export default class YouTubeCarousel extends Component {
         .catch(function (error) {
             // handle error
             console.log(error);
-        }.bind(this))
+        })
     }
 
     handleVideoListResponse(response) {
