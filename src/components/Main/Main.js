@@ -19,7 +19,7 @@ class Main extends Component {
         <Promo />
         <YouTubeCarousel />
         <BeatStore />
-        <Exclusive />
+        {/* <Exclusive /> */}
         {/* <CustomMusic /> */}
         <LicenseTerms />
         <AboutUs />

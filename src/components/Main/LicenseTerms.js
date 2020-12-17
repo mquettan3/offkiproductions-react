@@ -22,7 +22,7 @@ export default class LicenseTerms extends Component {
                 <tr>
                   <th>Cost</th>
                   <td className="text-center noWordWrap">
-                    $30
+                    $29.99
                   </td>
                 </tr>
                 <tr>
@@ -113,7 +113,7 @@ export default class LicenseTerms extends Component {
                 <tr>
                   <th>Cost</th>
                   <td className="text-center noWordWrap">
-                    $100
+                    $99
                   </td>
                 </tr>
                 <tr>

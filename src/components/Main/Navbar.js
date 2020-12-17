@@ -51,7 +51,6 @@ export default class Navbar extends Component {
               <li className="nav-item"><a className="active nav-link scrollto" href="#promo">Home</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#rapbeats">Beat Store</a></li>
               <li className="nav-item"><a className="nav-link" href="https://off-ki-merch.myshopify.com">Merch Store</a></li>
-              <li className="nav-item"><a className="nav-link scrollto" href="#exclusive">Exclusive Rights</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#license">License Terms</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#about">Vision</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#contact">Contact</a></li>
