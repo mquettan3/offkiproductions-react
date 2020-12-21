@@ -14,7 +14,7 @@ export default class LicenseTerms extends Component {
                 <thead className="thead-light">
                   <tr>
                     <th colSpan="2">
-                      <h4>Starter Package</h4>
+                      <h4>Starter</h4>
                     </th>
                   </tr>
                 </thead>
@@ -99,7 +99,7 @@ export default class LicenseTerms extends Component {
                 <thead className="thead-light">
                   <tr>
                     <th colSpan="2">
-                      <h4>Starter Package Plus</h4>
+                      <h4>Starter Plus</h4>
                     </th>
                   </tr>
                 </thead>
@@ -264,7 +264,7 @@ export default class LicenseTerms extends Component {
                 </tbody>
               </table>
             </div>
-            <div className="col-md-4 col-sm-12">
+            <div className="col-md-3 col-sm-12">
               <table className="table table-vertical-align table-striped">
                 <thead className="thead-light">
                   <tr>
