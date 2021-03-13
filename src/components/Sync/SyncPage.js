@@ -114,7 +114,7 @@ export default class ErrorPage extends Component {
                             <i>Expiration Date: {this.state.syncList[entry].expiration_date}</i>
                             <p>{this.state.syncList[entry].description}</p>
                         </div>
-                        <a className={"btn btn-primary btn-cta " + (expired ? "disabled" : "")} href="mailto:offki@offkiproductions.com?subject=Off Ki Sync">Submit Entry</a>
+                        <a className={"btn btn-primary btn-cta " + (expired ? "disabled" : "")} href={"mailto:offki@offkiproductions.com?subject=Off Ki Sync Entry for " + this.state.syncList[entry].title}>Submit Entry</a>
                     </div>
                 </div>
             )
