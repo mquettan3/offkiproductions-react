@@ -1,0 +1,49 @@
+[
+    {
+            "title": "This is a Custom Title!",
+            "description": "This is an extremely long description for this sync opportunity.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.",
+            "expiration_date": "2021-03-25",
+            "reference_track_list": [
+                "https://www.youtube.com/watch?v=ubtsA7_vCw8"
+            ]
+    },
+    {
+            "title": "B",
+            "description": "Description",
+            "expiration_date": "2021-03-25",
+            "reference_track_list": [
+                "https://www.youtube.com/watch?v=ubtsA7_vCw8",
+                "https://www.youtube.com/watch?v=8R_diQqNt1k"
+            ]
+    },
+    {
+            "title": "C",
+            "description": "Description",
+            "expiration_date": "2021-03-22",
+            "reference_track_list": [
+                "https://www.youtube.com/watch?v=ubtsA7_vCw8",
+                "https://www.youtube.com/watch?v=8R_diQqNt1k",
+                "https://www.youtube.com/watch?v=sHbO1IPAGcs"
+            ]
+    },
+    {
+            "title": "D",
+            "description": "Description",
+            "expiration_date": "2021-02-22",
+            "reference_track_list": [
+                "https://www.youtube.com/watch?v=ubtsA7_vCw8",
+                "https://www.youtube.com/watch?v=8R_diQqNt1k",
+                "https://www.youtube.com/watch?v=sHbO1IPAGcs"
+            ]
+    },
+    {
+            "title": "E",
+            "description": "Description",
+            "expiration_date": "2021-02-23",
+            "reference_track_list": [
+                "https://www.youtube.com/watch?v=ubtsA7_vCw8",
+                "https://www.youtube.com/watch?v=8R_diQqNt1k",
+                "https://www.youtube.com/watch?v=sHbO1IPAGcs"
+            ]
+    }
+]

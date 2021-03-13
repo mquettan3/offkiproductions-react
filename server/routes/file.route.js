@@ -141,4 +141,31 @@ fileRoutes.get('/videolist', function (req, res) {
     console.log("Sent video list " + JSON.stringify(videoListObject));
 });
 
+// Respond with a list of all the videos in ../src/assets/videolist.txt
+fileRoutes.get('/synclist', function (req, res) {
+    var syncList = []
+
+    // Read the synclist.json
+    try {
+      const data = fs.readFileSync(projectRoot + '/src/assets/synclist.json', 'utf8');
+      
+      // Assemble the file into a list of strings
+      syncList = JSON.parse(data);
+    } catch (err) {
+      console.error(err)
+
+      if(err instanceof SyntaxError) {
+        res.status(500).send("Sync List Parsing Error: Server-side miss-configuration. synclist.json file is in an invalid format!\n" + err.message);
+
+      } else {
+        // Assuming all other errors are due to file not being found.
+        res.status(404).send("Sync List File Error: Server-side miss-configuration. synclist.json file was not found!\n" + err.message);
+      }
+
+      return;
+    }
+
+    res.status(200).json(syncList);
+});
+
 module.exports = fileRoutes;
