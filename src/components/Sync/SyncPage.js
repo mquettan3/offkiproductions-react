@@ -69,12 +69,14 @@ export default class ErrorPage extends Component {
             const options = { month: 'long'};
             let currentMonth = new Intl.DateTimeFormat('en-US', options).format(tempDate);
             let currentYear = tempDate.getFullYear();
+            let addSeparator = true;
 
             // If the year or date has changed
             if((currentMonth !== previousMonth) || (currentYear !== previousYear)) {
                 // Snap a new month/year title!
                 previousMonth = currentMonth;
                 previousYear = currentYear;
+                addSeparator = false;
 
                 syncListJSX.push(
                     <div key={entry + currentMonth + " " + currentYear} className="row">
@@ -104,6 +106,7 @@ export default class ErrorPage extends Component {
 
             syncListJSX.push(
                 <div key={entry} className="row">
+                    <div className={addSeparator ? "separator-3" : ""}></div>
                     <div className="col-12 entry">
                         <div className="text-block">
                             <h3>{this.state.syncList[entry].title}</h3>

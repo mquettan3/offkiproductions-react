@@ -30,6 +30,11 @@
             margin-top: 20px;
         }
 
+        .separator-2:after {
+            height:  5px;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0.05) 70%, transparent 100%)
+        }
+
         .entry {
             display: flex;
             flex-direction: row;
@@ -46,18 +51,35 @@
                 }
             }
 
-            }
-
             .btn {
                 flex-shrink: 0;
                 height: 48px;
                 margin: auto 0;
             }
-
+    
             .btn.disabled {
                 background-color: #6eceb2;
                 border-color: #6eceb2;
                 opacity: 0.5;
             }
+        }
+
+        .separator-3 {
+            width: 100%;
+            margin-bottom: 15px;
+            position: relative;
+            height: 1px;
+        }
+
+        .separator-3:after {
+            height: 1px;
+            background: #d1d1d1;
+            background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.12) 35%, rgba(0, 0, 0, 0.12) 65%, transparent 100%);
+            position: absolute;
+            bottom: -1px;
+            left: 0px;
+            content: "";
+            width: 100%;
+        }
     }
 }

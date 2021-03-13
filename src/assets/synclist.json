@@ -1,6 +1,6 @@
 [
     {
-            "title": "This is a Custom Title!",
+            "title": "This is a Custom Title! A",
             "description": "This is an extremely long description for this sync opportunity.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.",
             "expiration_date": "2021-03-25",
             "reference_track_list": [
@@ -8,8 +8,8 @@
             ]
     },
     {
-            "title": "B",
-            "description": "Description",
+            "title": "This is a Custom Title! B",
+            "description": "This is an short description for this sync opportunity.",
             "expiration_date": "2021-03-25",
             "reference_track_list": [
                 "https://www.youtube.com/watch?v=ubtsA7_vCw8",
@@ -17,8 +17,8 @@
             ]
     },
     {
-            "title": "C",
-            "description": "Description",
+            "title": "This is a Custom Title! C",
+            "description": "This is an extremely long description for this sync opportunity.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.",
             "expiration_date": "2021-03-22",
             "reference_track_list": [
                 "https://www.youtube.com/watch?v=ubtsA7_vCw8",
@@ -27,8 +27,8 @@
             ]
     },
     {
-            "title": "D",
-            "description": "Description",
+            "title": "This is a Custom Title! D",
+            "description": "This is an extremely long description for this sync opportunity.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.  However long you want it to be.",
             "expiration_date": "2021-02-22",
             "reference_track_list": [
                 "https://www.youtube.com/watch?v=ubtsA7_vCw8",
@@ -37,13 +37,12 @@
             ]
     },
     {
-            "title": "E",
-            "description": "Description",
+            "title": "This is a Custom Title! E",
+            "description": "This is an short description for this sync opportunity.",
             "expiration_date": "2021-02-23",
             "reference_track_list": [
                 "https://www.youtube.com/watch?v=ubtsA7_vCw8",
-                "https://www.youtube.com/watch?v=8R_diQqNt1k",
-                "https://www.youtube.com/watch?v=sHbO1IPAGcs"
+                "https://www.youtube.com/watch?v=8R_diQqNt1k"
             ]
     }
 ]
