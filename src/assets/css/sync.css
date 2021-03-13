@@ -1,0 +1,41 @@
+.sync-wrapper .banner {
+  position: relative;
+  color: white;
+  padding: 20px 0; }
+  .sync-wrapper .banner h1 {
+    color: #ffffff;
+    margin-top: 30px; }
+  .sync-wrapper .banner .separator-2:after {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.12) 35%, rgba(255, 255, 255, 0.05) 70%, transparent 100%);
+    height: 2px; }
+
+.sync-wrapper .banner:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  content: ''; }
+
+.sync-wrapper .sync-list h2 {
+  margin-top: 20px; }
+
+.sync-wrapper .sync-list .entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+  .sync-wrapper .sync-list .entry .text-block a {
+    display: inline;
+    margin-right: 20px; }
+  .sync-wrapper .sync-list .entry .text-block i {
+    display: block; }
+
+.sync-wrapper .sync-list .btn {
+  height: 48px;
+  margin: auto 0; }
+
+.sync-wrapper .sync-list .btn.disabled {
+  background-color: #6eceb2;
+  border-color: #6eceb2;
+  opacity: 0.5; }
