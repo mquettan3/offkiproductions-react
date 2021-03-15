@@ -128,7 +128,7 @@ export default class ErrorPage extends Component {
                             <Link to="/"><h2><span className="fa fa-angle-double-left"></span> RETURN HOME</h2></Link>
                             <h1 className="page-title">Sync Opportunities</h1>
                             <div className="separator-2"></div>
-                            <p>We're offering sync opportuniies for film, tv, ads and more to artists and producers who use Off Ki Beats for loops and make some magic! Send your finished track for us via email with the subject "Off Ki Sync" and if yit fits a sync opporutnity we will pitch it! Below are some current opportunities we have as well as an archive of our past opportunties.</p>
+                            <p>We’re offering sync opportunities for film, tv, ads and more! Artists and producers who use Off Ki beats or loops and make some magic make sure to send the finished track to us by clicking the “Submit Entry” button below!!! Good luck and keep creating!!!</p>
                         </div>
                     </div>
                 </div>
