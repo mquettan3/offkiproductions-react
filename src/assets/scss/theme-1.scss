@@ -490,7 +490,7 @@ label {
     .desc {
         display: flex;
 
-        @media (max-width: 991px) {
+        @media (max-width: 482px) {
             img {
                 display: none;
             }
@@ -535,6 +535,7 @@ label {
         .desc-button {
             position: static !important;
             display: inline-block;
+            margin-right: 20px;
         }
     }
 }
@@ -745,7 +746,7 @@ ol.carousel-indicators  > li + li {
 
 /* This is where the text in the updates-block begins to wrap */
 @media (max-width: 509.98px) {
-  .updates-block .promo-cta-content .btn-cta.stream-button {
+  .updates-block .promo-cta-content .btn-cta {
       position: static;
       margin-top: 20px;
   }
@@ -793,7 +794,7 @@ ol.carousel-indicators  > li + li {
             margin-bottom: 20px;
         }
     }
-    .updates-block .promo-cta-content .btn-cta.stream-button {
+    .updates-block .promo-cta-content .btn-cta {
         position: static
     }
     .updates-block .promo-cta-content .desc {
@@ -819,7 +820,7 @@ ol.carousel-indicators  > li + li {
           margin-bottom: 20px;
       }
   }
-  .updates-block .promo-cta-content .btn-cta.stream-button {
+  .updates-block .promo-cta-content .btn-cta {
     position: static;
   }
   .updates-block .promo-cta-content .desc {
