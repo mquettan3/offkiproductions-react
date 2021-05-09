@@ -151,11 +151,12 @@ export default class Promo extends Component {
                     <div className="intro">
                       <h3 className="title">Listen to our Latest Project!</h3>
                       <p>Listen to our latest project, available everywhere you listen to music!</p>
-                      <p>Buy this project <a href="https://www.offkioriginal.com" target="_blank">HERE</a>!</p>
+                      {/* <p>Buy this project <a href="https://www.offkioriginal.com" target="_blank">HERE</a>!</p> */}
+                      <a className="btn btn-primary btn-cta desc-button" href="https://www.offkioriginal.com" target="_blank">Buy</a>
                     </div>
                     <a href="https://distrokid.com/hyperfollow/offkiproductions/spring-chill-2" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
                 </div> {/* desc */}
-                <a className="btn btn-primary btn-cta" href="https://distrokid.com/hyperfollow/offkiproductions/spring-chill-2" target="_blank">Stream</a>
+                <a className="btn btn-primary btn-cta stream-button" href="https://distrokid.com/hyperfollow/offkiproductions/spring-chill-2" target="_blank">Stream</a>
               </div> {/* updates-block-inner promo-cta-content */}
             </div> {/* container */}
           </div> {/* updates-block */}

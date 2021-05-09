@@ -490,7 +490,7 @@ label {
     .desc {
         display: flex;
 
-        @media (max-width: 482px) {
+        @media (max-width: 991px) {
             img {
                 display: none;
             }
@@ -530,6 +530,11 @@ label {
         .play-button:hover {
             opacity: 1;
             transition: opacity 0.2 ease-in-out;
+        }
+
+        .desc-button {
+            position: static !important;
+            display: inline-block;
         }
     }
 }
@@ -740,8 +745,9 @@ ol.carousel-indicators  > li + li {
 
 /* This is where the text in the updates-block begins to wrap */
 @media (max-width: 509.98px) {
-  .updates-block .promo-cta-content .btn-cta {
-      position: static
+  .updates-block .promo-cta-content .btn-cta.stream-button {
+      position: static;
+      margin-top: 20px;
   }
 
   .updates-block {
@@ -787,7 +793,7 @@ ol.carousel-indicators  > li + li {
             margin-bottom: 20px;
         }
     }
-    .updates-block .promo-cta-content .btn-cta {
+    .updates-block .promo-cta-content .btn-cta.stream-button {
         position: static
     }
     .updates-block .promo-cta-content .desc {
@@ -813,8 +819,8 @@ ol.carousel-indicators  > li + li {
           margin-bottom: 20px;
       }
   }
-  .updates-block .promo-cta-content .btn-cta {
-      position: static;
+  .updates-block .promo-cta-content .btn-cta.stream-button {
+    position: static;
   }
   .updates-block .promo-cta-content .desc {
       width: 620px;
@@ -831,7 +837,7 @@ ol.carousel-indicators  > li + li {
     .updates-block {
         height: 160px
     }
-    .updates-block .promo-cta-content .btn-cta {
+    .updates-block .promo-cta-content .btn-cta.stream-button {
         position: absolute
     }
     .updates-block .carousel .item {
@@ -988,6 +994,12 @@ section .table th, td {
 
 section .table-striped tbody tr:nth-of-type(odd) {
     background-color: whitesmoke !important;
+}
+
+section {
+    small {
+        font-size: 14px;
+    }
 }
 
 .dark-bg {
