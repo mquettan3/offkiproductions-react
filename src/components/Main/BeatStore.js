@@ -12,6 +12,7 @@ export default class BeatStore extends Component {
           <div className="row">
             <div className="col-12">
               <h2 className="section-title">Beat Store</h2>
+              <small>Tag removed upon purchase.</small>
               <div dangerouslySetInnerHTML={{__html: frame}} />
           	  {/* <AudioShop /> */}
             </div>

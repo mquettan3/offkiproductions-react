@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 
 import Hero1 from "../../assets/images/hero-1.jpg"
 //import BedOfRosesAlbum from "../../assets/images/BedOfRosesAlbum.jpg"
-import VibeChasing2 from "../../assets/images/VibeChasing2.jpg"
+// import VibeChasing2 from "../../assets/images/VibeChasing2.jpg"
+import VibeChasing2 from "../../assets/images/Spring Chill Album Cover.png"
 import MeditatingManSolo from '../../assets/images/Logos/MeditatingManSolo.svg';
 
 // Require Axios for HTTP requests
@@ -150,11 +151,11 @@ export default class Promo extends Component {
                     <div className="intro">
                       <h3 className="title">Listen to our Latest Project!</h3>
                       <p>Listen to our latest project, available everywhere you listen to music!</p>
-                      <p>Also, visit our <a href="https://off-ki-merch.myshopify.com" target="_blank">Merch Store</a>!</p>
+                      <p>Buy this project <a href="https://www.offkioriginal.com" target="_blank">HERE</a>!</p>
                     </div>
-                    <a href="https://distrokid.com/hyperfollow/offkiproductions/vibe-chasing-vol-2-lofi-n-chill" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
+                    <a href="https://distrokid.com/hyperfollow/offkiproductions/spring-chill-2" className="play-button" target="_blank"><i className="fas fa-play"></i></a>
                 </div> {/* desc */}
-                <a className="btn btn-primary btn-cta" href="https://distrokid.com/hyperfollow/offkiproductions/vibe-chasing-vol-2-lofi-n-chill" target="_blank">Listen Now!</a>
+                <a className="btn btn-primary btn-cta" href="https://distrokid.com/hyperfollow/offkiproductions/spring-chill-2" target="_blank">Stream</a>
               </div> {/* updates-block-inner promo-cta-content */}
             </div> {/* container */}
           </div> {/* updates-block */}
