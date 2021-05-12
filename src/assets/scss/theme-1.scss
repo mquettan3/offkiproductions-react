@@ -487,17 +487,28 @@ label {
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
 
+    @media (max-width: 482px) {
+        .updates-block-inner.promo-cta-content {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .desc a.play-button {
+            left: 50px;
+        }
+    }
+
     .desc {
         display: flex;
 
         @media (max-width: 482px) {
-            img {
-                display: none;
-            }
+            // img {
+            //     display: none;
+            // }
 
-            .play-button {
-                display: none;
-            }
+            // .play-button {
+            //     display: none;
+            // }
         }
 
         img {

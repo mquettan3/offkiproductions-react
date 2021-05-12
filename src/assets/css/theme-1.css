@@ -414,13 +414,14 @@ label {
   padding-bottom: 30px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff; }
+  @media (max-width: 482px) {
+    .updates-block .updates-block-inner.promo-cta-content {
+      padding-left: 15px;
+      padding-right: 15px; }
+    .updates-block .desc a.play-button {
+      left: 50px; } }
   .updates-block .desc {
     display: flex; }
-    @media (max-width: 482px) {
-      .updates-block .desc img {
-        display: none; }
-      .updates-block .desc .play-button {
-        display: none; } }
     .updates-block .desc img {
       height: 100px;
       width: 100px;
