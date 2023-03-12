@@ -21,7 +21,7 @@ class Main extends Component {
         <BeatStore />
         {/* <Exclusive /> */}
         {/* <CustomMusic /> */}
-        <LicenseTerms />
+        {/* <LicenseTerms /> */}
         <AboutUs />
         <CallToAction 
           action_description="Subscribe to our newsletter to be the first to learn about future deals we are running, new beat early access, and more!"
