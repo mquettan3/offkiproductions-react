@@ -22,7 +22,7 @@ export default class SongRow extends Component {
   }
 
   render() {
-    const license_tier = this.props.licenseTier;
+    // const license_tier = this.props.licenseTier;
     const songName = this.props.songName.split(".").slice(0, -1).join('.');
 
     return (
@@ -31,13 +31,13 @@ export default class SongRow extends Component {
           <img src={this.props.albumArtLocation} alt="Album Art" />
           {songName}
         </div>
-        <div className="shopping-selection">
+        {/* <div className="shopping-selection">
           <select name="license-tier" onChange={this.handleLicenseChange} value={license_tier}>
             <option value="None">Buy Now</option>
             <option value="Basic">Basic - $30</option>
             <option value="Premium">Premium - $100</option>
           </select>
-        </div>
+        </div> */}
       </div>
     )
   }

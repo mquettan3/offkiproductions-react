@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Hero1 from "../../assets/images/hero-1.jpg";
+import AudioShop from '../Main/Audio Shop/AudioFileShop.js'
 
 // Custom Styles
 import '../../assets/css/sync.css';
@@ -133,6 +134,11 @@ export default class ErrorPage extends Component {
                     </div>
                 </div>
                 <div className="container sync-list">
+                    <h2 className="section-title text-center">Example Music</h2>
+                    <AudioShop />
+                </div>
+                <div className="container sync-list section">
+                    <h2 className="section-title text-center">Open Sync Opportunities!</h2>
                     {syncListJSX}
                 </div>
             </div>
