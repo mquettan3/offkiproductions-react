@@ -94,7 +94,7 @@ export default class ErrorPage extends Component {
             let referenceTrackList = []
             for(let track in this.state.syncList[entry].reference_track_list) {
                 referenceTrackList.push(
-                    <a key={track} href={this.state.syncList[entry].reference_track_list[track]} target="_blank">Reference Track {parseInt(track) + 1}</a>
+                    <a key={track} href={this.state.syncList[entry].reference_track_list[track]} target="_blank">Reference Track {parseInt(track, 10) + 1}</a>
                 )
             }
 

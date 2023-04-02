@@ -2,10 +2,6 @@
 
 import React, { Component } from 'react';
 
-// Script Loader
-import scriptLoader from 'react-async-script-loader';
-
-
 class PayPalButton extends Component {
   constructor(props) {
     super(props);
@@ -73,7 +69,5 @@ class PayPalButton extends Component {
     )
   }
 }
-// Production
-export default scriptLoader('https://www.paypal.com/sdk/js?client-id=AczEaQP7d-VqHIIsmMRe2wugcUqJiQrD27NucJNOEy_SDCkUXzRMJHpVqvABtyyYBAgJ_R3zyhj-KCwk')(PayPalButton)
-// Sandbox
-//export default scriptLoader('https://www.paypal.com/sdk/js?client-id=AYHNtFj0PqXWC3WwFaJ6MJOggD2M1H3WjDyPvip_y7GLSFCr1qJyvfOVWvbqkmkoC3EY__-UkTIi9wqN')(PayPalButton)
+
+export default PayPalButton
