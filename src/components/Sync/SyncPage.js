@@ -138,7 +138,7 @@ export default class ErrorPage extends Component {
                     <AudioShop />
                 </div>
                 <div className="container sync-list section">
-                    <h2 className="section-title text-center">Open Sync Opportunities!</h2>
+                    <h2 className="section-title text-center">Open Sync Opportunities</h2>
                     {syncListJSX}
                 </div>
             </div>
