@@ -127,9 +127,9 @@ export default class ErrorPage extends Component {
                     <div className="container">
                         <div className="col-12 banner-content">
                             <Link to="/"><h2><span className="fa fa-angle-double-left"></span> RETURN HOME</h2></Link>
-                            <h1 className="page-title">Sync Opportunities</h1>
+                            <h1 className="page-title">Off Ki Sync Licensing</h1>
                             <div className="separator-2"></div>
-                            <p>We’re offering sync opportunities for film, tv, ads and more! Artists and producers who use Off Ki beats or loops and make some magic make sure to send the finished track to us by clicking the “Submit Entry” button below!!! Good luck and keep creating!!!</p>
+                            <p>Here are some examples of our sync licensing tracks. Please email us with any questions or requests. </p>
                         </div>
                     </div>
                 </div>
@@ -137,11 +137,8 @@ export default class ErrorPage extends Component {
                     <h2 className="section-title text-center">Example Music</h2>
                     <AudioShop />
                 </div>
-                <div className="container sync-list section">
-                    <h2 className="section-title text-center">Open Sync Opportunities</h2>
-                    {syncListJSX}
-                </div>
             </div>
+                
         )
     }
 }
