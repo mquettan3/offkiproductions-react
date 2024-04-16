@@ -10,6 +10,7 @@ import AboutUs from './AboutUs.js';
 import CallToAction from './CallToAction.js';
 import Contact from './Contact.js';
 import Footer from './Footer.js';
+import ReelCrafter from './ReelCrafter.js';
 
 class Main extends Component {
   render() {
@@ -17,6 +18,7 @@ class Main extends Component {
       <div className="Main">
         <Navbar />
         <Promo />
+        <ReelCrafter />
         <BeatStore />
         {/* <Exclusive /> */}
         {/* <CustomMusic /> */}
