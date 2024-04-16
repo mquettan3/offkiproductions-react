@@ -13,8 +13,6 @@ class App extends Component {
         <div className="App">
           <Switch>
             <Route exact path="/" component={Main}/>
-            <Route path="/checkout" component={Checkout}/>
-            <Route path="/paymentconfirmation" component={PaymentConfirmation}/>
             <Route path="/errorpage" component={ErrorPage}/>
             <Route path="/sync" component={SyncPage}/>
             <Redirect to={{pathname: "/errorpage"}} />

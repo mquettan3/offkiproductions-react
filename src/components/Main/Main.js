@@ -17,7 +17,6 @@ class Main extends Component {
       <div className="Main">
         <Navbar />
         <Promo />
-        <YouTubeCarousel />
         <BeatStore />
         {/* <Exclusive /> */}
         {/* <CustomMusic /> */}
