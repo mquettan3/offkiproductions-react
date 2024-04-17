@@ -50,7 +50,7 @@ export default class Navbar extends Component {
           <div id="navbar-collapse" className="navbar-collapse collapse text-center justify-content-center">
             <ul className="nav navbar-nav">
               <li className="nav-item"><a className="active nav-link scrollto" href="#promo">Home</a></li>
-              <li className="nav-item"><a className="nav-link scrollto" href="#reelcrafter">Music</a></li>
+              <li className="nav-item"><a className="nav-link scrollto" href="#reelcrafter">Sync Licensing</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#rapbeats">Beat Store</a></li>
               {/* <li className="nav-item"><Link className="nav-link" to="/sync">Sync licensing</Link></li> */}
               {/* <li className="nav-item"><a className="nav-link scrollto" href="#license">License Terms</a></li> */}
