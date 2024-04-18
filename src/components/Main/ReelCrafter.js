@@ -10,7 +10,7 @@ export default class ReelCrafter extends Component {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <h2 className="section-title">Music</h2>
+              <h2 className="section-title">Sync Licensing</h2>
               <div dangerouslySetInnerHTML={{__html: frame}} />
           	  {/* <AudioShop /> */}
             </div>

@@ -1,11 +1,13 @@
 // BeatStore.component.js
 
-import React, { Component } from 'react';
-// import AudioShop from './Audio Shop/AudioFileShop.js'
+import React, { useEffect } from 'react';
 
-export default class BeatStore extends Component {
-  render() {
-    const frame = '<iframe src="https://player.beatstars.com/?storeId=116624" width="100%" height="800" style="max-width:1024px;"> -- none -- </iframe>'
+function BeatStore() {
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []); 
+
+    const frame = '<iframe src="https://player.beatstars.com/?storeId=116624" width="100%" height="800"> -- none -- </iframe>'
     return (
       <section id="rapbeats" className="rap-trap-section section text-center">
         <div className="container">
@@ -20,5 +22,6 @@ export default class BeatStore extends Component {
         </div>
       </section>
     )
-  }
 }
+
+export default BeatStore;
