@@ -5,7 +5,8 @@ import BeatStore from '../BeatStore/BeatStore.js';
 // import Exclusive from './Exclusive.js';
 // import CustomMusic from './CustomMusic.js';
 import YouTubeCarousel from './YouTubeCarousel.js';
-// import LicenseTerms from './LicenseTerms.js';
+import LicenseTerms from './LicenseTerms.js';
+import Podcast from './Podcast.js';
 import AboutUs from './AboutUs.js';
 import CallToAction from './CallToAction.js';
 import Contact from './Contact.js';
@@ -23,6 +24,7 @@ class Main extends Component {
         {/* <Exclusive /> */}
         {/* <CustomMusic /> */}
         {/* <LicenseTerms /> */}
+        <Podcast />
         <AboutUs />
         <CallToAction 
           action_description="Subscribe to our newsletter to be the first to learn about future deals we are running, new beat early access, and more!"

@@ -52,9 +52,9 @@ export default class Navbar extends Component {
               <li className="nav-item"><a className="active nav-link scrollto" href="#promo">Home</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#reelcrafter">Sync Licensing</a></li>
               {/* <li className="nav-item"><a className="nav-link scrollto" href="#rapbeats">Beat Store</a></li> */}
-              <li className="nav-item"><Link className="nav-link" to="/beatstore">Beat Store</Link></li>
+              {/* <li className="nav-item"><Link className="nav-link" to="/beatstore">Beat Store</Link></li> */}
               {/* <li className="nav-item"><Link className="nav-link" to="/sync">Sync licensing</Link></li> */}
-              {/* <li className="nav-item"><a className="nav-link scrollto" href="#license">License Terms</a></li> */}
+              <li className="nav-item"><a className="nav-link scrollto" href="#podcast">Podcast</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#about">Vision</a></li>
               <li className="nav-item"><a className="nav-link scrollto" href="#contact">Contact</a></li>
             </ul>

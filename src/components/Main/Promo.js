@@ -1,15 +1,13 @@
 // Navbar.component.js
 
 import React, { Component } from 'react';
+import axios from 'axios'
 
 import Hero1 from "../../assets/images/hero-1.jpg"
 //import BedOfRosesAlbum from "../../assets/images/BedOfRosesAlbum.jpg"
 // import VibeChasing2 from "../../assets/images/VibeChasing2.jpg"
 import VibeChasing2 from "../../assets/images/Spring Chill Album Cover.png"
 import MeditatingManSolo from '../../assets/images/Logos/MeditatingManSolo.svg';
-
-// Require Axios for HTTP requests
-const axios = require('axios');
 
 var serverLocation = process.env.REACT_APP_SERVER_LOCATION;
 
