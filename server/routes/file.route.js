@@ -3,7 +3,7 @@ const express = require('express');
 const fileRoutes = express.Router();
 
 // Glob and path Used for file manipulation
-const globSync = require('glob/sync');
+const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
 
@@ -12,7 +12,7 @@ const projectRoot = path.resolve(__dirname + '/../../')
 // Respond with the names of all relevant files in ../src/assets/images
 fileRoutes.get('/herofiles', function (req, res) {
     // Send the list of files from the specified location
-    globSync(__dirname + '/../../src/assets/images/hero*', function (er, files) {
+    glob(__dirname + '/../../src/assets/images/hero*', function (er, files) {
         var fileList = []
         var count = 0;
 
@@ -57,7 +57,7 @@ fileRoutes.get('/musiclist', function (req, res) {
     var count = 0;
     var directorySongObject = {}
     // Send the list of files from the specified location
-    globSync(__dirname + '/../../src/assets/audio/samples/**', function (er, items) {
+    glob(__dirname + '/../../src/assets/audio/samples/**', function (er, items) {
       var currentCategory = "None";
   
       for(count in items) {
